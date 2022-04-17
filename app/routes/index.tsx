@@ -1,5 +1,6 @@
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
+import dayjs from "dayjs"
 
 import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
@@ -19,13 +20,15 @@ export const loader: LoaderFunction = async () => {
 
 export default function Index() {
   const contents = useLoaderData<MicroCMSContent[]>()
+
   return (
     <div>
+      <p>aaa</p>
       {contents.map((c) => (
-        <p key={c.id}>
+        <div key={c.id}>
           <Link to={`/posts/${c.id}`}>{c.title}</Link>
-          {new Date(c.createdAt).toLocaleString()}
-        </p>
+          <p>{dayjs(c.createdAt).format("YYYY年MM月DD日")}</p>
+        </div>
       ))}
     </div>
   )
