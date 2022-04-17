@@ -1,24 +1,32 @@
+import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
+import { Link, useLoaderData } from "@remix-run/react"
+
+import type { MicroCMSContent } from "@/types/microcms"
+import { client } from "lib/client.server"
+
+export const headers: HeadersFunction = () => {
+  return {
+    "Cache-Control": "max-age=0, s-maxage=60, stale-while-revalidate=60",
+  }
+}
+
+export const loader: LoaderFunction = async () => {
+  const { contents } = await client.getList<MicroCMSContent[]>({
+    endpoint: "posts",
+  })
+  return contents
+}
+
 export default function Index() {
+  const contents = useLoaderData<MicroCMSContent[]>()
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a target="_blank" href="https://remix.run/tutorials/blog" rel="noreferrer">
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/tutorials/jokes" rel="noreferrer">
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+    <div>
+      {contents.map((c) => (
+        <p key={c.id}>
+          <Link to={`/posts/${c.id}`}>{c.title}</Link>
+          {new Date(c.createdAt).toLocaleString()}
+        </p>
+      ))}
     </div>
   )
 }
