@@ -1,0 +1,41 @@
+{
+  "name": "remix-template-vercel",
+  "private": true,
+  "description": "",
+  "license": "",
+  "sideEffects": false,
+  "scripts": {
+    "dev": "remix dev",
+    "lint": "prettier --check app && eslint --cache app",
+    "lint:fix": "prettier --write app && eslint --cache --fix app",
+    "build": "remix build"
+  },
+  "dependencies": {
+    "@remix-run/node": "^1.4.0",
+    "@remix-run/react": "^1.4.0",
+    "@remix-run/vercel": "^1.4.0",
+    "@vercel/node": "^1.14.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@remix-run/dev": "^1.4.0",
+    "@remix-run/eslint-config": "^1.4.0",
+    "@remix-run/serve": "^1.4.0",
+    "@types/react": "^18.0.5",
+    "@types/react-dom": "^18.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.3",
+    "vitest": "^0.9.3"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
