@@ -1,3 +1,4 @@
+import { Divider, Title } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
 import dayjs from "dayjs"
@@ -23,7 +24,7 @@ export default function Index() {
 
   return (
     <div>
-      <p>aaa</p>
+      <Divider m="md" size="md" label={<Title order={2}>PICK UP</Title>} />
       {contents.map((c) => (
         <div key={c.id}>
           <Link to={`/posts/${c.id}`}>{c.title}</Link>

@@ -1,6 +1,8 @@
 import type { MetaFunction } from "@remix-run/node"
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from "@remix-run/react"
 
+import { MantineTheme } from "@/theme"
+
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "すな.dev",
@@ -15,7 +17,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <MantineTheme>
+          <Outlet />
+        </MantineTheme>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
