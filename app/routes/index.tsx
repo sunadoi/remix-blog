@@ -1,4 +1,4 @@
-import { Divider, Title } from "@mantine/core"
+import { AppShell, Divider, Grid, Header, Title, Paper } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
 import dayjs from "dayjs"
@@ -23,14 +23,45 @@ export default function Index() {
   const contents = useLoaderData<MicroCMSContent[]>()
 
   return (
-    <div>
-      <Divider m="md" size="md" label={<Title order={2}>PICK UP</Title>} />
-      {contents.map((c) => (
-        <div key={c.id}>
-          <Link to={`/posts/${c.id}`}>{c.title}</Link>
-          <p>{dayjs(c.createdAt).format("YYYY年MM月DD日")}</p>
-        </div>
-      ))}
-    </div>
+    <AppShell
+      header={
+        <Header height={70} p="xs">
+          <Grid justify="center" align="center" style={{ height: "70px" }}>
+            <Grid.Col span={3}>
+              <Title order={2}>すな.dev</Title>
+            </Grid.Col>
+            <Grid.Col span={7}>
+              <Title order={1}>すな.dev</Title>
+            </Grid.Col>
+          </Grid>
+        </Header>
+      }
+    >
+      <Grid justify="center">
+        <Grid.Col span={7}>
+          <Divider
+            my="md"
+            size="md"
+            label={
+              <Title order={2} mr="md">
+                PICK UP
+              </Title>
+            }
+          />
+          {contents.map((c) => (
+            <div key={c.id}>
+              <Link to={`/posts/${c.id}`}>{c.title}</Link>
+              <p>{dayjs(c.createdAt).format("YYYY年MM月DD日")}</p>
+            </div>
+          ))}
+        </Grid.Col>
+        <Grid.Col span={3}>
+          <Paper my="md" p="md" radius="md" shadow="xs">
+            <Title order={4}>カテゴリー</Title>
+            <Divider my="sm" size="sm" />
+          </Paper>
+        </Grid.Col>
+      </Grid>
+    </AppShell>
   )
 }
