@@ -1,6 +1,11 @@
-import { json } from "@remix-run/node"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
+import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
+import copy from "copy-to-clipboard"
+import parse from "html-react-parser"
+import { Fragment } from "react"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { xonokai } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
 import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
@@ -38,7 +43,45 @@ export default function PostsId() {
 
   return (
     <div>
-      <h1>{content.title}</h1>
+      <h2>{content.title}</h2>
+      <div>
+        {content.body.map((c) => {
+          if (c.type.includes("code")) {
+            const code = c.code[0]
+            if (!code) throw new Error("no code tag")
+            return (
+              <Fragment key={code.code}>
+                <button onClick={() => copy(code.code)}>copy</button>
+                <SyntaxHighlighter
+                  language={code.language}
+                  style={xonokai}
+                  showLineNumbers
+                  wrapLines
+                  wrapLongLines
+                  customStyle={{ backgroundColor: "#22272E" }}
+                  lineProps={(lineNumber) => {
+                    return {
+                      style: {
+                        display: "block",
+                        backgroundColor: [...code.diffAdd.split(",").map((n) => Number(n))].includes(lineNumber)
+                          ? "#273732"
+                          : [...code.diffRemove.split(",").map((n) => Number(n))].includes(lineNumber)
+                          ? "#3F2D32"
+                          : [...code.highlight.split(",").map((n) => Number(n))].includes(lineNumber)
+                          ? "gray"
+                          : "",
+                      },
+                    }
+                  }}
+                >
+                  {code.code}
+                </SyntaxHighlighter>
+              </Fragment>
+            )
+          }
+          return <Fragment key={c.rich}>{parse(c.rich)}</Fragment>
+        })}
+      </div>
     </div>
   )
 }

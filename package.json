@@ -15,10 +15,13 @@
     "@remix-run/react": "^1.4.0",
     "@remix-run/vercel": "^1.4.0",
     "@vercel/node": "^1.14.0",
+    "copy-to-clipboard": "^3.3.1",
     "dayjs": "^1.11.1",
+    "html-react-parser": "^1.4.11",
     "microcms-js-sdk": "^2.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-syntax-highlighter": "^15.5.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.4.0",
@@ -26,6 +29,7 @@
     "@remix-run/serve": "^1.4.0",
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
+    "@types/react-syntax-highlighter": "^13.5.2",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "eslint": "^8.11.0",
