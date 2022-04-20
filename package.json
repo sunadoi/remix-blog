@@ -22,8 +22,8 @@
     "dayjs": "^1.11.1",
     "html-react-parser": "^1.4.11",
     "microcms-js-sdk": "^2.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-icons": "^4.3.1",
     "react-syntax-highlighter": "^15.5.0"
   },
