@@ -1,4 +1,4 @@
-import { AppShell, Divider, Grid, Header, Title, Paper } from "@mantine/core"
+import { AppShell, Divider, Grid, Header, Title, Paper, Center } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
 import dayjs from "dayjs"
@@ -26,7 +26,7 @@ export default function Index() {
     <AppShell
       header={
         <Header height={70} p="xs">
-          <Grid justify="center" align="center" style={{ height: "70px" }}>
+          <Grid justify="center" align="center" className="h-[80px]">
             <Grid.Col span={3}>
               <Title order={2}>すな.dev</Title>
             </Grid.Col>
@@ -43,15 +43,34 @@ export default function Index() {
             my="md"
             size="md"
             label={
-              <Title order={2} mr="md">
-                PICK UP
-              </Title>
+              <Center className="gap-2">
+                <Title order={1} className="translate-y-[-3px]">
+                  |
+                </Title>
+                <Title order={2} mr="md">
+                  PICK UP
+                </Title>
+              </Center>
+            }
+          />
+          <Divider
+            my="md"
+            size="md"
+            label={
+              <Center className="gap-2">
+                <Title order={1} className="translate-y-[-3px]">
+                  |
+                </Title>
+                <Title order={2} mr="md">
+                  All Topics ({contents.length})
+                </Title>
+              </Center>
             }
           />
           {contents.map((c) => (
             <div key={c.id}>
               <Link to={`/posts/${c.id}`}>{c.title}</Link>
-              <p>{dayjs(c.createdAt).format("YYYY年MM月DD日")}</p>
+              <p className="text-red-400">{dayjs(c.createdAt).format("YYYY年MM月DD日")}</p>
             </div>
           ))}
         </Grid.Col>

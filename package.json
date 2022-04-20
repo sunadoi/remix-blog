@@ -5,10 +5,10 @@
   "license": "",
   "sideEffects": false,
   "scripts": {
-    "dev": "remix dev",
+    "dev": "concurrently \"tailwindcss -w -i ./styles/app.css -o app/styles/app.css\" \"remix dev\"",
     "lint": "prettier --check app && eslint --cache app",
     "lint:fix": "prettier --write app && eslint --cache --fix app",
-    "build": "remix build"
+    "build": "tailwindcss -m -i ./styles/app.css -o app/styles/app.css && remix build"
   },
   "dependencies": {
     "@mantine/core": "^4.1.4",
@@ -35,12 +35,16 @@
     "@types/react-syntax-highlighter": "^13.5.2",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
+    "autoprefixer": "^10.4.4",
+    "concurrently": "^7.1.0",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0",
+    "postcss": "^8.4.12",
     "prettier": "^2.6.2",
+    "tailwindcss": "^3.0.24",
     "typescript": "^4.6.3",
     "vitest": "^0.9.3"
   },
