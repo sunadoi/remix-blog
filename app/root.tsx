@@ -1,7 +1,8 @@
-import { AppShell, Header, Grid, Title } from "@mantine/core"
+import { AppShell, Header, Grid, Title, Input } from "@mantine/core"
 import type { MetaFunction } from "@remix-run/node"
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from "@remix-run/react"
 import type { FC, ReactNode } from "react"
+import { AiOutlineSearch } from "react-icons/ai"
 
 import styles from "@/styles/app.css"
 import { MantineTheme } from "@/theme"
@@ -46,8 +47,8 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
             <Grid.Col span={3}>
               <Title order={1}>すな.dev</Title>
             </Grid.Col>
-            <Grid.Col span={7}>
-              <Title order={1}>すな.dev</Title>
+            <Grid.Col span={3} offset={4}>
+              <Input icon={<AiOutlineSearch />} radius="md" size="md" />
             </Grid.Col>
           </Grid>
         </Header>
