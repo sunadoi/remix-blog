@@ -24,6 +24,7 @@
     "microcms-js-sdk": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
     "react-syntax-highlighter": "^15.5.0"
   },
   "devDependencies": {

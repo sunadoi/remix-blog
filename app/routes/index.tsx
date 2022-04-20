@@ -1,7 +1,9 @@
-import { AppShell, Divider, Grid, Header, Title, Paper, Center } from "@mantine/core"
+import { AppShell, Divider, Grid, Header, Title, Paper, Center, Group } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
 import dayjs from "dayjs"
+import { BsFillPersonFill } from "react-icons/bs"
+import { MdArchive, MdCategory } from "react-icons/md"
 
 import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
@@ -76,7 +78,24 @@ export default function Index() {
         </Grid.Col>
         <Grid.Col span={3}>
           <Paper my="md" p="md" radius="md" shadow="xs">
-            <Title order={4}>カテゴリー</Title>
+            <Group spacing="xs">
+              <MdCategory size="20px" />
+              <Title order={4}>カテゴリー</Title>
+            </Group>
+            <Divider my="sm" size="sm" />
+          </Paper>
+          <Paper my="md" p="md" radius="md" shadow="xs">
+            <Group spacing="xs">
+              <BsFillPersonFill size="20px" />
+              <Title order={4}>プロフィール</Title>
+            </Group>
+            <Divider my="sm" size="sm" />
+          </Paper>
+          <Paper my="md" p="md" radius="md" shadow="xs">
+            <Group spacing="xs">
+              <MdArchive size="20px" />
+              <Title order={4}>アーカイブ</Title>
+            </Group>
             <Divider my="sm" size="sm" />
           </Paper>
         </Grid.Col>
