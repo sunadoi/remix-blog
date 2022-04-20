@@ -1,5 +1,7 @@
+import { AppShell, Header, Grid, Title } from "@mantine/core"
 import type { MetaFunction } from "@remix-run/node"
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from "@remix-run/react"
+import type { FC, ReactNode } from "react"
 
 import styles from "@/styles/app.css"
 import { MantineTheme } from "@/theme"
@@ -23,13 +25,36 @@ export default function App() {
       </head>
       <body>
         <MantineTheme>
-          <Outlet />
+          <Layout>
+            <Outlet />
+          </Layout>
         </MantineTheme>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
       </body>
     </html>
+  )
+}
+
+const Layout: FC<{ children: ReactNode }> = ({ children }) => {
+  return (
+    <AppShell
+      header={
+        <Header height={70} px="sm" py="xs">
+          <Grid justify="center" align="center" className="h-[80px]">
+            <Grid.Col span={3}>
+              <Title order={1}>すな.dev</Title>
+            </Grid.Col>
+            <Grid.Col span={7}>
+              <Title order={1}>すな.dev</Title>
+            </Grid.Col>
+          </Grid>
+        </Header>
+      }
+    >
+      {children}
+    </AppShell>
   )
 }
 
