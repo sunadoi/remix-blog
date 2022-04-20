@@ -9,6 +9,11 @@ declare module "@mantine/core" {
   export interface MantineThemeColorsOverride {
     colors: Record<ExtendedCustomColors, Tuple<string, 10>>
   }
+
+  export interface MantineThemeOther {
+    primary: string
+    secondary: string
+  }
 }
 
 export const MantineTheme: FC<{ children: ReactNode }> = ({ children }) => {
@@ -35,12 +40,19 @@ export const MantineTheme: FC<{ children: ReactNode }> = ({ children }) => {
               "#011633",
             ],
           },
+          other: {
+            primary: "#012C6B",
+            secondary: "#416190",
+          },
           primaryColor: "brand",
           spacing: { xs: 8, sm: 16, md: 24, lg: 32, xl: 40 },
         }}
         styles={{
           Title: (theme) => ({
-            root: { color: theme.colors.brand[5] },
+            root: { color: theme.other.primary },
+          }),
+          Text: (theme) => ({
+            root: { color: theme.other.secondary },
           }),
         }}
         withNormalizeCSS
