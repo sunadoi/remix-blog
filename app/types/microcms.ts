@@ -1,6 +1,13 @@
 import type { MicroCMSDate } from "microcms-js-sdk"
 
-export type Category = "React" | "TypeScript" | "JavaScript" | "Firebase"
+const Categories = {
+  React: "React",
+  TypeScript: "TypeScript",
+  JavaScript: "JavaScript",
+  Firebase: "Firebase",
+} as const
+
+export type Category = keyof typeof Categories
 
 export type MicroCMSContent = {
   id: string
@@ -22,3 +29,7 @@ export type MicroCMSContent = {
     type: ("rich" | "code" | "point" | "alert")[]
   }[]
 } & MicroCMSDate
+
+export const isCategory = (category: string): category is Category => {
+  return category in Categories
+}

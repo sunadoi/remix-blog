@@ -2,11 +2,12 @@ import { Divider, Grid, Title, Paper, Center, Group, Image, Card, Text, AspectRa
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useNavigate } from "@remix-run/react"
 import dayjs from "dayjs"
-import { BsFillPersonFill } from "react-icons/bs"
+import { Fragment } from "react"
 import { MdArchive, MdCategory } from "react-icons/md"
 
 import { CategoryIconMap } from "@/constant"
 import type { Category, MicroCMSContent } from "@/types/microcms"
+import { isCategory } from "@/types/microcms"
 import { client } from "lib/client.server"
 
 export const headers: HeadersFunction = () => {
@@ -16,14 +17,28 @@ export const headers: HeadersFunction = () => {
 }
 
 export const loader: LoaderFunction = async () => {
-  const { contents } = await client.getList<MicroCMSContent[]>({
+  const { contents } = await client.getList<MicroCMSContent>({
     endpoint: "posts",
   })
-  return contents
+  const categories = contents
+    .flatMap((c) => c.category)
+    .reduce(
+      (acc, category) => {
+        return { ...acc, [category]: acc[category] ? (acc[category] ?? 0) + 1 : 1 }
+      },
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      {} as { [key in string]: number }
+    )
+  const archives = [...new Set(contents.map((c) => dayjs(c.publishedAt).format("YYYY年MM月")))]
+  return { contents, categories, archives }
 }
 
 export default function Index() {
-  const contents = useLoaderData<MicroCMSContent[]>()
+  const { contents, categories, archives } = useLoaderData<{
+    contents: MicroCMSContent[]
+    categories: { [key in Category]: number }
+    archives: string[]
+  }>()
   const navigate = useNavigate()
 
   return (
@@ -76,8 +91,9 @@ export default function Index() {
               </Title>
               <Group position="apart">
                 <Group spacing="xs">
-                  {/* eslint-disable-next-line @typescript-eslint/consistent-type-assertions */}
-                  <Image src={CategoryIconMap.get(c.topic?.[0] as Category)} width="24px" />
+                  {c.topic?.[0] && isCategory(c.topic?.[0]) && (
+                    <Image src={CategoryIconMap.get(c.topic?.[0])} width="24px" />
+                  )}
                   <Text>{c.topic?.[0]}</Text>
                 </Group>
                 <Text size="sm" sx={(theme) => ({ color: theme.colors.gray[6] })}>
@@ -95,13 +111,20 @@ export default function Index() {
             <Title order={4}>カテゴリー</Title>
           </Group>
           <Divider my="sm" size="sm" />
-        </Paper>
-        <Paper my="md" p="md" radius="md" shadow="xs">
-          <Group spacing="xs">
-            <BsFillPersonFill size="20px" />
-            <Title order={4}>プロフィール</Title>
-          </Group>
-          <Divider my="sm" size="sm" />
+          {Object.entries(categories).map(([category, count], index) => (
+            <Fragment key={category}>
+              {index <= 10 ? (
+                <Group spacing="xs" mb="sm">
+                  {isCategory(category) && <Image src={CategoryIconMap.get(category)} width="24px" />}
+                  <Text>
+                    {category} ({count})
+                  </Text>
+                </Group>
+              ) : (
+                <Text>もっと見る</Text>
+              )}
+            </Fragment>
+          ))}
         </Paper>
         <Paper my="md" p="md" radius="md" shadow="xs">
           <Group spacing="xs">
@@ -109,6 +132,9 @@ export default function Index() {
             <Title order={4}>アーカイブ</Title>
           </Group>
           <Divider my="sm" size="sm" />
+          {archives.map((a, index) => (
+            <Fragment key={a}>{index <= 2 ? <Text>{a}</Text> : <Text>もっと見る</Text>}</Fragment>
+          ))}
         </Paper>
       </Grid.Col>
     </Grid>
