@@ -4,8 +4,9 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch }
 import type { FC, ReactNode } from "react"
 import { AiOutlineSearch } from "react-icons/ai"
 
-import styles from "@/styles/app.css"
 import { MantineTheme } from "@/theme"
+
+import styles from "./styles/app.css"
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
