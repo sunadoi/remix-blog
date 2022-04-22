@@ -51,9 +51,6 @@ export const MantineTheme: FC<{ children: ReactNode }> = ({ children }) => {
           Title: (theme) => ({
             root: { color: theme.other.primary },
           }),
-          Text: (theme) => ({
-            root: { color: theme.other.secondary },
-          }),
         }}
         withNormalizeCSS
         withGlobalStyles

@@ -1,9 +1,9 @@
+import { Anchor, Grid, Group, Paper, Text, Title } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import copy from "copy-to-clipboard"
 import parse from "html-react-parser"
-import { Fragment } from "react"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { xonokai } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
@@ -42,18 +42,30 @@ export default function PostsId() {
   const content = useLoaderData<MicroCMSContent>()
 
   return (
-    <div>
-      <h2>{content.title}</h2>
-      <div>
-        {content.body.map((c) => {
-          if (c.type.includes("code")) {
-            const code = c.code[0]
-            if (!code) throw new Error("no code tag")
+    <Grid justify="center">
+      <Grid.Col span={7}>
+        <Title order={2}>{content.title}</Title>
+        <div>
+          {content.body.map((c) => {
+            if (c.fieldId === "content") {
+              return <Text key={c.richText}>{parse(c.richText)}</Text>
+            }
+            if (c.fieldId === "message") {
+              return <Text key={c.message}>{parse(c.message)}</Text>
+            }
+            if (c.fieldId === "link") {
+              return (
+                <Anchor href={c.url} color="blue" className="cursor-pointer hover:opacity-70">
+                  {c.url}
+                </Anchor>
+              )
+            }
+
             return (
-              <Fragment key={code.code}>
-                <button onClick={() => copy(code.code)}>copy</button>
+              <div key={c.code}>
+                <button onClick={() => copy(c.code)}>copy</button>
                 <SyntaxHighlighter
-                  language={code.language}
+                  language={c.language}
                   style={xonokai}
                   showLineNumbers
                   wrapLines
@@ -63,25 +75,31 @@ export default function PostsId() {
                     return {
                       style: {
                         display: "block",
-                        backgroundColor: [...code.diffAdd.split(",").map((n) => Number(n))].includes(lineNumber)
+                        backgroundColor: [...c.diffAdd.split(",").map((n) => Number(n))].includes(lineNumber)
                           ? "#273732"
-                          : [...code.diffRemove.split(",").map((n) => Number(n))].includes(lineNumber)
+                          : [...c.diffRemove.split(",").map((n) => Number(n))].includes(lineNumber)
                           ? "#3F2D32"
-                          : [...code.highlight.split(",").map((n) => Number(n))].includes(lineNumber)
+                          : [...c.highlight.split(",").map((n) => Number(n))].includes(lineNumber)
                           ? "gray"
                           : "",
                       },
                     }
                   }}
                 >
-                  {code.code}
+                  {c.code}
                 </SyntaxHighlighter>
-              </Fragment>
+              </div>
             )
-          }
-          return <Fragment key={c.rich}>{parse(c.rich)}</Fragment>
-        })}
-      </div>
-    </div>
+          })}
+        </div>
+      </Grid.Col>
+      <Grid.Col span={3}>
+        <Paper my="md" p="md" radius="md" shadow="xs">
+          <Group spacing="xs">
+            <Title order={4}>目次</Title>
+          </Group>
+        </Paper>
+      </Grid.Col>
+    </Grid>
   )
 }

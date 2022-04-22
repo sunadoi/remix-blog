@@ -86,17 +86,17 @@ export default function Index() {
               <AspectRatio ratio={16 / 9}>
                 <Image src={c.image.url} alt="thumbnail" radius="sm" />
               </AspectRatio>
-              <Title order={4} my="sm">
+              <Text size="xl" sx={(theme) => ({ color: theme.other.primary })} weight="bold" my="sm" lineClamp={4}>
                 {c.title}
-              </Title>
+              </Text>
               <Group position="apart">
                 <Group spacing="xs">
                   {c.topic?.[0] && isCategory(c.topic?.[0]) && (
                     <Image src={CategoryIconMap.get(c.topic?.[0])} width="24px" />
                   )}
-                  <Text>{c.topic?.[0]}</Text>
+                  <Text sx={(theme) => ({ color: theme.other.secondary })}>{c.topic?.[0]}</Text>
                 </Group>
-                <Text size="sm" sx={(theme) => ({ color: theme.colors.gray[6] })}>
+                <Text size="sm" color="gray">
                   {dayjs(c.createdAt).format("YYYY.MM.DD")}
                 </Text>
               </Group>
@@ -116,12 +116,12 @@ export default function Index() {
               {index <= 10 ? (
                 <Group spacing="xs" mb="sm">
                   {isCategory(category) && <Image src={CategoryIconMap.get(category)} width="24px" />}
-                  <Text>
+                  <Text sx={(theme) => ({ color: theme.other.secondary })}>
                     {category} ({count})
                   </Text>
                 </Group>
               ) : (
-                <Text>もっと見る</Text>
+                <Text color="blue">もっと見る</Text>
               )}
             </Fragment>
           ))}
@@ -133,7 +133,13 @@ export default function Index() {
           </Group>
           <Divider my="sm" size="sm" />
           {archives.map((a, index) => (
-            <Fragment key={a}>{index <= 2 ? <Text>{a}</Text> : <Text>もっと見る</Text>}</Fragment>
+            <Fragment key={a}>
+              {index <= 2 ? (
+                <Text sx={(theme) => ({ color: theme.other.secondary })}>{a}</Text>
+              ) : (
+                <Text color="blue">もっと見る</Text>
+              )}
+            </Fragment>
           ))}
         </Paper>
       </Grid.Col>
