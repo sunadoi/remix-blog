@@ -1,4 +1,4 @@
-import { Anchor, Grid, Group, Paper, Text, Title } from "@mantine/core"
+import { Grid, Group, Paper, Stack, Text, Title } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
@@ -32,14 +32,33 @@ export const loader: LoaderFunction = async ({ params, request }) => {
       })
     })
 
+  const toc = content.body
+    .flatMap((c) => {
+      if (c.fieldId !== "content") return null
+      const html = parse(c.richText)
+      if (!Array.isArray(html)) return null
+      return html.map((e) =>
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+        e.type === "h2" || e.type === "h3" ? { id: e.key, text: e.props.children as string, name: e.type } : null
+      )
+    })
+    .filter((t) => !!t)
+
   // 下書きの場合キャッシュヘッダを変更
   const headers = draftKey ? { "Cache-Control": "no-store, max-age=0" } : undefined
 
-  return json(content, { headers })
+  return json({ content, toc }, { headers })
 }
 
 export default function PostsId() {
-  const content = useLoaderData<MicroCMSContent>()
+  const { content, toc } = useLoaderData<{
+    content: MicroCMSContent
+    toc: {
+      id: React.Key | null
+      text: string
+      name: string
+    }[]
+  }>()
 
   return (
     <Grid justify="center">
@@ -55,9 +74,15 @@ export default function PostsId() {
             }
             if (c.fieldId === "link") {
               return (
-                <Anchor href={c.url} color="blue" className="cursor-pointer hover:opacity-70">
+                <Text
+                  variant="link"
+                  component="a"
+                  href={c.url}
+                  color="blue"
+                  className="cursor-pointer hover:opacity-70"
+                >
                   {c.url}
-                </Anchor>
+                </Text>
               )
             }
 
@@ -96,7 +121,14 @@ export default function PostsId() {
       <Grid.Col span={3}>
         <Paper my="md" p="md" radius="md" shadow="xs">
           <Group spacing="xs">
-            <Title order={4}>目次</Title>
+            <Stack spacing="xs">
+              <Title order={4}>目次</Title>
+              {toc.map((t) => (
+                <Title key={t.id} order={t.name === "h2" ? 4 : 5}>
+                  {t.text}
+                </Title>
+              ))}
+            </Stack>
           </Group>
         </Paper>
       </Grid.Col>
