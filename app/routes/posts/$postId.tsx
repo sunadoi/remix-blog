@@ -138,7 +138,7 @@ export default function PostsId() {
         </Box>
       </Grid.Col>
       <Grid.Col span={3}>
-        <Paper my="md" p="md" radius="md" shadow="xs">
+        <Paper my="md" p="md" radius="md" shadow="xs" className="sticky top-[16px]">
           <Group spacing="xs">
             <Stack spacing="xs">
               <Title order={4}>目次</Title>
