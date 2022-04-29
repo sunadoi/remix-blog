@@ -1,4 +1,4 @@
-import { Grid, Group, Paper, Stack, Text, Title } from "@mantine/core"
+import { Box, Grid, Group, Paper, Stack, Text, Title } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
@@ -64,7 +64,25 @@ export default function PostsId() {
     <Grid justify="center">
       <Grid.Col span={7}>
         <Title order={2}>{content.title}</Title>
-        <div>
+        <Box
+          sx={(theme) => ({
+            h2: {
+              fontSize: "26px",
+              fontWeight: "bold",
+            },
+            h3: {
+              fontSize: "20px",
+              fontWeight: "bold",
+            },
+            h4: {
+              fontSize: "16px",
+              fontWeight: "bold",
+            },
+            code: {
+              backgroundColor: theme.colors.gray[2],
+            },
+          })}
+        >
           {content.body.map((c) => {
             if (c.fieldId === "content") {
               return <Text key={c.richText}>{parse(c.richText)}</Text>
@@ -100,13 +118,14 @@ export default function PostsId() {
                     return {
                       style: {
                         display: "block",
-                        backgroundColor: [...c.diffAdd.split(",").map((n) => Number(n))].includes(lineNumber)
-                          ? "#273732"
-                          : [...c.diffRemove.split(",").map((n) => Number(n))].includes(lineNumber)
-                          ? "#3F2D32"
-                          : [...c.highlight.split(",").map((n) => Number(n))].includes(lineNumber)
-                          ? "gray"
-                          : "",
+                        backgroundColor:
+                          c.diffAdd && [...c.diffAdd.split(",").map((n) => Number(n))].includes(lineNumber)
+                            ? "#273732"
+                            : c.diffRemove && [...c.diffRemove.split(",").map((n) => Number(n))].includes(lineNumber)
+                            ? "#3F2D32"
+                            : c.highlight && [...c.highlight.split(",").map((n) => Number(n))].includes(lineNumber)
+                            ? "gray"
+                            : "",
                       },
                     }
                   }}
@@ -116,7 +135,7 @@ export default function PostsId() {
               </div>
             )
           })}
-        </div>
+        </Box>
       </Grid.Col>
       <Grid.Col span={3}>
         <Paper my="md" p="md" radius="md" shadow="xs">
