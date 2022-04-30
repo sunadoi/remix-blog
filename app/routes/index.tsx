@@ -3,10 +3,11 @@ import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useNavigate } from "@remix-run/react"
 import dayjs from "dayjs"
 import { Fragment } from "react"
-import { MdArchive, MdCategory } from "react-icons/md"
+import { MdArchive } from "react-icons/md"
 
+import { Category } from "@/components/category"
 import { CategoryIconMap } from "@/constant"
-import type { Category, MicroCMSContent } from "@/types/microcms"
+import type { CategoryType, MicroCMSContent } from "@/types/microcms"
 import { isCategory } from "@/types/microcms"
 import { client } from "lib/client.server"
 
@@ -36,7 +37,7 @@ export const loader: LoaderFunction = async () => {
 export default function Index() {
   const { contents, categories, archives } = useLoaderData<{
     contents: MicroCMSContent[]
-    categories: { [key in Category]: number }
+    categories: { [key in CategoryType]: number }
     archives: string[]
   }>()
   const navigate = useNavigate()
@@ -105,27 +106,7 @@ export default function Index() {
         </Grid>
       </Grid.Col>
       <Grid.Col span={3}>
-        <Paper my="md" p="md" radius="md" shadow="xs">
-          <Group spacing="xs">
-            <MdCategory size="20px" />
-            <Title order={4}>カテゴリー</Title>
-          </Group>
-          <Divider my="sm" size="sm" />
-          {Object.entries(categories).map(([category, count], index) => (
-            <Fragment key={category}>
-              {index <= 10 ? (
-                <Group spacing="xs" mb="sm">
-                  {isCategory(category) && <Image src={CategoryIconMap.get(category) ?? ""} width="24px" />}
-                  <Text sx={(theme) => ({ color: theme.other.secondary })}>
-                    {category} ({count})
-                  </Text>
-                </Group>
-              ) : (
-                <Text color="blue">もっと見る</Text>
-              )}
-            </Fragment>
-          ))}
-        </Paper>
+        <Category categories={categories} />
         <Paper my="md" p="md" radius="md" shadow="xs">
           <Group spacing="xs">
             <MdArchive size="20px" />

@@ -7,7 +7,7 @@ const Categories = {
   Firebase: "Firebase",
 } as const
 
-export type Category = keyof typeof Categories
+export type CategoryType = keyof typeof Categories
 
 type Content = {
   fieldId: "content"
@@ -39,11 +39,11 @@ export type MicroCMSContent = {
   id: string
   title: string
   image: { url: string; height: number; width: number }
-  category: Category[]
-  topic: Category[]
+  category: CategoryType[]
+  topic: CategoryType[]
   body: (Content | Message | Link | Code)[]
 } & MicroCMSDate
 
-export const isCategory = (category: string): category is Category => {
+export const isCategory = (category: string): category is CategoryType => {
   return category in Categories
 }
