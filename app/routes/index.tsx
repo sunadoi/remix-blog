@@ -1,8 +1,8 @@
-import { Divider, Grid, Title, Paper, Center, Group, Image, Card, Text, AspectRatio } from "@mantine/core"
+import { Divider, Grid, Title, Paper, Center, Group, Image, Card, Text, AspectRatio, Overlay } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
-import { useLoaderData, useNavigate } from "@remix-run/react"
+import { useLoaderData, useNavigate, useTransition } from "@remix-run/react"
 import dayjs from "dayjs"
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 import { MdArchive } from "react-icons/md"
 
 import { Category } from "@/components/category"
@@ -41,6 +41,8 @@ export default function Index() {
     archives: string[]
   }>()
   const navigate = useNavigate()
+  const [selectedCardId, setSelectedCardId] = useState("")
+  const transition = useTransition()
 
   return (
     <Grid justify="center">
@@ -82,8 +84,14 @@ export default function Index() {
               p="sm"
               m="sm"
               shadow="xs"
-              onClick={() => navigate(`/posts/${c.id}`)}
+              onClick={() => {
+                setSelectedCardId(c.id)
+                navigate(`/posts/${c.id}`)
+              }}
             >
+              {transition.state === "loading" && selectedCardId === c.id && (
+                <Overlay opacity={0.3} color="white" zIndex={1} />
+              )}
               <AspectRatio ratio={16 / 9}>
                 <Image src={c.image.url} alt="thumbnail" radius="sm" />
               </AspectRatio>
