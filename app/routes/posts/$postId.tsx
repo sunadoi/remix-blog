@@ -59,7 +59,7 @@ export default function PostsId() {
     }[]
   }>()
   const theme = useMantineTheme()
-  const match = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`)
+  const match = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`, false)
 
   return (
     <Grid justify="center">
@@ -105,7 +105,6 @@ export default function PostsId() {
                 </Text>
               )
             }
-
             return <SyntaxHighlighter key={c.code} code={c} />
           })}
         </Box>
@@ -117,7 +116,7 @@ export default function PostsId() {
               <Stack spacing="xs">
                 <Title order={4}>目次</Title>
                 {toc.map((t, index) => (
-                  <Title key={t.id ?? index} order={t.name === "h2" ? 4 : 5}>
+                  <Title key={index} order={t.name === "h2" ? 4 : 5}>
                     {t.text}
                   </Title>
                 ))}

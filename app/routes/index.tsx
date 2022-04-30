@@ -1,4 +1,18 @@
-import { Divider, Grid, Title, Center, Group, Image, Card, Text, AspectRatio, Overlay } from "@mantine/core"
+import {
+  Divider,
+  Grid,
+  Title,
+  Center,
+  Group,
+  Image,
+  Card,
+  Text,
+  AspectRatio,
+  Overlay,
+  MediaQuery,
+  useMantineTheme,
+} from "@mantine/core"
+import { useMediaQuery } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useNavigate, useTransition } from "@remix-run/react"
 import dayjs from "dayjs"
@@ -43,10 +57,12 @@ export default function Index() {
   const navigate = useNavigate()
   const [selectedCardId, setSelectedCardId] = useState("")
   const transition = useTransition()
+  const theme = useMantineTheme()
+  const match = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`, false)
 
   return (
     <Grid justify="center">
-      <Grid.Col span={7}>
+      <Grid.Col span={match ? 12 : 7}>
         <Divider
           my="md"
           size="md"
@@ -113,10 +129,12 @@ export default function Index() {
           ))}
         </Grid>
       </Grid.Col>
-      <Grid.Col span={3}>
-        <Category categories={categories} />
-        <Archive archives={archives} />
-      </Grid.Col>
+      <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+        <Grid.Col span={3}>
+          <Category categories={categories} />
+          <Archive archives={archives} />
+        </Grid.Col>
+      </MediaQuery>
     </Grid>
   )
 }
