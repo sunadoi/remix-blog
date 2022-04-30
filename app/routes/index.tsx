@@ -1,11 +1,11 @@
-import { Divider, Grid, Title, Paper, Center, Group, Image, Card, Text, AspectRatio, Overlay } from "@mantine/core"
+import { Divider, Grid, Title, Center, Group, Image, Card, Text, AspectRatio, Overlay } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useNavigate, useTransition } from "@remix-run/react"
 import dayjs from "dayjs"
-import { Fragment, useState } from "react"
-import { MdArchive } from "react-icons/md"
+import { useState } from "react"
 
-import { Category } from "@/components/category"
+import { Archive } from "@/components/Archive"
+import { Category } from "@/components/Category"
 import { CategoryIconMap } from "@/constant"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
 import { isCategory } from "@/types/microcms"
@@ -115,22 +115,7 @@ export default function Index() {
       </Grid.Col>
       <Grid.Col span={3}>
         <Category categories={categories} />
-        <Paper my="md" p="md" radius="md" shadow="xs">
-          <Group spacing="xs">
-            <MdArchive size="20px" />
-            <Title order={4}>アーカイブ</Title>
-          </Group>
-          <Divider my="sm" size="sm" />
-          {archives.map((a, index) => (
-            <Fragment key={a}>
-              {index <= 2 ? (
-                <Text sx={(theme) => ({ color: theme.other.secondary })}>{a}</Text>
-              ) : (
-                <Text color="blue">もっと見る</Text>
-              )}
-            </Fragment>
-          ))}
-        </Paper>
+        <Archive archives={archives} />
       </Grid.Col>
     </Grid>
   )
