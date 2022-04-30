@@ -9,7 +9,6 @@ import {
   Text,
   AspectRatio,
   Overlay,
-  MediaQuery,
   useMantineTheme,
 } from "@mantine/core"
 import { useMediaQuery } from "@mantine/hooks"
@@ -58,11 +57,11 @@ export default function Index() {
   const [selectedCardId, setSelectedCardId] = useState("")
   const transition = useTransition()
   const theme = useMantineTheme()
-  const match = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`, false)
+  const underMd = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`, false)
 
   return (
     <Grid justify="center">
-      <Grid.Col span={match ? 12 : 7}>
+      <Grid.Col span={underMd ? 12 : 7}>
         <Divider
           my="md"
           size="md"
@@ -129,12 +128,12 @@ export default function Index() {
           ))}
         </Grid>
       </Grid.Col>
-      <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+      {!underMd && (
         <Grid.Col span={3}>
           <Category categories={categories} />
           <Archive archives={archives} />
         </Grid.Col>
-      </MediaQuery>
+      )}
     </Grid>
   )
 }
