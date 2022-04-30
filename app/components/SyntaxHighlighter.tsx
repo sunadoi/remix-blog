@@ -1,5 +1,5 @@
-import { Tabs, Image, Box, Group, Tooltip } from "@mantine/core"
-import { useClipboard } from "@mantine/hooks"
+import { Tabs, Image, Box, Group, Tooltip, useMantineTheme } from "@mantine/core"
+import { useClipboard, useMediaQuery } from "@mantine/hooks"
 import type { FC } from "react"
 import { FiClipboard } from "react-icons/fi"
 import { Prism } from "react-syntax-highlighter"
@@ -14,6 +14,8 @@ type SyntaxHighlighterProps = {
 
 export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
   const clipboard = useClipboard({ timeout: 1000 })
+  const theme = useMantineTheme()
+  const underSm = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`, false)
 
   return (
     <Box className="relative">
@@ -27,20 +29,22 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
           />
         </Tabs>
       )}
-      <Group
-        position="right"
-        className={`absolute top-[${
-          code.fileName ? "32px" : "10px"
-        }] right-[8px] p-[8px] z-10 text-white text-opacity-60 cursor-pointer`}
-        onClick={() => clipboard.copy(code.code)}
-        sx={() => ({
-          backgroundColor: "#22272E",
-        })}
-      >
-        <Tooltip opened={clipboard.copied} label="コピーしました" placement="end">
-          <FiClipboard size="20px" />
-        </Tooltip>
-      </Group>
+      {!underSm && (
+        <Group
+          position="right"
+          className={`absolute top-[${
+            code.fileName ? "32px" : "10px"
+          }] right-[8px] p-[8px] z-10 text-white text-opacity-60 cursor-pointer`}
+          onClick={() => clipboard.copy(code.code)}
+          sx={() => ({
+            backgroundColor: "#22272E",
+          })}
+        >
+          <Tooltip opened={clipboard.copied} label="コピーしました" placement="end">
+            <FiClipboard size="20px" />
+          </Tooltip>
+        </Group>
+      )}
       <Prism
         language={code.language}
         style={xonokai}
