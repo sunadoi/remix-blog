@@ -92,7 +92,7 @@ export default function Index() {
               <Group position="apart">
                 <Group spacing="xs">
                   {c.topic?.[0] && isCategory(c.topic?.[0]) && (
-                    <Image src={CategoryIconMap.get(c.topic?.[0])} width="24px" />
+                    <Image src={CategoryIconMap.get(c.topic?.[0]) ?? ""} width="24px" />
                   )}
                   <Text sx={(theme) => ({ color: theme.other.secondary })}>{c.topic?.[0]}</Text>
                 </Group>
@@ -115,7 +115,7 @@ export default function Index() {
             <Fragment key={category}>
               {index <= 10 ? (
                 <Group spacing="xs" mb="sm">
-                  {isCategory(category) && <Image src={CategoryIconMap.get(category)} width="24px" />}
+                  {isCategory(category) && <Image src={CategoryIconMap.get(category) ?? ""} width="24px" />}
                   <Text sx={(theme) => ({ color: theme.other.secondary })}>
                     {category} ({count})
                   </Text>

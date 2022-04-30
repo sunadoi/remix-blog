@@ -23,7 +23,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const content = await client
     .get<MicroCMSContent>({
       endpoint: "posts",
-      contentId: params.postId,
+      contentId: params.postId ?? "",
       queries: { draftKey: draftKey ?? "" },
     })
     .catch(() => {
@@ -47,7 +47,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   // 下書きの場合キャッシュヘッダを変更
   const headers = draftKey ? { "Cache-Control": "no-store, max-age=0" } : undefined
 
-  return json({ content, toc }, { headers })
+  return json({ content, toc }, { ...(headers ? { headers } : {}) })
 }
 
 export default function PostsId() {
