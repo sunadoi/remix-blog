@@ -18,7 +18,6 @@
     "@remix-run/react": "^1.4.0",
     "@remix-run/vercel": "^1.4.0",
     "@vercel/node": "^1.14.0",
-    "copy-to-clipboard": "^3.3.1",
     "dayjs": "^1.11.1",
     "html-react-parser": "^1.4.11",
     "microcms-js-sdk": "^2.0.0",

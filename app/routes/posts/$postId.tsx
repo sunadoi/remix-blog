@@ -2,11 +2,9 @@ import { Box, Grid, Group, Paper, Stack, Text, Title } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import copy from "copy-to-clipboard"
 import parse from "html-react-parser"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { xonokai } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
+import { SyntaxHighlighter } from "@/components/SyntaxHighlighter"
 import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
 
@@ -104,36 +102,7 @@ export default function PostsId() {
               )
             }
 
-            return (
-              <div key={c.code}>
-                <button onClick={() => copy(c.code)}>copy</button>
-                <SyntaxHighlighter
-                  language={c.language}
-                  style={xonokai}
-                  showLineNumbers
-                  wrapLines
-                  wrapLongLines
-                  customStyle={{ backgroundColor: "#22272E" }}
-                  lineProps={(lineNumber) => {
-                    return {
-                      style: {
-                        display: "block",
-                        backgroundColor:
-                          c.diffAdd && [...c.diffAdd.split(",").map((n) => Number(n))].includes(lineNumber)
-                            ? "#273732"
-                            : c.diffRemove && [...c.diffRemove.split(",").map((n) => Number(n))].includes(lineNumber)
-                            ? "#3F2D32"
-                            : c.highlight && [...c.highlight.split(",").map((n) => Number(n))].includes(lineNumber)
-                            ? "gray"
-                            : "",
-                      },
-                    }
-                  }}
-                >
-                  {c.code}
-                </SyntaxHighlighter>
-              </div>
-            )
+            return <SyntaxHighlighter key={c.code} code={c} />
           })}
         </Box>
       </Grid.Col>

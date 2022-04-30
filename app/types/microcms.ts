@@ -25,14 +25,14 @@ type Link = {
   url: string
 }
 
-type Code = {
+export type Code = {
   fieldId: "code"
   language: string
   fileName?: string
   code: string
-  highlight: string
-  diffAdd: string
-  diffRemove: string
+  highlight?: string
+  diffAdd?: string
+  diffRemove?: string
 }
 
 export type MicroCMSContent = {

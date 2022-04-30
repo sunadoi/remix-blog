@@ -10,3 +10,8 @@ export const CategoryIconMap = new Map<CategoryType, string>([
   ["JavaScript", JavaScriptIcon],
   ["Firebase", FirebaseIcon],
 ])
+
+export const LanguageIconMap = new Map<string, string>([
+  ["tsx", ReactIcon],
+  ["ts", TypeScriptIcon],
+])
