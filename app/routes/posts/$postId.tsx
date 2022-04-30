@@ -1,4 +1,5 @@
-import { Box, Grid, Group, Paper, Stack, Text, Title } from "@mantine/core"
+import { Box, Grid, Group, MediaQuery, Paper, Stack, Text, Title, useMantineTheme } from "@mantine/core"
+import { useMediaQuery } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
@@ -57,10 +58,12 @@ export default function PostsId() {
       name: string
     }[]
   }>()
+  const theme = useMantineTheme()
+  const match = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`)
 
   return (
     <Grid justify="center">
-      <Grid.Col span={7}>
+      <Grid.Col span={match ? 12 : 7}>
         <Title order={2}>{content.title}</Title>
         <Box
           sx={(theme) => ({
@@ -81,9 +84,9 @@ export default function PostsId() {
             },
           })}
         >
-          {content.body.map((c) => {
+          {content.body.map((c, index) => {
             if (c.fieldId === "content") {
-              return <Text key={c.richText}>{parse(c.richText)}</Text>
+              return <Text key={c.richText + index}>{parse(c.richText)}</Text>
             }
             if (c.fieldId === "message") {
               return <Text key={c.message}>{parse(c.message)}</Text>
@@ -91,6 +94,7 @@ export default function PostsId() {
             if (c.fieldId === "link") {
               return (
                 <Text
+                  key={c.url}
                   variant="link"
                   component="a"
                   href={c.url}
@@ -106,20 +110,22 @@ export default function PostsId() {
           })}
         </Box>
       </Grid.Col>
-      <Grid.Col span={3}>
-        <Paper my="md" p="md" radius="md" shadow="xs" className="sticky top-[16px]">
-          <Group spacing="xs">
-            <Stack spacing="xs">
-              <Title order={4}>目次</Title>
-              {toc.map((t) => (
-                <Title key={t.id} order={t.name === "h2" ? 4 : 5}>
-                  {t.text}
-                </Title>
-              ))}
-            </Stack>
-          </Group>
-        </Paper>
-      </Grid.Col>
+      <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+        <Grid.Col span={3}>
+          <Paper my="md" p="md" radius="md" shadow="xs" className="sticky top-[16px]">
+            <Group spacing="xs">
+              <Stack spacing="xs">
+                <Title order={4}>目次</Title>
+                {toc.map((t, index) => (
+                  <Title key={t.id ?? index} order={t.name === "h2" ? 4 : 5}>
+                    {t.text}
+                  </Title>
+                ))}
+              </Stack>
+            </Group>
+          </Paper>
+        </Grid.Col>
+      </MediaQuery>
     </Grid>
   )
 }
