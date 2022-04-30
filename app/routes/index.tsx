@@ -1,16 +1,4 @@
-import {
-  Divider,
-  Grid,
-  Title,
-  Center,
-  Group,
-  Image,
-  Card,
-  Text,
-  AspectRatio,
-  Overlay,
-  useMantineTheme,
-} from "@mantine/core"
+import { Divider, Grid, Title, Group, Image, Card, Text, AspectRatio, Overlay, useMantineTheme } from "@mantine/core"
 import { useMediaQuery } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useNavigate, useTransition } from "@remix-run/react"
@@ -66,65 +54,73 @@ export default function Index() {
           my="md"
           size="md"
           label={
-            <Center className="gap-2">
+            <Group spacing="xs">
               <Title order={1} className="translate-y-[-3px]">
                 |
               </Title>
               <Title order={2} mr="md">
                 PICK UP
               </Title>
-            </Center>
+            </Group>
           }
         />
         <Divider
           my="md"
           size="md"
           label={
-            <Center className="gap-2">
+            <Group spacing="xs">
               <Title order={1} className="translate-y-[-3px]">
                 |
               </Title>
               <Title order={2} mr="md">
                 All Topics ({contents.length})
               </Title>
-            </Center>
+            </Group>
           }
         />
         <Grid>
           {contents.map((c) => (
-            <Card
-              key={c.id}
-              className="w-[29%] cursor-pointer"
-              radius="md"
-              p="sm"
-              m="sm"
-              shadow="xs"
-              onClick={() => {
-                setSelectedCardId(c.id)
-                navigate(`/posts/${c.id}`)
-              }}
-            >
-              {transition.state === "loading" && selectedCardId === c.id && (
-                <Overlay opacity={0.3} color="white" zIndex={1} />
-              )}
-              <AspectRatio ratio={16 / 9}>
-                <Image src={c.image.url} alt="thumbnail" radius="sm" />
-              </AspectRatio>
-              <Text size="xl" sx={(theme) => ({ color: theme.other.primary })} weight="bold" my="sm" lineClamp={4}>
-                {c.title}
-              </Text>
-              <Group position="apart">
-                <Group spacing="xs">
-                  {c.topic?.[0] && isCategory(c.topic?.[0]) && (
-                    <Image src={CategoryIconMap.get(c.topic?.[0]) ?? ""} width="24px" />
-                  )}
-                  <Text sx={(theme) => ({ color: theme.other.secondary })}>{c.topic?.[0]}</Text>
-                </Group>
-                <Text size="sm" color="gray">
-                  {dayjs(c.createdAt).format("YYYY.MM.DD")}
+            <Grid.Col key={c.id} span={underMd ? 6 : 4}>
+              <Card
+                className="cursor-pointer"
+                radius="md"
+                p="sm"
+                shadow="xs"
+                onClick={() => {
+                  setSelectedCardId(c.id)
+                  navigate(`/posts/${c.id}`)
+                }}
+              >
+                {transition.state === "loading" && selectedCardId === c.id && (
+                  <Overlay opacity={0.3} color="white" zIndex={1} />
+                )}
+                <AspectRatio ratio={16 / 9}>
+                  <Image src={c.image.url} alt="thumbnail" radius="sm" />
+                </AspectRatio>
+                <Text
+                  size={underMd ? "md" : "xl"}
+                  sx={(theme) => ({ color: theme.other.primary })}
+                  weight="bold"
+                  my="xs"
+                  lineClamp={4}
+                >
+                  {c.title}
                 </Text>
-              </Group>
-            </Card>
+                <Group position="apart" direction={underMd ? "column" : "row"} spacing={0}>
+                  <Group spacing="xs">
+                    {c.topic?.[0] && isCategory(c.topic?.[0]) && (
+                      <Image src={CategoryIconMap.get(c.topic?.[0]) ?? ""} width={underMd ? "14px" : "24px"} />
+                    )}
+                    <Text sx={(theme) => ({ color: theme.other.secondary })} size={underMd ? "sm" : "md"}>
+                      {c.topic?.[0]}
+                    </Text>
+                  </Group>
+                  <Text size="sm" color="gray">
+                    {dayjs(c.createdAt).format("YYYY.MM.DD")}
+                  </Text>
+                </Group>
+              </Card>
+            </Grid.Col>
           ))}
         </Grid>
       </Grid.Col>
