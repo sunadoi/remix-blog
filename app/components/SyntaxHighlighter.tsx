@@ -52,14 +52,17 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
         wrapLines
         wrapLongLines
         customStyle={{
+          display: "flex",
           backgroundColor: "#22272E",
           border: "none",
           borderRadius: `${code.fileName ? "0" : "8px"} 8px 8px 8px`,
         }}
+        codeTagProps={{ style: { flex: "auto", backgroundColor: "#22272E" } }}
         lineProps={(lineNumber) => {
           return {
             style: {
-              display: "block",
+              minWidth: "max-content",
+              paddingRight: "8px",
               backgroundColor:
                 code.diffAdd && [...code.diffAdd.split(",").map((n) => Number(n))].includes(lineNumber)
                   ? "#273732"
@@ -67,7 +70,7 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
                   ? "#3F2D32"
                   : code.highlight && [...code.highlight.split(",").map((n) => Number(n))].includes(lineNumber)
                   ? "#3c3c3c"
-                  : "",
+                  : "#22272E",
             },
           }
         }}
