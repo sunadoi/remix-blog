@@ -53,11 +53,11 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
       header={
         <Header height={70} px="sm" py="xs">
           <Grid justify="center" align="center" className="h-[80px]">
-            <Grid.Col span={underMd ? 6 : 3}>
+            <Grid.Col span={underMd ? 6 : 3} px={0}>
               <Title order={1}>すな.dev</Title>
             </Grid.Col>
             {underMd ? (
-              <Grid.Col span={1} offset={3}>
+              <Grid.Col span={1} offset={4}>
                 <Burger opened={isOpen} onClick={() => setIsOpen((o) => !o)} size="sm" />
               </Grid.Col>
             ) : (
