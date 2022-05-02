@@ -1,13 +1,14 @@
-import { AppShell, Header, Grid, Title, Input, Group, Burger, useMantineTheme, Drawer } from "@mantine/core"
+import { AppShell, Header, Grid, Title, Input, Group, Burger, useMantineTheme, Drawer, Image } from "@mantine/core"
 import { useMediaQuery } from "@mantine/hooks"
 import type { MetaFunction } from "@remix-run/node"
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from "@remix-run/react"
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch, useNavigate } from "@remix-run/react"
 import type { FC, ReactNode } from "react"
 import { useState } from "react"
 import { AiOutlineSearch } from "react-icons/ai"
 import { BsFillPersonFill } from "react-icons/bs"
 import { MdArchive, MdCategory } from "react-icons/md"
 
+import Logo from "@/assets/logo.png"
 import { MantineTheme } from "@/theme"
 
 import styles from "./styles/app.css"
@@ -46,6 +47,7 @@ export default function App() {
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   const theme = useMantineTheme()
   const underMd = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`, false)
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -53,8 +55,14 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
       header={
         <Header height={70} px="sm" py="xs">
           <Grid justify="center" align="center" className="h-[80px]">
-            <Grid.Col span={underMd ? 6 : 3} px={0}>
-              <Title order={1}>すな.dev</Title>
+            <Grid.Col span={underMd ? 6 : 3} px={underMd ? 0 : 16}>
+              <Image
+                src={Logo}
+                alt="logo"
+                width="250px"
+                className="cursor-pointer hover:opacity-80"
+                onClick={() => navigate("/")}
+              />
             </Grid.Col>
             {underMd ? (
               <Grid.Col span={1} offset={4}>
