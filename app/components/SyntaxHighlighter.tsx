@@ -34,7 +34,7 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
           position="right"
           className={`absolute top-[${
             code.fileName ? "32px" : "10px"
-          }] right-[8px] p-[8px] z-10 text-white text-opacity-60 cursor-pointer`}
+          }] right-[16px] p-[8px] z-10 text-white text-opacity-60 cursor-pointer`}
           onClick={() => clipboard.copy(code.code)}
           sx={() => ({
             backgroundColor: "#22272E",

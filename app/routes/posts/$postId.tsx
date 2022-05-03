@@ -1,5 +1,5 @@
 import { css, cx } from "@emotion/css"
-import { Box, Grid, Group, Paper, Stack, Text, Title, useMantineTheme } from "@mantine/core"
+import { Blockquote, Box, Grid, Group, Paper, Stack, Text, Title, useMantineTheme } from "@mantine/core"
 import { useMediaQuery } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
@@ -93,6 +93,19 @@ export default function PostsId() {
                     </Title>
                   )
                 }
+                if (html.type === "blockquote") {
+                  return (
+                    <Box key={index} mt="lg">
+                      <Blockquote
+                        icon={null}
+                        color="primary"
+                        sx={(theme) => ({ backgroundColor: theme.colors.gray[1] })}
+                      >
+                        {html.props.children}
+                      </Blockquote>
+                    </Box>
+                  )
+                }
                 return (
                   <Text key={index} className="leading-[1.8]">
                     {html.props.children}
@@ -127,7 +140,7 @@ export default function PostsId() {
       </Grid.Col>
       {!underMd && (
         <Grid.Col span={3}>
-          <Paper my="md" p="md" radius="md" shadow="xs" className="sticky top-[88px]">
+          <Paper mb="md" mt={56} p="md" radius="md" shadow="xs" className="sticky top-[88px]">
             <Group spacing="xs">
               <Stack spacing="xs">
                 <Title order={4}>目次</Title>
