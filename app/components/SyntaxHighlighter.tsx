@@ -50,19 +50,23 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
         style={xonokai}
         showLineNumbers
         wrapLines
-        wrapLongLines
         customStyle={{
-          display: "flex",
           backgroundColor: "#22272E",
           border: "none",
           borderRadius: `${code.fileName ? "0" : "8px"} 8px 8px 8px`,
         }}
-        codeTagProps={{ style: { flex: "auto", backgroundColor: "#22272E" } }}
+        codeTagProps={{
+          style: {
+            display: "flex",
+            flexDirection: "column",
+            minWidth: "max-content",
+            paddingRight: "8px",
+            backgroundColor: "#22272E",
+          },
+        }}
         lineProps={(lineNumber) => {
           return {
             style: {
-              minWidth: "max-content",
-              paddingRight: "8px",
               backgroundColor:
                 code.diffAdd && [...code.diffAdd.split(",").map((n) => Number(n))].includes(lineNumber)
                   ? "#273732"
