@@ -67,26 +67,22 @@ export default function PostsId() {
         <Title order={2}>{content.title}</Title>
         <Box
           sx={(theme) => ({
-            h2: {
-              fontSize: "26px",
-              fontWeight: "bold",
-            },
-            h3: {
-              fontSize: "20px",
-              fontWeight: "bold",
-            },
-            h4: {
-              fontSize: "16px",
-              fontWeight: "bold",
-            },
             code: {
               backgroundColor: theme.colors.gray[2],
             },
           })}
         >
-          {content.body.map((c, index) => {
+          {content.body.map((c) => {
             if (c.fieldId === "content") {
-              return <Text key={c.richText + index}>{parse(c.richText)}</Text>
+              return [parse(c.richText)].flat().map((html, index) =>
+                typeof html !== "string" && (html.type === "h2" || html.type === "h3" || html.type === "h4") ? (
+                  <Title key={index} id={html.props.id} order={html.type === "h2" ? 2 : html.type === "h3" ? 3 : 4}>
+                    {html.props.children}
+                  </Title>
+                ) : (
+                  typeof html !== "string" && <Text key={index}>{html.props.children}</Text>
+                )
+              )
             }
             if (c.fieldId === "message") {
               return <Text key={c.message}>{parse(c.message)}</Text>
