@@ -64,7 +64,9 @@ export default function PostsId() {
   return (
     <Grid justify="center">
       <Grid.Col span={underMd ? 12 : 7}>
-        <Title order={2}>{content.title}</Title>
+        <Title order={2} mb="md">
+          {content.title}
+        </Title>
         <Box
           className="body"
           sx={(theme) => ({
@@ -77,11 +79,20 @@ export default function PostsId() {
             if (c.fieldId === "content") {
               return [parse(c.richText)].flat().map((html, index) =>
                 typeof html !== "string" && (html.type === "h2" || html.type === "h3" || html.type === "h4") ? (
-                  <Title key={index} id={html.props.id} order={html.type === "h2" ? 2 : html.type === "h3" ? 3 : 4}>
+                  <Title
+                    key={index}
+                    id={html.props.id}
+                    order={html.type === "h2" ? 2 : html.type === "h3" ? 3 : 4}
+                    mt="xl"
+                  >
                     {html.props.children}
                   </Title>
                 ) : (
-                  typeof html !== "string" && <Text key={index}>{html.props.children}</Text>
+                  typeof html !== "string" && (
+                    <Text key={index} className="leading-[1.8]">
+                      {html.props.children}
+                    </Text>
+                  )
                 )
               )
             }
@@ -102,13 +113,17 @@ export default function PostsId() {
                 </Text>
               )
             }
-            return <SyntaxHighlighter key={c.code} code={c} />
+            return (
+              <Box key={c.code} my="lg">
+                <SyntaxHighlighter code={c} />
+              </Box>
+            )
           })}
         </Box>
       </Grid.Col>
       {!underMd && (
         <Grid.Col span={3}>
-          <Paper my="md" p="md" radius="md" shadow="xs" className="sticky top-[16px]">
+          <Paper my="md" p="md" radius="md" shadow="xs" className="sticky top-[88px]">
             <Group spacing="xs">
               <Stack spacing="xs">
                 <Title order={4}>目次</Title>

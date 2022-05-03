@@ -53,7 +53,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <AppShell
       header={
-        <Header height={70} px="sm" py="xs">
+        <Header height={70} px="sm" py="xs" className="sticky">
           <Grid justify="center" align="center" className="h-[80px]">
             <Grid.Col span={underMd ? 6 : 3} px={underMd ? 0 : 16}>
               <Image
