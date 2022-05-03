@@ -107,7 +107,7 @@ export default function PostsId() {
                   )
                 }
                 return (
-                  <Text key={index} className="leading-[1.8]">
+                  <Text key={index} className="leading-loose">
                     {html.props.children}
                   </Text>
                 )
@@ -148,7 +148,7 @@ export default function PostsId() {
                   className={cx(
                     "toc",
                     "font-bold",
-                    "leading-[1.8]",
+                    "leading-loose",
                     css`
                       color: ${theme.other.primary};
                       a {
