@@ -1,9 +1,12 @@
+import { css, cx } from "@emotion/css"
 import { Box, Grid, Group, Paper, Stack, Text, Title, useMantineTheme } from "@mantine/core"
 import { useMediaQuery } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
-import { useLoaderData, useNavigate } from "@remix-run/react"
+import { useLoaderData } from "@remix-run/react"
 import parse from "html-react-parser"
+import { useEffect } from "react"
+import tocbot from "tocbot"
 
 import { SyntaxHighlighter } from "@/components/SyntaxHighlighter"
 import type { MicroCMSContent } from "@/types/microcms"
@@ -31,25 +34,14 @@ export const loader: LoaderFunction = async ({ params, request }) => {
       })
     })
 
-  const toc = content.body
-    .flatMap((c) => {
-      if (c.fieldId !== "content") return null
-      const html = parse(c.richText)
-      if (!Array.isArray(html)) return null
-      return html.map((e) =>
-        e.type === "h2" || e.type === "h3" ? { id: e.props.id, text: e.props.children, name: e.type } : null
-      )
-    })
-    .filter((t) => !!t)
-
   // 下書きの場合キャッシュヘッダを変更
   const headers = draftKey ? { "Cache-Control": "no-store, max-age=0" } : undefined
 
-  return json({ content, toc }, { ...(headers ? { headers } : {}) })
+  return json({ content }, { ...(headers ? { headers } : {}) })
 }
 
 export default function PostsId() {
-  const { content, toc } = useLoaderData<{
+  const { content } = useLoaderData<{
     content: MicroCMSContent
     toc: {
       id: string
@@ -58,14 +50,23 @@ export default function PostsId() {
     }[]
   }>()
   const theme = useMantineTheme()
-  const navigate = useNavigate()
   const underMd = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`, false)
+
+  useEffect(() => {
+    tocbot.init({
+      tocSelector: ".toc",
+      contentSelector: ".body",
+      headingSelector: "h2, h3, h4",
+    })
+    return () => tocbot.destroy()
+  }, [])
 
   return (
     <Grid justify="center">
       <Grid.Col span={underMd ? 12 : 7}>
         <Title order={2}>{content.title}</Title>
         <Box
+          className="body"
           sx={(theme) => ({
             code: {
               backgroundColor: theme.colors.gray[2],
@@ -111,16 +112,30 @@ export default function PostsId() {
             <Group spacing="xs">
               <Stack spacing="xs">
                 <Title order={4}>目次</Title>
-                {toc.map((t) => (
-                  <Title
-                    key={t.id}
-                    order={t.name === "h2" ? 4 : 5}
-                    onClick={() => navigate(`#${t.id}`)}
-                    className="cursor-pointer hover:opacity-70"
-                  >
-                    {t.name === "h2" ? t.text : <span>　{t.text}</span>}
-                  </Title>
-                ))}
+                <Box
+                  className={cx(
+                    "toc",
+                    "font-bold",
+                    "leading-[1.8]",
+                    css`
+                      color: ${theme.other.primary};
+                      a {
+                        opacity: 0.5;
+                      }
+                      .is-active-link {
+                        opacity: 1;
+                      }
+                      .node-name--H3::before {
+                        white-space: pre;
+                        content: "    ";
+                      }
+                      .node-name--H4::before {
+                        white-space: pre;
+                        content: "        ";
+                      }
+                    `
+                  )}
+                />
               </Stack>
             </Group>
           </Paper>
