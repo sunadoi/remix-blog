@@ -72,29 +72,33 @@ export default function PostsId() {
           sx={(theme) => ({
             code: {
               backgroundColor: theme.colors.gray[2],
+              borderRadius: "4px",
+              padding: "4px",
             },
           })}
         >
           {content.body.map((c) => {
             if (c.fieldId === "content") {
-              return [parse(c.richText)].flat().map((html, index) =>
-                typeof html !== "string" && (html.type === "h2" || html.type === "h3" || html.type === "h4") ? (
-                  <Title
-                    key={index}
-                    id={html.props.id}
-                    order={html.type === "h2" ? 2 : html.type === "h3" ? 3 : 4}
-                    mt="xl"
-                  >
-                    {html.props.children}
-                  </Title>
-                ) : (
-                  typeof html !== "string" && (
-                    <Text key={index} className="leading-[1.8]">
+              return [parse(c.richText)].flat().map((html, index) => {
+                if (typeof html === "string") return <></>
+                if (html.type === "h2" || html.type === "h3" || html.type === "h4") {
+                  return (
+                    <Title
+                      key={index}
+                      id={html.props.id}
+                      order={html.type === "h2" ? 2 : html.type === "h3" ? 3 : 4}
+                      mt="xl"
+                    >
                       {html.props.children}
-                    </Text>
+                    </Title>
                   )
+                }
+                return (
+                  <Text key={index} className="leading-[1.8]">
+                    {html.props.children}
+                  </Text>
                 )
-              )
+              })
             }
             if (c.fieldId === "message") {
               return <Text key={c.message}>{parse(c.message)}</Text>

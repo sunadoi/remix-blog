@@ -60,7 +60,7 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
             display: "flex",
             flexDirection: "column",
             minWidth: "max-content",
-            paddingRight: "8px",
+            padding: "0 8px 0 0",
             backgroundColor: "#22272E",
           },
         }}
