@@ -2,7 +2,7 @@ import { Box, Grid, Group, Paper, Stack, Text, Title, useMantineTheme } from "@m
 import { useMediaQuery } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
-import { useLoaderData } from "@remix-run/react"
+import { useLoaderData, useNavigate } from "@remix-run/react"
 import parse from "html-react-parser"
 
 import { SyntaxHighlighter } from "@/components/SyntaxHighlighter"
@@ -37,8 +37,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
       const html = parse(c.richText)
       if (!Array.isArray(html)) return null
       return html.map((e) =>
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        e.type === "h2" || e.type === "h3" ? { id: e.key, text: e.props.children as string, name: e.type } : null
+        e.type === "h2" || e.type === "h3" ? { id: e.props.id, text: e.props.children, name: e.type } : null
       )
     })
     .filter((t) => !!t)
@@ -53,12 +52,13 @@ export default function PostsId() {
   const { content, toc } = useLoaderData<{
     content: MicroCMSContent
     toc: {
-      id: React.Key | null
+      id: string
       text: string
       name: string
     }[]
   }>()
   const theme = useMantineTheme()
+  const navigate = useNavigate()
   const underMd = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`, false)
 
   return (
@@ -115,9 +115,14 @@ export default function PostsId() {
             <Group spacing="xs">
               <Stack spacing="xs">
                 <Title order={4}>目次</Title>
-                {toc.map((t, index) => (
-                  <Title key={index} order={t.name === "h2" ? 4 : 5}>
-                    {t.text}
+                {toc.map((t) => (
+                  <Title
+                    key={t.id}
+                    order={t.name === "h2" ? 4 : 5}
+                    onClick={() => navigate(`#${t.id}`)}
+                    className="cursor-pointer hover:opacity-70"
+                  >
+                    {t.name === "h2" ? t.text : <span>　{t.text}</span>}
                   </Title>
                 ))}
               </Stack>
