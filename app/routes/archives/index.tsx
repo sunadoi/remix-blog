@@ -3,12 +3,18 @@ import { useScrollIntoView } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useSearchParams } from "@remix-run/react"
 import dayjs from "dayjs"
+import timezone from "dayjs/plugin/timezone"
+import utc from "dayjs/plugin/utc"
 import { useEffect, useState } from "react"
 
 import { ContentCard } from "@/components/ContentCard"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.setDefault("Asia/Tokyo")
 
 export const headers: HeadersFunction = () => {
   return {
@@ -22,18 +28,18 @@ export const loader: LoaderFunction = async () => {
   })
 
   const sortedContents = contents.sort((a, b) => dayjs(b.publishedAt).diff(a.publishedAt))
-  const months = [...new Set(contents.map((c) => dayjs(c.publishedAt).format("YYYY年MM月")))].reduce(
+  const months = [...new Set(contents.map((c) => dayjs(c.publishedAt).tz().format("YYYY年MM月")))].reduce(
     (acc, month) => ({
       ...acc,
-      [month]: sortedContents.filter((c) => dayjs(c.publishedAt).format("YYYY年MM月") === month),
+      [month]: sortedContents.filter((c) => dayjs(c.publishedAt).tz().format("YYYY年MM月") === month),
     }),
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as { [key in string]: MicroCMSContent[] }
   )
-  const years = [...new Set(contents.map((c) => dayjs(c.publishedAt).format("YYYY年")))].reduce(
+  const years = [...new Set(contents.map((c) => dayjs(c.publishedAt).tz().format("YYYY年")))].reduce(
     (acc, year) => ({
       ...acc,
-      [year]: sortedContents.filter((c) => dayjs(c.publishedAt).format("YYYY年") === year),
+      [year]: sortedContents.filter((c) => dayjs(c.publishedAt).tz().format("YYYY年") === year),
     }), // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     {} as { [key in string]: MicroCMSContent[] }
   )
