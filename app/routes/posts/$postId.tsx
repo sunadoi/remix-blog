@@ -1,5 +1,4 @@
-import { css, cx } from "@emotion/css"
-import { Blockquote, Box, Grid, Group, Paper, Stack, Text, Title, useMantineTheme } from "@mantine/core"
+import { Blockquote, Box, Grid, Text, Title } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
@@ -8,6 +7,7 @@ import { useEffect } from "react"
 import tocbot from "tocbot"
 
 import { SyntaxHighlighter } from "@/components/SyntaxHighlighter"
+import { Toc } from "@/components/Toc"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
@@ -49,7 +49,6 @@ export default function PostsId() {
       name: string
     }[]
   }>()
-  const theme = useMantineTheme()
   const [largerThanMd] = useMediaQueryMin("md", true)
 
   useEffect(() => {
@@ -140,43 +139,9 @@ export default function PostsId() {
       </Grid.Col>
       {largerThanMd && (
         <Grid.Col span={3}>
-          <Paper mb="md" mt={56} p="md" radius="md" shadow="xs" className="sticky top-[88px]">
-            <Group spacing="xs">
-              <Stack spacing="xs">
-                <Title order={4}>目次</Title>
-                <Box
-                  className={cx(
-                    "toc",
-                    "font-bold",
-                    "leading-loose",
-                    css`
-                      ol {
-                        list-style-type: none;
-                        padding: 0;
-                        margin: 0;
-                      }
-                      a {
-                        opacity: 0.5;
-                        color: ${theme.other.primary};
-                        text-decoration: none;
-                      }
-                      .is-active-link {
-                        opacity: 1;
-                      }
-                      .node-name--H3::before {
-                        white-space: pre;
-                        content: "    ";
-                      }
-                      .node-name--H4::before {
-                        white-space: pre;
-                        content: "        ";
-                      }
-                    `
-                  )}
-                />
-              </Stack>
-            </Group>
-          </Paper>
+          <Box className="sticky top-[88px]">
+            <Toc />
+          </Box>
         </Grid.Col>
       )}
     </Grid>
