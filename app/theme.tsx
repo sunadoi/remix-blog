@@ -18,6 +18,8 @@ declare module "@mantine/core" {
   }
 }
 
+const fontFamily = "Helvetica Neue, Arial, Hiragino Kaku Gothic ProN, Hiragino Sans,Meiryo,sans-serif"
+
 export const MantineTheme: FC<{ children: ReactNode }> = ({ children }) => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light")
   const toggleColorScheme = (value?: ColorScheme) =>
@@ -63,9 +65,8 @@ export const MantineTheme: FC<{ children: ReactNode }> = ({ children }) => {
           spacing: smallerThanSm ? { xs: 4, sm: 8, md: 16, lg: 24, xl: 32 } : { xs: 8, sm: 16, md: 24, lg: 32, xl: 40 },
         }}
         styles={{
-          Title: (theme) => ({
-            root: { color: theme.other.primary },
-          }),
+          Title: (theme) => ({ root: { color: theme.other.primary, fontFamily } }),
+          Text: () => ({ root: { fontFamily } }),
         }}
         withNormalizeCSS
         withGlobalStyles
@@ -74,6 +75,7 @@ export const MantineTheme: FC<{ children: ReactNode }> = ({ children }) => {
           styles={(theme) => ({
             body: {
               ...theme.fn.fontStyles(),
+              fontFamily,
               backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[7] : "#F9FCFF",
             },
           })}
