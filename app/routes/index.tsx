@@ -1,15 +1,13 @@
-import { Divider, Grid, Title, Group, Image, Card, Text, AspectRatio, Overlay } from "@mantine/core"
+import { Divider, Grid, Title, Group } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
-import { useLoaderData, useNavigate, useTransition } from "@remix-run/react"
+import { useLoaderData } from "@remix-run/react"
 import dayjs from "dayjs"
-import { useState } from "react"
 
 import { Archive } from "@/components/Archive"
 import { Category } from "@/components/Category"
-import { CategoryIconMap } from "@/constant"
+import { ContentCard } from "@/components/ContentCard"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
-import { isCategory } from "@/types/microcms"
 import { client } from "lib/client.server"
 
 export const headers: HeadersFunction = () => {
@@ -41,9 +39,6 @@ export default function Index() {
     categories: { [key in CategoryType]: number }
     archives: string[]
   }>()
-  const navigate = useNavigate()
-  const [selectedCardId, setSelectedCardId] = useState("")
-  const transition = useTransition()
   const [largerThanMd] = useMediaQueryMin("md", true)
 
   return (
@@ -80,45 +75,7 @@ export default function Index() {
         <Grid>
           {contents.map((c) => (
             <Grid.Col key={c.id} span={largerThanMd ? 4 : 6}>
-              <Card
-                className="cursor-pointer"
-                radius="md"
-                p="sm"
-                shadow="xs"
-                onClick={() => {
-                  setSelectedCardId(c.id)
-                  navigate(`/posts/${c.id}`)
-                }}
-              >
-                {transition.state === "loading" && selectedCardId === c.id && (
-                  <Overlay opacity={0.3} color="white" zIndex={1} />
-                )}
-                <AspectRatio ratio={16 / 9}>
-                  <Image src={c.image.url} alt="thumbnail" radius="sm" />
-                </AspectRatio>
-                <Text
-                  size={largerThanMd ? "xl" : "md"}
-                  sx={(theme) => ({ color: theme.other.primary })}
-                  weight="bold"
-                  my="xs"
-                  lineClamp={4}
-                >
-                  {c.title}
-                </Text>
-                <Group position="apart" direction={largerThanMd ? "row" : "column"} spacing={0}>
-                  <Group spacing="xs">
-                    {c.topic?.[0] && isCategory(c.topic?.[0]) && (
-                      <Image src={CategoryIconMap.get(c.topic?.[0]) ?? ""} width={largerThanMd ? "24px" : "14px"} />
-                    )}
-                    <Text sx={(theme) => ({ color: theme.other.secondary })} size={largerThanMd ? "md" : "sm"}>
-                      {c.topic?.[0]}
-                    </Text>
-                  </Group>
-                  <Text size="sm" color="gray">
-                    {dayjs(c.createdAt).format("YYYY.MM.DD")}
-                  </Text>
-                </Group>
-              </Card>
+              <ContentCard content={c} />
             </Grid.Col>
           ))}
         </Grid>
