@@ -73,15 +73,19 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
               <>
                 <Grid.Col span={4}>
                   <Group position="right">
-                    <Group spacing="xs" className="cursor-pointer">
+                    <Group spacing="xs" className="cursor-pointer hover:opacity-80">
                       <BsFillPersonFill size="20px" />
                       <Title order={5}>プロフィール</Title>
                     </Group>
-                    <Group spacing="xs" className="cursor-pointer">
+                    <Group
+                      spacing="xs"
+                      className="cursor-pointer hover:opacity-80"
+                      onClick={() => navigate("/archives")}
+                    >
                       <MdArchive size="20px" />
                       <Title order={5}>アーカイブ</Title>
                     </Group>
-                    <Group spacing="xs" className="cursor-pointer">
+                    <Group spacing="xs" className="cursor-pointer hover:opacity-80">
                       <MdCategory size="20px" />
                       <Title order={5}>カテゴリー</Title>
                     </Group>

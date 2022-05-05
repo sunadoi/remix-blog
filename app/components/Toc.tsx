@@ -15,6 +15,7 @@ export const Toc: FC = () => {
               "toc", // tocbotによってここにマウントされる
               "font-bold",
               "leading-loose",
+              "text-sm",
               css`
                 ol {
                   list-style-type: none;
