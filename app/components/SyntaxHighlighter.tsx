@@ -34,13 +34,13 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
           position="right"
           className={`absolute top-[${
             code.fileName ? "32px" : "10px"
-          }] right-[16px] z-10 cursor-pointer p-[8px] text-white text-opacity-60`}
+          }] right-[16px] z-10 cursor-pointer p-2 text-white text-opacity-60`}
           onClick={() => clipboard.copy(code.code)}
           sx={() => ({
             backgroundColor: "#22272E",
           })}
         >
-          <Tooltip opened={clipboard.copied} label="コピーしました" placement="end">
+          <Tooltip opened={clipboard.copied} label="コピーしました" placement="end" className="flex items-center">
             <FiClipboard size="20px" />
           </Tooltip>
         </Group>
@@ -54,6 +54,7 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
           backgroundColor: "#22272E",
           border: "none",
           borderRadius: `${code.fileName ? "0" : "8px"} 8px 8px 8px`,
+          margin: 0,
         }}
         codeTagProps={{
           style: {

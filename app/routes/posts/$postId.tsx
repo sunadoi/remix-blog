@@ -150,9 +150,15 @@ export default function PostsId() {
                     "font-bold",
                     "leading-loose",
                     css`
-                      color: ${theme.other.primary};
+                      ol {
+                        list-style-type: none;
+                        padding: 0;
+                        margin: 0;
+                      }
                       a {
                         opacity: 0.5;
+                        color: ${theme.other.primary};
+                        text-decoration: none;
                       }
                       .is-active-link {
                         opacity: 1;
