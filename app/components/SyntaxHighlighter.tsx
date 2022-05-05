@@ -25,7 +25,7 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
             style={{ backgroundColor: "#22272E" }}
             label={code.fileName}
             icon={<Image src={LanguageIconMap.get(code.language) ?? ""} alt="languageIcon" width="16px" />}
-            className="cursor-default px-[16px] rounded-t-[8px] rounded-b-none"
+            className="cursor-default rounded-t-[8px] rounded-b-none px-[16px]"
           />
         </Tabs>
       )}
@@ -34,7 +34,7 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
           position="right"
           className={`absolute top-[${
             code.fileName ? "32px" : "10px"
-          }] right-[16px] p-[8px] z-10 text-white text-opacity-60 cursor-pointer`}
+          }] right-[16px] z-10 cursor-pointer p-[8px] text-white text-opacity-60`}
           onClick={() => clipboard.copy(code.code)}
           sx={() => ({
             backgroundColor: "#22272E",
