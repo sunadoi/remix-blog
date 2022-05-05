@@ -1,11 +1,11 @@
-import { Divider, Grid, Title, Group } from "@mantine/core"
+import { Divider, Grid, Title, Group, Stack } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import dayjs from "dayjs"
 
 import { Archive } from "@/components/Archive"
 import { Category } from "@/components/Category"
-import { ContentCard } from "@/components/ContentCard"
+import { ContentCard, WideContentCard } from "@/components/ContentCard"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
@@ -58,6 +58,11 @@ export default function Index() {
             </Group>
           }
         />
+        <Stack>
+          {contents.map((c) => (
+            <WideContentCard key={c.id} content={c} />
+          ))}
+        </Stack>
         <Divider
           my="md"
           size="md"

@@ -1,4 +1,4 @@
-import { Card, Overlay, AspectRatio, Group, Image, Text } from "@mantine/core"
+import { Card, Overlay, AspectRatio, Group, Image, Text, Grid, Stack } from "@mantine/core"
 import { useNavigate, useTransition } from "@remix-run/react"
 import dayjs from "dayjs"
 import type { FC } from "react"
@@ -58,6 +58,60 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
           {dayjs(content.createdAt).format("YYYY.MM.DD")}
         </Text>
       </Group>
+    </Card>
+  )
+}
+
+export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
+  const navigate = useNavigate()
+  const [selectedCardId, setSelectedCardId] = useState("")
+  const transition = useTransition()
+  const [largerThanMd] = useMediaQueryMin("md", true)
+
+  return (
+    <Card
+      className="cursor-pointer"
+      radius="md"
+      p={0}
+      shadow="xs"
+      onClick={() => {
+        setSelectedCardId(content.id)
+        navigate(`/posts/${content.id}`)
+      }}
+    >
+      {transition.state === "loading" && selectedCardId === content.id && (
+        <Overlay opacity={0.3} color="white" zIndex={1} />
+      )}
+      <Grid gutter={largerThanMd ? "xl" : "md"}>
+        <Grid.Col span={largerThanMd ? 4 : 6} p={0}>
+          <Image src={content.image.url} alt="thumbnail" radius="sm" />
+        </Grid.Col>
+        <Grid.Col span={largerThanMd ? 8 : 6}>
+          <Stack justify="space-between" spacing="sm" py="sm" className="h-[100%]">
+            <Text
+              size={largerThanMd ? "xl" : "md"}
+              sx={(theme) => ({ color: theme.other.primary })}
+              weight="bold"
+              lineClamp={2}
+            >
+              {content.title}
+            </Text>
+            <Group>
+              <Group spacing="xs">
+                {content.topic?.[0] && isCategory(content.topic?.[0]) && (
+                  <Image src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={largerThanMd ? "24px" : "14px"} />
+                )}
+                <Text sx={(theme) => ({ color: theme.other.secondary })} size={largerThanMd ? "md" : "sm"}>
+                  {content.topic?.[0]}
+                </Text>
+              </Group>
+              <Text size="sm" color="gray">
+                {dayjs(content.createdAt).format("YYYY.MM.DD")}
+              </Text>
+            </Group>
+          </Stack>
+        </Grid.Col>
+      </Grid>
     </Card>
   )
 }
