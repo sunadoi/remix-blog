@@ -1,5 +1,4 @@
-import { Divider, Grid, Title, Group, Image, Card, Text, AspectRatio, Overlay, useMantineTheme } from "@mantine/core"
-import { useMediaQuery } from "@mantine/hooks"
+import { Divider, Grid, Title, Group, Image, Card, Text, AspectRatio, Overlay } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useNavigate, useTransition } from "@remix-run/react"
 import dayjs from "dayjs"
@@ -8,6 +7,7 @@ import { useState } from "react"
 import { Archive } from "@/components/Archive"
 import { Category } from "@/components/Category"
 import { CategoryIconMap } from "@/constant"
+import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
 import { isCategory } from "@/types/microcms"
 import { client } from "lib/client.server"
@@ -44,12 +44,11 @@ export default function Index() {
   const navigate = useNavigate()
   const [selectedCardId, setSelectedCardId] = useState("")
   const transition = useTransition()
-  const theme = useMantineTheme()
-  const underMd = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`, false)
+  const [largerThanMd] = useMediaQueryMin("md", true)
 
   return (
     <Grid justify="center">
-      <Grid.Col span={underMd ? 12 : 7}>
+      <Grid.Col span={largerThanMd ? 7 : 12}>
         <Divider
           my="md"
           size="md"
@@ -80,7 +79,7 @@ export default function Index() {
         />
         <Grid>
           {contents.map((c) => (
-            <Grid.Col key={c.id} span={underMd ? 6 : 4}>
+            <Grid.Col key={c.id} span={largerThanMd ? 4 : 6}>
               <Card
                 className="cursor-pointer"
                 radius="md"
@@ -98,7 +97,7 @@ export default function Index() {
                   <Image src={c.image.url} alt="thumbnail" radius="sm" />
                 </AspectRatio>
                 <Text
-                  size={underMd ? "md" : "xl"}
+                  size={largerThanMd ? "xl" : "md"}
                   sx={(theme) => ({ color: theme.other.primary })}
                   weight="bold"
                   my="xs"
@@ -106,12 +105,12 @@ export default function Index() {
                 >
                   {c.title}
                 </Text>
-                <Group position="apart" direction={underMd ? "column" : "row"} spacing={0}>
+                <Group position="apart" direction={largerThanMd ? "row" : "column"} spacing={0}>
                   <Group spacing="xs">
                     {c.topic?.[0] && isCategory(c.topic?.[0]) && (
-                      <Image src={CategoryIconMap.get(c.topic?.[0]) ?? ""} width={underMd ? "14px" : "24px"} />
+                      <Image src={CategoryIconMap.get(c.topic?.[0]) ?? ""} width={largerThanMd ? "24px" : "14px"} />
                     )}
-                    <Text sx={(theme) => ({ color: theme.other.secondary })} size={underMd ? "sm" : "md"}>
+                    <Text sx={(theme) => ({ color: theme.other.secondary })} size={largerThanMd ? "md" : "sm"}>
                       {c.topic?.[0]}
                     </Text>
                   </Group>
@@ -124,7 +123,7 @@ export default function Index() {
           ))}
         </Grid>
       </Grid.Col>
-      {!underMd && (
+      {largerThanMd && (
         <Grid.Col span={3}>
           <Category categories={categories} />
           <Archive archives={archives} />

@@ -1,11 +1,12 @@
-import { Tabs, Image, Box, Group, Tooltip, useMantineTheme } from "@mantine/core"
-import { useClipboard, useMediaQuery } from "@mantine/hooks"
+import { Tabs, Image, Box, Group, Tooltip } from "@mantine/core"
+import { useClipboard } from "@mantine/hooks"
 import type { FC } from "react"
 import { FiClipboard } from "react-icons/fi"
 import { Prism } from "react-syntax-highlighter"
 import { xonokai } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
 import { LanguageIconMap } from "@/constant"
+import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { Code } from "@/types/microcms"
 
 type SyntaxHighlighterProps = {
@@ -14,8 +15,7 @@ type SyntaxHighlighterProps = {
 
 export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
   const clipboard = useClipboard({ timeout: 1000 })
-  const theme = useMantineTheme()
-  const underSm = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`, false)
+  const [largerThanSm] = useMediaQueryMin("sm", true)
 
   return (
     <Box className="relative">
@@ -29,7 +29,7 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
           />
         </Tabs>
       )}
-      {!underSm && (
+      {largerThanSm && (
         <Group
           position="right"
           className={`absolute top-[${

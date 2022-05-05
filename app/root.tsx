@@ -1,5 +1,4 @@
-import { AppShell, Header, Grid, Title, Input, Group, Burger, useMantineTheme, Drawer, Image } from "@mantine/core"
-import { useMediaQuery } from "@mantine/hooks"
+import { AppShell, Header, Grid, Title, Input, Group, Burger, Drawer, Image } from "@mantine/core"
 import type { MetaFunction } from "@remix-run/node"
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch, useNavigate } from "@remix-run/react"
 import type { FC, ReactNode } from "react"
@@ -9,6 +8,7 @@ import { BsFillPersonFill } from "react-icons/bs"
 import { MdArchive, MdCategory } from "react-icons/md"
 
 import Logo from "@/assets/logo.png"
+import { useMediaQueryMax } from "@/hooks/useMediaQuery"
 import { MantineTheme } from "@/theme"
 
 import styles from "./styles/app.css"
@@ -45,17 +45,18 @@ export default function App() {
 }
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
-  const theme = useMantineTheme()
-  const underMd = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`, false)
+  const [smallerThanMd, mounted] = useMediaQueryMax("md", true)
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
+
+  if (!mounted) return <></>
 
   return (
     <AppShell
       header={
         <Header height={70} px="sm" py="xs" className="sticky">
           <Grid justify="center" align="center" className="h-[80px]">
-            <Grid.Col span={underMd ? 6 : 3} px={underMd ? 0 : 16}>
+            <Grid.Col span={smallerThanMd ? 6 : 3} px={smallerThanMd ? 0 : 16}>
               <Image
                 src={Logo}
                 alt="logo"
@@ -64,7 +65,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
                 onClick={() => navigate("/")}
               />
             </Grid.Col>
-            {underMd ? (
+            {smallerThanMd ? (
               <Grid.Col span={1} offset={4}>
                 <Burger opened={isOpen} onClick={() => setIsOpen((o) => !o)} size="sm" />
               </Grid.Col>

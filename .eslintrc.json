@@ -31,6 +31,7 @@
     "react/jsx-boolean-value": ["error", "never"],
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "off",
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "import/no-duplicates": "error",
     "import/order": [

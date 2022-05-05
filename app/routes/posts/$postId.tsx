@@ -1,6 +1,5 @@
 import { css, cx } from "@emotion/css"
 import { Blockquote, Box, Grid, Group, Paper, Stack, Text, Title, useMantineTheme } from "@mantine/core"
-import { useMediaQuery } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
@@ -9,6 +8,7 @@ import { useEffect } from "react"
 import tocbot from "tocbot"
 
 import { SyntaxHighlighter } from "@/components/SyntaxHighlighter"
+import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
 
@@ -50,7 +50,7 @@ export default function PostsId() {
     }[]
   }>()
   const theme = useMantineTheme()
-  const underMd = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`, false)
+  const [largerThanMd] = useMediaQueryMin("md", true)
 
   useEffect(() => {
     tocbot.init({
@@ -63,7 +63,7 @@ export default function PostsId() {
 
   return (
     <Grid justify="center">
-      <Grid.Col span={underMd ? 12 : 7}>
+      <Grid.Col span={largerThanMd ? 7 : 12}>
         <Title order={2} mb="md">
           {content.title}
         </Title>
@@ -138,7 +138,7 @@ export default function PostsId() {
           })}
         </Box>
       </Grid.Col>
-      {!underMd && (
+      {largerThanMd && (
         <Grid.Col span={3}>
           <Paper mb="md" mt={56} p="md" radius="md" shadow="xs" className="sticky top-[88px]">
             <Group spacing="xs">
