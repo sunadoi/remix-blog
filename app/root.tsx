@@ -54,13 +54,13 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <AppShell
       header={
-        <Header height={70} px="sm" py="xs" className="sticky">
-          <Grid justify="center" align="center" className="h-[80px]">
+        <Header height={smallerThanMd ? 45 : 70} px="sm" py={smallerThanMd ? "sm" : "xs"} className="sticky">
+          <Grid justify="center" align="center" className={`h-[${smallerThanMd ? "70px" : "80px"}]`}>
             <Grid.Col span={smallerThanMd ? 6 : 3} px={smallerThanMd ? 0 : 16}>
               <Image
                 src={Logo}
                 alt="logo"
-                width="250px"
+                width={smallerThanMd ? "150px" : "200px"}
                 className="cursor-pointer hover:opacity-80"
                 onClick={() => navigate("/")}
               />
