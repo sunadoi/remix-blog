@@ -1,8 +1,9 @@
 import { Divider, Grid, Title, Group, Box, Tabs } from "@mantine/core"
+import { useScrollIntoView } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
-import { useLoaderData } from "@remix-run/react"
+import { useLoaderData, useSearchParams } from "@remix-run/react"
 import dayjs from "dayjs"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { ContentCard } from "@/components/ContentCard"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
@@ -46,6 +47,12 @@ export default function Index() {
   }>()
   const [archiveType, setArchiveType] = useState<"month" | "year">("month")
   const [largerThanMd] = useMediaQueryMin("md", true)
+  const [params] = useSearchParams()
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({ duration: 0, offset: 80 })
+
+  useEffect(() => {
+    scrollIntoView()
+  }, [])
 
   return (
     <Grid justify="center">
@@ -74,7 +81,7 @@ export default function Index() {
         </Tabs>
         {Object.entries(archiveType === "month" ? months : years).map(([archive, contents]) => {
           return (
-            <Box key={archive} mb={64}>
+            <Box key={archive} ref={archive === params.get("month") ? targetRef : undefined} mb={64}>
               <Divider
                 my="md"
                 size="md"

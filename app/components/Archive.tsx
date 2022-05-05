@@ -1,6 +1,6 @@
-import { Paper, Group, Title, Divider, Text } from "@mantine/core"
+import { Paper, Group, Title, Divider, Anchor, Stack } from "@mantine/core"
+import { Link } from "@remix-run/react"
 import type { FC } from "react"
-import { Fragment } from "react"
 import { MdArchive } from "react-icons/md"
 
 type ArchiveProps = {
@@ -15,15 +15,19 @@ export const Archive: FC<ArchiveProps> = ({ archives }) => {
         <Title order={4}>アーカイブ</Title>
       </Group>
       <Divider my="sm" size="sm" />
-      {archives.map((a, index) => (
-        <Fragment key={a}>
-          {index <= 2 ? (
-            <Text sx={(theme) => ({ color: theme.other.secondary })}>{a}</Text>
-          ) : (
-            <Text color="blue">もっと見る</Text>
-          )}
-        </Fragment>
-      ))}
+      <Stack spacing="xs">
+        {archives.map((a, index) => (
+          <Anchor
+            key={a}
+            component={Link}
+            to={index <= 2 ? `/archives?month=${a}` : "/archives"}
+            sx={(theme) => ({ color: theme.other.secondary })}
+            className="hover:no-underline hover:opacity-80"
+          >
+            {index <= 2 ? a : "もっと見る"}
+          </Anchor>
+        ))}
+      </Stack>
     </Paper>
   )
 }
