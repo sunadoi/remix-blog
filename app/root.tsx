@@ -54,7 +54,12 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <AppShell
       header={
-        <Header height={smallerThanMd ? 45 : 60} px="sm" py={smallerThanMd ? "sm" : "xs"}>
+        <Header
+          height={smallerThanMd ? 45 : 60}
+          px="sm"
+          py={smallerThanMd ? "sm" : "xs"}
+          className={smallerThanMd ? "" : "sticky"}
+        >
           <Grid justify="center" align="center" className={`h-[${smallerThanMd ? "70px" : "80px"}]`}>
             <Grid.Col span={smallerThanMd ? 6 : 3} px={smallerThanMd ? 0 : 16} className="max-w-[360px]">
               <Image

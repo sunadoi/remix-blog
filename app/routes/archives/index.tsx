@@ -1,13 +1,14 @@
-import { Divider, Grid, Title, Group, Box, Tabs } from "@mantine/core"
+import { Divider, Grid, Title, Group, Box, Image, Stack, Badge } from "@mantine/core"
 import { useScrollIntoView } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useSearchParams } from "@remix-run/react"
 import dayjs from "dayjs"
 import timezone from "dayjs/plugin/timezone"
 import utc from "dayjs/plugin/utc"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 import { ContentCard } from "@/components/ContentCard"
+import { MonthIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
@@ -27,31 +28,29 @@ export const loader: LoaderFunction = async () => {
     endpoint: "posts",
   })
 
-  const sortedContents = contents.sort((a, b) => dayjs(b.publishedAt).diff(a.publishedAt))
-  const months = [...new Set(contents.map((c) => dayjs(c.publishedAt).tz().format("YYYY年MM月")))].reduce(
-    (acc, month) => ({
-      ...acc,
-      [month]: sortedContents.filter((c) => dayjs(c.publishedAt).tz().format("YYYY年MM月") === month),
-    }),
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    {} as { [key in string]: MicroCMSContent[] }
-  )
-  const years = [...new Set(contents.map((c) => dayjs(c.publishedAt).tz().format("YYYY年")))].reduce(
-    (acc, year) => ({
-      ...acc,
-      [year]: sortedContents.filter((c) => dayjs(c.publishedAt).tz().format("YYYY年") === year),
-    }), // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    {} as { [key in string]: MicroCMSContent[] }
-  )
-  return { months, years }
+  const yearMonths = contents
+    .sort((a, b) => dayjs(b.publishedAt).diff(a.publishedAt))
+    .reduce(
+      (acc, content) => {
+        const yearMonth = dayjs(content.publishedAt).tz().format("YYYY年MM月")
+        return {
+          ...acc,
+          [yearMonth]: {
+            month: dayjs(content.publishedAt).tz().month() + 1,
+            contents: [...(acc[yearMonth]?.contents ?? []), content],
+          },
+        }
+      },
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      {} as { [key in string]: { month: number; contents: MicroCMSContent[] } }
+    )
+  return { yearMonths }
 }
 
 export default function Index() {
-  const { months, years } = useLoaderData<{
-    months: { [key in string]: MicroCMSContent[] }
-    years: { [key in string]: MicroCMSContent[] }
+  const { yearMonths } = useLoaderData<{
+    yearMonths: { [key in string]: { month: number; contents: MicroCMSContent[] } }
   }>()
-  const [archiveType, setArchiveType] = useState<"month" | "year">("month")
   const [largerThanMd] = useMediaQueryMin("md", true)
   const [params] = useSearchParams()
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({ duration: 0, offset: 80 })
@@ -62,8 +61,8 @@ export default function Index() {
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 10 : 12}>
-        <Tabs
+      <Grid.Col span={largerThanMd ? 8 : 12} className="max-w-[1200px]">
+        {/* <Tabs
           position="center"
           variant="unstyled"
           onTabChange={(_, tabkey) => (tabkey === "month" || tabkey === "year") && setArchiveType(tabkey)}
@@ -84,25 +83,55 @@ export default function Index() {
         >
           <Tabs.Tab label="月別" tabKey="month" />
           <Tabs.Tab label="年別" tabKey="year" />
-        </Tabs>
-        {Object.entries(archiveType === "month" ? months : years).map(([archive, contents]) => {
+        </Tabs> */}
+        <Divider
+          my="md"
+          size="md"
+          label={
+            <Group spacing="xs">
+              <Title order={1} className="translate-y-[-3px]">
+                |
+              </Title>
+              <Title order={2} mr="md">
+                Archives
+              </Title>
+            </Group>
+          }
+        />
+        {Object.entries(yearMonths).map(([yearMonth, archive]) => {
           return (
-            <Box key={archive} ref={archive === params.get("month") ? targetRef : undefined} mb={64}>
-              <Divider
-                my="md"
-                size="md"
-                label={
-                  <Group spacing="xs">
-                    <Title order={2}>{archive}</Title>
-                  </Group>
-                }
-              />
-              <Grid>
-                {contents.map((c) => (
-                  <Grid.Col key={c.id} span={largerThanMd ? 3 : 6}>
-                    <ContentCard content={c} />
-                  </Grid.Col>
-                ))}
+            <Box key={yearMonth} ref={yearMonth === params.get("month") ? targetRef : undefined} mb="xl">
+              <Grid justify="center" gutter={largerThanMd ? 80 : "lg"}>
+                <Grid.Col span={largerThanMd ? 2 : 12}>
+                  {largerThanMd ? (
+                    <Stack justify="center" align="center" spacing="xs" mt="sm">
+                      <Image src={MonthIconMap.get(archive.month) ?? ""} alt="monthIcon" width="100px" />
+                      <Title order={3}>{yearMonth}</Title>
+                      <Badge radius="sm" variant="filled" size="lg">
+                        {archive.contents.length}記事
+                      </Badge>
+                    </Stack>
+                  ) : (
+                    <Group position="center" spacing="md">
+                      <Image src={MonthIconMap.get(archive.month) ?? ""} alt="monthIcon" width="100px" />
+                      <Stack spacing="xs">
+                        <Title order={3}>{yearMonth}</Title>
+                        <Badge radius="sm" variant="filled" size="lg">
+                          {archive.contents.length}記事
+                        </Badge>
+                      </Stack>
+                    </Group>
+                  )}
+                </Grid.Col>
+                <Grid.Col span={largerThanMd ? 9 : 12}>
+                  <Grid>
+                    {archive.contents.map((c) => (
+                      <Grid.Col key={c.id} span={largerThanMd ? 4 : 6}>
+                        <ContentCard content={c} />
+                      </Grid.Col>
+                    ))}
+                  </Grid>
+                </Grid.Col>
               </Grid>
             </Box>
           )
