@@ -43,7 +43,7 @@ export default function Index() {
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 7 : 12}>
+      <Grid.Col span={largerThanMd ? 7 : 12} className="max-w-[830px]">
         <Divider
           my="md"
           size="md"
@@ -86,7 +86,7 @@ export default function Index() {
         </Grid>
       </Grid.Col>
       {largerThanMd && (
-        <Grid.Col span={3}>
+        <Grid.Col span={3} className="max-w-[360px]">
           <Category categories={categories} />
           <Archive archives={archives} />
         </Grid.Col>

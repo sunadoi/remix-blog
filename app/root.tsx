@@ -54,9 +54,9 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <AppShell
       header={
-        <Header height={smallerThanMd ? 45 : 60} px="sm" py={smallerThanMd ? "sm" : "xs"} className="sticky">
+        <Header height={smallerThanMd ? 45 : 60} px="sm" py={smallerThanMd ? "sm" : "xs"}>
           <Grid justify="center" align="center" className={`h-[${smallerThanMd ? "70px" : "80px"}]`}>
-            <Grid.Col span={smallerThanMd ? 6 : 3} px={smallerThanMd ? 0 : 16}>
+            <Grid.Col span={smallerThanMd ? 6 : 3} px={smallerThanMd ? 0 : 16} className="max-w-[360px]">
               <Image
                 src={Logo}
                 alt="logo"
@@ -71,7 +71,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
               </Grid.Col>
             ) : (
               <>
-                <Grid.Col span={4}>
+                <Grid.Col span={4} className="max-w-[480px]">
                   <Group position="right">
                     <Group spacing="xs" className="cursor-pointer hover:opacity-80">
                       <BsFillPersonFill size="20px" />
@@ -91,7 +91,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
                     </Group>
                   </Group>
                 </Grid.Col>
-                <Grid.Col span={3}>
+                <Grid.Col span={3} className="max-w-[360px]">
                   <Input icon={<AiOutlineSearch />} radius="md" size="md" />
                 </Grid.Col>
               </>

@@ -62,7 +62,7 @@ export default function PostsId() {
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 7 : 12}>
+      <Grid.Col span={largerThanMd ? 7 : 12} className="max-w-[830px]">
         <Title order={2} mb="md">
           {content.title}
         </Title>
@@ -138,7 +138,7 @@ export default function PostsId() {
         </Box>
       </Grid.Col>
       {largerThanMd && (
-        <Grid.Col span={3}>
+        <Grid.Col span={3} className="max-w-[360px]">
           <Box className="sticky top-[88px]">
             <Toc />
           </Box>
