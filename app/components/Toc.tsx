@@ -6,7 +6,7 @@ export const Toc: FC = () => {
   const theme = useMantineTheme()
 
   return (
-    <Paper mb="md" mt={56} p="md" radius="md" shadow="xs">
+    <Paper mb="md" mt={60} p="md" radius="md" shadow="xs">
       <Group spacing="xs">
         <Stack spacing="xs">
           <Title order={4}>目次</Title>

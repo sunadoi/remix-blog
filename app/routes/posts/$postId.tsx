@@ -1,12 +1,11 @@
-import { Blockquote, Box, Grid, Text, Title } from "@mantine/core"
+import { Box, Grid, Paper, Title } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import parse from "html-react-parser"
 import { useEffect } from "react"
 import tocbot from "tocbot"
 
-import { SyntaxHighlighter } from "@/components/SyntaxHighlighter"
+import { BlogContent } from "@/components/BlogContent"
 import { Toc } from "@/components/Toc"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
@@ -62,80 +61,17 @@ export default function PostsId() {
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 7 : 12} className="max-w-[830px]">
+      <Grid.Col span={largerThanMd ? 7 : 12}>
         <Title order={2} mb="md">
           {content.title}
         </Title>
-        <Box
-          className="body"
-          sx={(theme) => ({
-            code: {
-              backgroundColor: theme.colors.gray[2],
-              borderRadius: "4px",
-              padding: "4px",
-            },
-          })}
-        >
-          {content.body.map((c) => {
-            if (c.fieldId === "content") {
-              return [parse(c.richText)].flat().map((html, index) => {
-                if (typeof html === "string") return <></>
-                if (html.type === "h2" || html.type === "h3" || html.type === "h4") {
-                  return (
-                    <Title
-                      key={index}
-                      id={html.props.id}
-                      order={html.type === "h2" ? 2 : html.type === "h3" ? 3 : 4}
-                      mt="xl"
-                    >
-                      {html.props.children}
-                    </Title>
-                  )
-                }
-                if (html.type === "blockquote") {
-                  return (
-                    <Box key={index} mt="lg">
-                      <Blockquote
-                        icon={null}
-                        color="primary"
-                        sx={(theme) => ({ backgroundColor: theme.colors.gray[1] })}
-                      >
-                        {html.props.children}
-                      </Blockquote>
-                    </Box>
-                  )
-                }
-                return (
-                  <Text key={index} className="leading-loose">
-                    {html.props.children}
-                  </Text>
-                )
-              })
-            }
-            if (c.fieldId === "message") {
-              return <Text key={c.message}>{parse(c.message)}</Text>
-            }
-            if (c.fieldId === "link") {
-              return (
-                <Text
-                  key={c.url}
-                  variant="link"
-                  component="a"
-                  href={c.url}
-                  color="blue"
-                  className="cursor-pointer hover:opacity-70"
-                >
-                  {c.url}
-                </Text>
-              )
-            }
-            return (
-              <Box key={c.code} my="lg">
-                <SyntaxHighlighter code={c} />
-              </Box>
-            )
-          })}
-        </Box>
+        {largerThanMd ? (
+          <Paper my="md" mx={0} p="md" radius="md" shadow="xs">
+            <BlogContent content={content} />
+          </Paper>
+        ) : (
+          <BlogContent content={content} />
+        )}
       </Grid.Col>
       {largerThanMd && (
         <Grid.Col span={3} className="max-w-[360px]">

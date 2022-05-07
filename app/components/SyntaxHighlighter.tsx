@@ -34,7 +34,7 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
           position="right"
           className={`absolute top-[${
             code.fileName ? "32px" : "10px"
-          }] right-[16px] z-10 cursor-pointer p-2 text-white text-opacity-60`}
+          }] right-[0px] z-10 cursor-pointer rounded-tr-[8px] p-2 text-white text-opacity-60`}
           onClick={() => clipboard.copy(code.code)}
           sx={() => ({
             backgroundColor: "#22272E",
@@ -61,13 +61,14 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
             display: "flex",
             flexDirection: "column",
             minWidth: "max-content",
-            padding: "0 8px 0 0",
+            padding: 0,
             backgroundColor: "#22272E",
           },
         }}
         lineProps={(lineNumber) => {
           return {
             style: {
+              paddingRight: "16px",
               backgroundColor:
                 code.diffAdd && [...code.diffAdd.split(",").map((n) => Number(n))].includes(lineNumber)
                   ? "#273732"
