@@ -1,4 +1,4 @@
-import { Card, Overlay, Group, Image, Text, Grid, Stack, CardSection } from "@mantine/core"
+import { Card, Overlay, Group, Image, Text, Grid, Stack, CardSection, AspectRatio } from "@mantine/core"
 import { useNavigate, useTransition } from "@remix-run/react"
 import dayjs from "dayjs"
 import type { FC } from "react"
@@ -35,22 +35,24 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
         <Overlay opacity={0.3} color="white" zIndex={1} />
       )}
       <CardSection>
-        <Image src={content.image.url} alt="thumbnail" />
+        <AspectRatio ratio={1.9 / 1}>
+          <Image src={content.image.url} alt="thumbnail" />
+        </AspectRatio>
       </CardSection>
-      <Text size="md" sx={(theme) => ({ color: theme.other.primary })} weight="bold" my="xs" lineClamp={3}>
+      <Text size="md" sx={(theme) => ({ color: theme.other.primary })} weight="bold" my="sm" lineClamp={3}>
         {content.title}
       </Text>
       <Group position="apart" direction={largerThanMd ? "row" : "column"} spacing="xs">
         <Group spacing="xs">
           {content.topic?.[0] && isCategory(content.topic?.[0]) && (
-            <Image src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={largerThanMd ? "16px" : "14px"} />
+            <Image src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={largerThanMd ? "16px" : "12px"} />
           )}
           <Text sx={(theme) => ({ color: theme.other.secondary })} size="sm">
             {content.topic?.[0]}
           </Text>
         </Group>
         <Group spacing="xs">
-          <BiTime size={largerThanMd ? 16 : 14} />
+          <BiTime size={largerThanMd ? 16 : 12} />
           <Text size="sm" color="gray">
             {dayjs(content.createdAt).format("YYYY.MM.DD")}
           </Text>
@@ -68,9 +70,9 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
 
   return (
     <Card
-      className="cursor-pointer"
+      className="max-w-[770px] cursor-pointer"
       radius="md"
-      p={0}
+      p="sm"
       shadow="xs"
       onClick={() => {
         setSelectedCardId(content.id)
@@ -81,25 +83,29 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
         <Overlay opacity={0.3} color="white" zIndex={1} />
       )}
       <Grid gutter={largerThanMd ? "xl" : "md"}>
-        <Grid.Col span={largerThanMd ? 4 : 6} p={0}>
-          <Image src={content.image.url} alt="thumbnail" radius="sm" />
+        <Grid.Col span={6} p={0}>
+          <AspectRatio ratio={1.9 / 1}>
+            <Image src={content.image.url} alt="thumbnail" radius="sm" />
+          </AspectRatio>
         </Grid.Col>
-        <Grid.Col span={largerThanMd ? 8 : 6}>
-          <Stack justify="space-between" spacing="sm" py="sm" className="h-[100%]">
-            <Text size="md" sx={(theme) => ({ color: theme.other.primary })} weight="bold" pr="sm" lineClamp={2}>
+        <Grid.Col span={6}>
+          <Stack justify="space-between" spacing="sm" className="h-[100%]">
+            <Text size="md" sx={(theme) => ({ color: theme.other.primary })} weight="bold" lineClamp={2}>
               {content.title}
             </Text>
-            <Group spacing="sm">
+            <Group position="apart" spacing="xs">
+              {largerThanMd && (
+                <Group spacing="xs">
+                  {content.topic?.[0] && isCategory(content.topic?.[0]) && (
+                    <Image src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={largerThanMd ? "16px" : "12px"} />
+                  )}
+                  <Text sx={(theme) => ({ color: theme.other.secondary })} size="sm">
+                    {content.topic?.[0]}
+                  </Text>
+                </Group>
+              )}
               <Group spacing="xs">
-                {content.topic?.[0] && isCategory(content.topic?.[0]) && (
-                  <Image src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={largerThanMd ? "16px" : "14px"} />
-                )}
-                <Text sx={(theme) => ({ color: theme.other.secondary })} size="sm">
-                  {content.topic?.[0]}
-                </Text>
-              </Group>
-              <Group spacing="xs">
-                <BiTime size={largerThanMd ? 16 : 14} />
+                <BiTime size={largerThanMd ? 16 : 12} />
                 <Text size="sm" color="gray">
                   {dayjs(content.createdAt).format("YYYY.MM.DD")}
                 </Text>
