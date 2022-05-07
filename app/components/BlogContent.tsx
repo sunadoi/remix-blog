@@ -2,6 +2,7 @@ import { Box, Title, Blockquote, Text, Group } from "@mantine/core"
 import parse from "html-react-parser"
 import type { FC, ReactNode } from "react"
 
+import { Message } from "@/components/Message"
 import { SyntaxHighlighter } from "@/components/SyntaxHighlighter"
 import type { MicroCMSContent } from "@/types/microcms"
 
@@ -58,7 +59,12 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
           })
         }
         if (c.fieldId === "message") {
-          return <Text key={c.message}>{parse(c.message)}</Text>
+          if (!c.type[0]) return <></>
+          return (
+            <Message type={c.type[0]} key={c.message}>
+              {parse(c.message)}
+            </Message>
+          )
         }
         if (c.fieldId === "link") {
           return (

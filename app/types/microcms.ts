@@ -16,7 +16,7 @@ type Content = {
 
 type Message = {
   fieldId: "message"
-  type: "point" | "alert"
+  type: ("point" | "info" | "alert")[]
   message: string
 }
 
