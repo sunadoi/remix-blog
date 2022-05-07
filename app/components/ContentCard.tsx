@@ -1,4 +1,4 @@
-import { Card, Overlay, Group, Image, Text, Grid, Stack, CardSection, AspectRatio } from "@mantine/core"
+import { Card, Overlay, Group, Image, Text, Grid, Stack, AspectRatio, Box } from "@mantine/core"
 import { useNavigate, useTransition } from "@remix-run/react"
 import dayjs from "dayjs"
 import type { FC } from "react"
@@ -34,11 +34,12 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
       {transition.state === "loading" && selectedCardId === content.id && (
         <Overlay opacity={0.3} color="white" zIndex={1} />
       )}
-      <CardSection>
+      {/* NOTE: CardSectionを使うとOverlayのmtがずれてしまうのでBoxでCardSectionを定義 */}
+      <Box mt={-16} mr={-16} ml={-16}>
         <AspectRatio ratio={1.9 / 1}>
           <Image src={content.image.url} alt="thumbnail" />
         </AspectRatio>
-      </CardSection>
+      </Box>
       <Text size="md" sx={(theme) => ({ color: theme.other.primary })} weight="bold" my="sm" lineClamp={3}>
         {content.title}
       </Text>
