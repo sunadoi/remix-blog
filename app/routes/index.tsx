@@ -64,7 +64,8 @@ export default function Index() {
           ))}
         </Stack>
         <Divider
-          my="md"
+          mt={64}
+          mb="md"
           size="md"
           label={
             <Group spacing="xs">
