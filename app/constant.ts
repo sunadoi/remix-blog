@@ -1,4 +1,7 @@
+import AWSIcon from "@/assets/category/aws.svg"
 import FirebaseIcon from "@/assets/category/firebase.svg"
+import GitHubIcon from "@/assets/category/github.svg"
+import GoIcon from "@/assets/category/go.svg"
 import JavaScriptIcon from "@/assets/category/javascript.svg"
 import ReactIcon from "@/assets/category/react.svg"
 import TypeScriptIcon from "@/assets/category/typescript.svg"
@@ -20,7 +23,10 @@ export const CategoryIconMap = new Map<CategoryType, string>([
   ["React", ReactIcon],
   ["TypeScript", TypeScriptIcon],
   ["JavaScript", JavaScriptIcon],
+  ["Go", GoIcon],
   ["Firebase", FirebaseIcon],
+  ["AWS", AWSIcon],
+  ["GitHub", GitHubIcon],
 ])
 
 export const LanguageIconMap = new Map<string, string>([

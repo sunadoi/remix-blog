@@ -23,7 +23,9 @@ export const Category: FC<CategoryProps> = ({ categories }) => {
         <Fragment key={category}>
           {index <= 10 ? (
             <Group spacing="xs" mb="sm">
-              {isCategory(category) && <Image src={CategoryIconMap.get(category) ?? ""} width="24px" />}
+              {isCategory(category) && (
+                <Image fit="contain" src={CategoryIconMap.get(category) ?? ""} width={24} height={24} />
+              )}
               <Text sx={(theme) => ({ color: theme.other.secondary })}>
                 {category} ({count})
               </Text>

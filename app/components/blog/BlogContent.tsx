@@ -40,8 +40,8 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
       </Group>
       <ul
         className={cx(
-          "flex list-none gap-[8px] px-0 pb-[16px]",
-          largerThanMd ? "flex-wrap" : "overflow-x-scroll whitespace-nowrap"
+          "flex list-none px-0 pb-[16px]",
+          largerThanMd ? "flex-wrap gap-[16px]" : "gap-[8px] overflow-x-scroll whitespace-nowrap"
         )}
       >
         {content.category.map((c) => {
@@ -49,7 +49,7 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
             <li key={c} className="max-w-max shrink-0">
               <Paper key={c} radius="xl" shadow="xs" px="md" py={4}>
                 <Group spacing="xs" align="center">
-                  <Image src={CategoryIconMap.get(c) ?? ""} alt="categoryIcon" width={14} />
+                  <Image fit="contain" src={CategoryIconMap.get(c) ?? ""} alt="categoryIcon" width={20} height={20} />
                   <Text sx={(theme) => ({ color: theme.other.secondary })}>{c}</Text>
                 </Group>
               </Paper>
@@ -61,7 +61,7 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
         <Image
           src={content.image.url}
           alt="thumbnail"
-          width="70%"
+          width="60%"
           radius="md"
           mb="xl"
           classNames={{

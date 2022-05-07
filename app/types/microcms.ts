@@ -4,7 +4,10 @@ const Categories = {
   React: "React",
   TypeScript: "TypeScript",
   JavaScript: "JavaScript",
+  Go: "Go",
   Firebase: "Firebase",
+  AWS: "AWS",
+  GitHub: "GitHub",
 } as const
 
 export type CategoryType = keyof typeof Categories
