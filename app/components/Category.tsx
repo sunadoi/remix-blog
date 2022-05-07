@@ -1,6 +1,6 @@
 import { Paper, Group, Title, Divider, Image, Text } from "@mantine/core"
+import { useNavigate } from "@remix-run/react"
 import type { FC } from "react"
-import { Fragment } from "react"
 import { MdCategory } from "react-icons/md"
 
 import { CategoryIconMap } from "@/constant"
@@ -12,6 +12,8 @@ type CategoryProps = {
 }
 
 export const Category: FC<CategoryProps> = ({ categories }) => {
+  const navigate = useNavigate()
+
   return (
     <Paper my="md" p="md" radius="md" shadow="xs">
       <Group spacing="xs">
@@ -19,22 +21,30 @@ export const Category: FC<CategoryProps> = ({ categories }) => {
         <Title order={4}>カテゴリー</Title>
       </Group>
       <Divider my="sm" size="sm" />
-      {Object.entries(categories).map(([category, count], index) => (
-        <Fragment key={category}>
-          {index <= 10 ? (
-            <Group spacing="xs" mb="sm">
-              {isCategory(category) && (
-                <Image fit="contain" src={CategoryIconMap.get(category) ?? ""} width={24} height={24} />
-              )}
-              <Text sx={(theme) => ({ color: theme.other.secondary })}>
-                {category} ({count})
-              </Text>
-            </Group>
-          ) : (
-            <Text color="blue">もっと見る</Text>
-          )}
-        </Fragment>
-      ))}
+      {Object.entries(categories).map(([category, count], index) => {
+        if (index > 10) return <></>
+        return (
+          <Group
+            key={category}
+            spacing="xs"
+            mb="sm"
+            className="cursor-pointer hover:opacity-80"
+            onClick={() => navigate(`/categories/${category}`)}
+          >
+            {isCategory(category) && (
+              <Image fit="contain" src={CategoryIconMap.get(category) ?? ""} width={24} height={24} />
+            )}
+            <Text sx={(theme) => ({ color: theme.other.secondary })}>
+              {category} ({count})
+            </Text>
+          </Group>
+        )
+      })}
+      {Object.keys(categories).length >= 10 && (
+        <Text color="blue" className="cursor-pointer hover:opacity-80" onClick={() => navigate("/categories")}>
+          もっと見る
+        </Text>
+      )}
     </Paper>
   )
 }
