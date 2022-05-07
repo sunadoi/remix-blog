@@ -2,6 +2,8 @@ import { Divider, Grid, Title, Group, Stack } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import dayjs from "dayjs"
+import timezone from "dayjs/plugin/timezone"
+import utc from "dayjs/plugin/utc"
 
 import { Archive } from "@/components/Archive"
 import { Category } from "@/components/Category"
@@ -9,6 +11,10 @@ import { ContentCard, WideContentCard } from "@/components/ContentCard"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.setDefault("Asia/Tokyo")
 
 export const headers: HeadersFunction = () => {
   return {
@@ -24,12 +30,22 @@ export const loader: LoaderFunction = async () => {
     .flatMap((c) => c.category)
     .reduce(
       (acc, category) => {
-        return { ...acc, [category]: acc[category] ? (acc[category] ?? 0) + 1 : 1 }
+        return { ...acc, [category]: (acc[category] ?? 0) + 1 }
       },
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
       {} as { [key in string]: number }
     )
-  const archives = [...new Set(contents.map((c) => dayjs(c.publishedAt).format("YYYY年MM月")))]
+  const archives = contents.reduce((acc, c) => {
+    const date = dayjs(c.publishedAt).tz()
+    return {
+      ...acc,
+      [date.format("YYYY年MM月")]: {
+        month: date.month() + 1,
+        count: (acc[date.format("YYYY年MM月")]?.["count"] ?? 0) + 1,
+      },
+    }
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  }, {} as { [key in string]: { month: number; count: number } })
   return { contents, categories, archives }
 }
 
@@ -37,7 +53,7 @@ export default function Index() {
   const { contents, categories, archives } = useLoaderData<{
     contents: MicroCMSContent[]
     categories: { [key in CategoryType]: number }
-    archives: string[]
+    archives: { [key in string]: { month: number; count: number } }
   }>()
   const [largerThanMd] = useMediaQueryMin("md", true)
 
