@@ -1,13 +1,21 @@
-import { Box, Blockquote, Text } from "@mantine/core"
+import { cx } from "@emotion/css"
+import { Box, Blockquote, Text, Title, Group, Image, Paper } from "@mantine/core"
+import dayjs from "dayjs"
 import parse from "html-react-parser"
 import type { FC } from "react"
+import { BiTime } from "react-icons/bi"
+import { MdUpdate } from "react-icons/md"
 
 import { BlogHeading } from "@/components/blog/BlogHeading"
 import { Message } from "@/components/blog/Message"
 import { SyntaxHighlighter } from "@/components/blog/SyntaxHighlighter"
+import { CategoryIconMap } from "@/constant"
+import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
 
 export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
+  const [largerThanMd] = useMediaQueryMin("md", true)
+
   return (
     <Box
       className="body"
@@ -19,6 +27,48 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
         },
       })}
     >
+      <Title order={2}>{content.title}</Title>
+      <Group my="sm">
+        <Group spacing="xs">
+          <BiTime />
+          <Text color="gray">{dayjs(content.publishedAt).format("YYYY.MM.DD")}</Text>
+        </Group>
+        <Group spacing="xs">
+          <MdUpdate />
+          <Text color="gray">{dayjs(content.updatedAt).format("YYYY.MM.DD")}</Text>
+        </Group>
+      </Group>
+      <ul
+        className={cx(
+          "flex list-none gap-[8px] px-0 pb-[16px]",
+          largerThanMd ? "flex-wrap" : "overflow-x-scroll whitespace-nowrap"
+        )}
+      >
+        {content.category.map((c) => {
+          return (
+            <li key={c} className="max-w-max shrink-0">
+              <Paper key={c} radius="xl" shadow="xs" px="md" py={4}>
+                <Group spacing="xs" align="center">
+                  <Image src={CategoryIconMap.get(c) ?? ""} alt="categoryIcon" width={14} />
+                  <Text sx={(theme) => ({ color: theme.other.secondary })}>{c}</Text>
+                </Group>
+              </Paper>
+            </li>
+          )
+        })}
+      </ul>
+      <Group position="center">
+        <Image
+          src={content.image.url}
+          alt="thumbnail"
+          width="70%"
+          radius="md"
+          mb="xl"
+          classNames={{
+            image: "mx-auto",
+          }}
+        />
+      </Group>
       {content.body.map((c) => {
         if (c.fieldId === "content") {
           return [parse(c.richText)].flat().map((html, index) => {

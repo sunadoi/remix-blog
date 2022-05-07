@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Title } from "@mantine/core"
+import { Box, Grid, Paper } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
@@ -62,9 +62,6 @@ export default function PostsId() {
   return (
     <Grid justify="center">
       <Grid.Col span={largerThanMd ? 7 : 12} className={`${largerThanMd ? "max-w-[830px]" : ""}`}>
-        <Title order={2} mb="md">
-          {content.title}
-        </Title>
         {largerThanMd ? (
           <Paper my="md" mx={0} p="md" radius="md" shadow="xs">
             <BlogContent content={content} />
