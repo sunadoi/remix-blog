@@ -2,9 +2,9 @@ import { Box, Blockquote, Text } from "@mantine/core"
 import parse from "html-react-parser"
 import type { FC } from "react"
 
-import { BlogHeading } from "@/components/BlogHeading"
-import { Message } from "@/components/Message"
-import { SyntaxHighlighter } from "@/components/SyntaxHighlighter"
+import { BlogHeading } from "@/components/blog/BlogHeading"
+import { Message } from "@/components/blog/Message"
+import { SyntaxHighlighter } from "@/components/blog/SyntaxHighlighter"
 import type { MicroCMSContent } from "@/types/microcms"
 
 export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
