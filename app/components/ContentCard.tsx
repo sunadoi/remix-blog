@@ -3,6 +3,7 @@ import { useNavigate, useTransition } from "@remix-run/react"
 import dayjs from "dayjs"
 import type { FC } from "react"
 import { useState } from "react"
+import { BiTime } from "react-icons/bi"
 
 import { CategoryIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
@@ -39,7 +40,7 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
       <Text size="md" sx={(theme) => ({ color: theme.other.primary })} weight="bold" my="xs" lineClamp={3}>
         {content.title}
       </Text>
-      <Group position="apart" direction={largerThanMd ? "row" : "column"} spacing={0}>
+      <Group position="apart" direction={largerThanMd ? "row" : "column"} spacing="xs">
         <Group spacing="xs">
           {content.topic?.[0] && isCategory(content.topic?.[0]) && (
             <Image src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={largerThanMd ? "16px" : "14px"} />
@@ -48,9 +49,12 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
             {content.topic?.[0]}
           </Text>
         </Group>
-        <Text size="sm" color="gray">
-          {dayjs(content.createdAt).format("YYYY.MM.DD")}
-        </Text>
+        <Group spacing="xs">
+          <BiTime size={largerThanMd ? 16 : 14} />
+          <Text size="sm" color="gray">
+            {dayjs(content.createdAt).format("YYYY.MM.DD")}
+          </Text>
+        </Group>
       </Group>
     </Card>
   )
@@ -85,7 +89,7 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
             <Text size="md" sx={(theme) => ({ color: theme.other.primary })} weight="bold" pr="sm" lineClamp={2}>
               {content.title}
             </Text>
-            <Group>
+            <Group spacing="sm">
               <Group spacing="xs">
                 {content.topic?.[0] && isCategory(content.topic?.[0]) && (
                   <Image src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={largerThanMd ? "16px" : "14px"} />
@@ -94,9 +98,12 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
                   {content.topic?.[0]}
                 </Text>
               </Group>
-              <Text size="sm" color="gray">
-                {dayjs(content.createdAt).format("YYYY.MM.DD")}
-              </Text>
+              <Group spacing="xs">
+                <BiTime size={largerThanMd ? 16 : 14} />
+                <Text size="sm" color="gray">
+                  {dayjs(content.createdAt).format("YYYY.MM.DD")}
+                </Text>
+              </Group>
             </Group>
           </Stack>
         </Grid.Col>

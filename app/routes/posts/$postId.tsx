@@ -61,7 +61,7 @@ export default function PostsId() {
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 7 : 12} className="max-w-[830px]">
+      <Grid.Col span={largerThanMd ? 7 : 12} className={`${largerThanMd ? "max-w-[830px]" : ""}`}>
         <Title order={2} mb="md">
           {content.title}
         </Title>
