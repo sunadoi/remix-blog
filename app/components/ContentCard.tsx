@@ -55,7 +55,7 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
         <Group spacing="xs">
           <BiTime size={largerThanMd ? 16 : 12} />
           <Text size="sm" color="gray">
-            {dayjs(content.createdAt).format("YYYY.MM.DD")}
+            {dayjs(content.publishedAt).format("YYYY.MM.DD")}
           </Text>
         </Group>
       </Group>
@@ -108,7 +108,7 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
               <Group spacing="xs">
                 <BiTime size={largerThanMd ? 16 : 12} />
                 <Text size="sm" color="gray">
-                  {dayjs(content.createdAt).format("YYYY.MM.DD")}
+                  {dayjs(content.publishedAt).format("YYYY.MM.DD")}
                 </Text>
               </Group>
             </Group>
