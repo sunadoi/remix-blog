@@ -1,20 +1,14 @@
 import { Divider, Grid, Title, Group, Stack } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import dayjs from "dayjs"
-import timezone from "dayjs/plugin/timezone"
-import utc from "dayjs/plugin/utc"
 
 import { Archive } from "@/components/Archive"
 import { Category } from "@/components/Category"
 import { ContentCard, WideContentCard } from "@/components/ContentCard"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
+import { dayjsSSR } from "@/utils/date"
 import { client } from "lib/client.server"
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
-dayjs.tz.setDefault("Asia/Tokyo")
 
 export const headers: HeadersFunction = () => {
   return {
@@ -36,7 +30,7 @@ export const loader: LoaderFunction = async () => {
       {} as { [key in string]: number }
     )
   const archives = contents.reduce((acc, c) => {
-    const date = dayjs(c.publishedAt).tz()
+    const date = dayjsSSR(c.publishedAt)
     return {
       ...acc,
       [date.format("YYYY年MM月")]: {

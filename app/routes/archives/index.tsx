@@ -2,20 +2,14 @@ import { Divider, Grid, Title, Group, Box, Image, Stack, Badge } from "@mantine/
 import { useScrollIntoView } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useSearchParams } from "@remix-run/react"
-import dayjs from "dayjs"
-import timezone from "dayjs/plugin/timezone"
-import utc from "dayjs/plugin/utc"
 import { useEffect } from "react"
 
 import { ContentCard } from "@/components/ContentCard"
 import { MonthIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
+import { dayjsSSR } from "@/utils/date"
 import { client } from "lib/client.server"
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
-dayjs.tz.setDefault("Asia/Tokyo")
 
 export const headers: HeadersFunction = () => {
   return {
@@ -29,14 +23,14 @@ export const loader: LoaderFunction = async () => {
   })
 
   const yearMonths = contents
-    .sort((a, b) => dayjs(b.publishedAt).diff(a.publishedAt))
+    .sort((a, b) => dayjsSSR(b.publishedAt).diff(a.publishedAt))
     .reduce(
       (acc, content) => {
-        const yearMonth = dayjs(content.publishedAt).tz().format("YYYY年MM月")
+        const yearMonth = dayjsSSR(content.publishedAt).format("YYYY年MM月")
         return {
           ...acc,
           [yearMonth]: {
-            month: dayjs(content.publishedAt).tz().month() + 1,
+            month: dayjsSSR(content.publishedAt).month() + 1,
             contents: [...(acc[yearMonth]?.contents ?? []), content],
           },
         }
