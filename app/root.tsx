@@ -90,7 +90,11 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
                       <MdArchive size="20px" />
                       <Title order={5}>アーカイブ</Title>
                     </Group>
-                    <Group spacing="xs" className="cursor-pointer hover:opacity-80">
+                    <Group
+                      spacing="xs"
+                      className="cursor-pointer hover:opacity-80"
+                      onClick={() => navigate("/categories")}
+                    >
                       <MdCategory size="20px" />
                       <Title order={5}>カテゴリー</Title>
                     </Group>

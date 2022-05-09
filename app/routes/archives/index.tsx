@@ -101,7 +101,7 @@ export default function Index() {
                     <Stack justify="center" align="center" spacing="xs" mt="sm">
                       <Image src={MonthIconMap.get(archive.month) ?? ""} alt="monthIcon" width="100px" />
                       <Title order={3}>{yearMonth}</Title>
-                      <Badge radius="sm" variant="filled" size="lg">
+                      <Badge radius="md" variant="filled" size="lg">
                         {archive.contents.length}記事
                       </Badge>
                     </Stack>
@@ -110,7 +110,7 @@ export default function Index() {
                       <Image src={MonthIconMap.get(archive.month) ?? ""} alt="monthIcon" width="100px" />
                       <Stack spacing="xs">
                         <Title order={3}>{yearMonth}</Title>
-                        <Badge radius="sm" variant="filled" size="lg">
+                        <Badge radius="md" variant="filled" size="lg">
                           {archive.contents.length}記事
                         </Badge>
                       </Stack>
