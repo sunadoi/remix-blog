@@ -1,8 +1,9 @@
-import { Box, Grid, Paper } from "@mantine/core"
+import { ActionIcon, Box, Grid, Group, Paper, useMantineTheme } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { useEffect } from "react"
+import { MdToc, MdShare } from "react-icons/md"
 import tocbot from "tocbot"
 
 import { BlogContent } from "@/components/blog/BlogContent"
@@ -49,6 +50,7 @@ export default function PostsId() {
     }[]
   }>()
   const [largerThanMd] = useMediaQueryMin("md", true)
+  const theme = useMantineTheme()
 
   useEffect(() => {
     tocbot.init({
@@ -60,23 +62,41 @@ export default function PostsId() {
   }, [])
 
   return (
-    <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 7 : 12} className={`${largerThanMd ? "max-w-[830px]" : ""}`}>
-        {largerThanMd ? (
-          <Paper my="md" mx={0} p="md" radius="md" shadow="xs">
+    <>
+      <Grid justify="center">
+        <Grid.Col span={largerThanMd ? 7 : 12} className={`${largerThanMd ? "max-w-[830px]" : ""}`}>
+          {largerThanMd ? (
+            <Paper my="md" mx={0} p="md" radius="md" shadow="xs">
+              <BlogContent content={content} />
+            </Paper>
+          ) : (
             <BlogContent content={content} />
-          </Paper>
-        ) : (
-          <BlogContent content={content} />
-        )}
-      </Grid.Col>
-      {largerThanMd && (
-        <Grid.Col span={3} className="max-w-[360px]">
-          <Box className="sticky top-[88px]">
-            <Toc />
-          </Box>
+          )}
         </Grid.Col>
+        {largerThanMd && (
+          <Grid.Col span={3} className="max-w-[360px]">
+            <Box className="sticky top-[88px]">
+              <Toc />
+            </Box>
+          </Grid.Col>
+        )}
+      </Grid>
+      {!largerThanMd && (
+        <Group position="right" align="flex-end" className="fixed bottom-[88px] right-4">
+          <ActionIcon
+            radius={100}
+            size="md"
+            variant="filled"
+            className="bg-white hover:bg-white"
+            sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
+          >
+            <MdShare color={theme.other.primary} size={16} />
+          </ActionIcon>
+          <ActionIcon variant="filled" radius={100} color={theme.other.primary} size="xl">
+            <MdToc size={24} />
+          </ActionIcon>
+        </Group>
       )}
-    </Grid>
+    </>
   )
 }

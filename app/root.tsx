@@ -1,4 +1,4 @@
-import { AppShell, Header, Grid, Title, Input, Group, Burger, Drawer, Image, useMantineTheme } from "@mantine/core"
+import { AppShell, Header, Grid, Title, Input, Group, Image, useMantineTheme } from "@mantine/core"
 import type { LoaderFunction, MetaFunction } from "@remix-run/node"
 import {
   Links,
@@ -12,7 +12,6 @@ import {
   useNavigate,
 } from "@remix-run/react"
 import type { FC, ReactNode } from "react"
-import { useState } from "react"
 import { AiOutlineSearch } from "react-icons/ai"
 import { MdArchive, MdCategory, MdPerson } from "react-icons/md"
 
@@ -65,7 +64,6 @@ const Layout: FC<{ path: string; children: ReactNode }> = ({ path, children }) =
   const [smallerThanMd, mounted] = useMediaQueryMax("md", true)
   const navigate = useNavigate()
   const theme = useMantineTheme()
-  const [isOpen, setIsOpen] = useState(false)
 
   if (!mounted) return <></>
 
@@ -79,20 +77,16 @@ const Layout: FC<{ path: string; children: ReactNode }> = ({ path, children }) =
           className={smallerThanMd ? "" : "sticky"}
         >
           <Grid justify="center" align="center" className={`h-[${smallerThanMd ? "70px" : "80px"}]`}>
-            <Grid.Col span={smallerThanMd ? 6 : 3} px={smallerThanMd ? 0 : 16} className="max-w-[360px]">
+            <Grid.Col span={smallerThanMd ? 5 : 3} px={smallerThanMd ? 0 : 16} className="max-w-[360px]">
               <Image
                 src={Logo}
                 alt="logo"
-                width={smallerThanMd ? "150px" : "200px"}
+                width={smallerThanMd ? "100%" : "200px"}
                 className="cursor-pointer hover:opacity-80"
                 onClick={() => navigate("/")}
               />
             </Grid.Col>
-            {smallerThanMd ? (
-              <Grid.Col span={1} offset={4}>
-                <Burger opened={isOpen} onClick={() => setIsOpen((o) => !o)} size="sm" />
-              </Grid.Col>
-            ) : (
+            {!smallerThanMd && (
               <>
                 <Grid.Col span={4} className="max-w-[480px]">
                   <Group position="right">
@@ -129,9 +123,6 @@ const Layout: FC<{ path: string; children: ReactNode }> = ({ path, children }) =
       footer={smallerThanMd ? <SPNavbar path={path} /> : <></>}
     >
       {children}
-      <Drawer opened={isOpen} onClose={() => setIsOpen(false)} position="right" padding="sm" size="md">
-        aaaa
-      </Drawer>
     </AppShell>
   )
 }

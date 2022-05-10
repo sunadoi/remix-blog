@@ -16,6 +16,7 @@ declare module "@mantine/core" {
     primary: string
     secondary: string
     paleBlue: string
+    white: string
   }
 }
 
@@ -50,6 +51,7 @@ export const MantineTheme: FC<{ children: ReactNode }> = ({ children }) => {
             primary: "#012C6B",
             secondary: "#416190",
             paleBlue: "#E9EFFB",
+            white: "#FFFFFF",
           },
           primaryColor: "brand",
           headings: {
