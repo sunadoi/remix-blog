@@ -1,4 +1,4 @@
-import { Paper, Group, Title, Divider, Image, Text } from "@mantine/core"
+import { Paper, Group, Title, Divider, Image, Text, useMantineTheme } from "@mantine/core"
 import { useNavigate } from "@remix-run/react"
 import type { FC } from "react"
 import { MdCategory } from "react-icons/md"
@@ -12,12 +12,13 @@ type CategoryProps = {
 }
 
 export const Category: FC<CategoryProps> = ({ categories }) => {
+  const theme = useMantineTheme()
   const navigate = useNavigate()
 
   return (
     <Paper my="md" p="md" radius="md" shadow="xs">
       <Group spacing="xs">
-        <MdCategory size="20px" />
+        <MdCategory color={theme.other.primary} size="20px" />
         <Title order={4}>カテゴリー</Title>
       </Group>
       <Divider my="sm" size="sm" />

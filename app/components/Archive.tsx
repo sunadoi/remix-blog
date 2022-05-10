@@ -1,4 +1,4 @@
-import { Paper, Group, Title, Divider, Text, Image } from "@mantine/core"
+import { Paper, Group, Title, Divider, Text, Image, useMantineTheme } from "@mantine/core"
 import { useNavigate } from "@remix-run/react"
 import type { FC } from "react"
 import { MdArchive } from "react-icons/md"
@@ -10,12 +10,13 @@ type ArchiveProps = {
 }
 
 export const Archive: FC<ArchiveProps> = ({ archives }) => {
+  const theme = useMantineTheme()
   const navigate = useNavigate()
 
   return (
     <Paper my="md" p="md" radius="md" shadow="xs">
       <Group spacing="xs">
-        <MdArchive size="20px" />
+        <MdArchive color={theme.other.primary} size="20px" />
         <Title order={4}>アーカイブ</Title>
       </Group>
       <Divider my="sm" size="sm" />

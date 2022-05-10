@@ -1,13 +1,23 @@
-import { AppShell, Header, Grid, Title, Input, Group, Burger, Drawer, Image } from "@mantine/core"
-import type { MetaFunction } from "@remix-run/node"
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch, useNavigate } from "@remix-run/react"
+import { AppShell, Header, Grid, Title, Input, Group, Burger, Drawer, Image, useMantineTheme } from "@mantine/core"
+import type { LoaderFunction, MetaFunction } from "@remix-run/node"
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useCatch,
+  useLoaderData,
+  useNavigate,
+} from "@remix-run/react"
 import type { FC, ReactNode } from "react"
 import { useState } from "react"
 import { AiOutlineSearch } from "react-icons/ai"
-import { BsFillPersonFill } from "react-icons/bs"
-import { MdArchive, MdCategory } from "react-icons/md"
+import { MdArchive, MdCategory, MdPerson } from "react-icons/md"
 
 import Logo from "@/assets/logo.png"
+import { SPNavbar } from "@/components/SPNavbar"
 import { useMediaQueryMax } from "@/hooks/useMediaQuery"
 import { MantineTheme } from "@/theme"
 
@@ -23,7 +33,14 @@ export function links() {
   return [{ rel: "stylesheet", href: styles }]
 }
 
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url)
+  return { path: url.pathname }
+}
+
 export default function App() {
+  const { path } = useLoaderData<{ path: string }>()
+
   return (
     <html lang="ja">
       <head>
@@ -32,7 +49,7 @@ export default function App() {
       </head>
       <body>
         <MantineTheme>
-          <Layout>
+          <Layout path={path}>
             <Outlet />
           </Layout>
         </MantineTheme>
@@ -44,9 +61,10 @@ export default function App() {
   )
 }
 
-const Layout: FC<{ children: ReactNode }> = ({ children }) => {
+const Layout: FC<{ path: string; children: ReactNode }> = ({ path, children }) => {
   const [smallerThanMd, mounted] = useMediaQueryMax("md", true)
   const navigate = useNavigate()
+  const theme = useMantineTheme()
   const [isOpen, setIsOpen] = useState(false)
 
   if (!mounted) return <></>
@@ -79,7 +97,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
                 <Grid.Col span={4} className="max-w-[480px]">
                   <Group position="right">
                     <Group spacing="xs" className="cursor-pointer hover:opacity-80">
-                      <BsFillPersonFill size="20px" />
+                      <MdPerson color={theme.other.primary} size="20px" />
                       <Title order={5}>プロフィール</Title>
                     </Group>
                     <Group
@@ -87,7 +105,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
                       className="cursor-pointer hover:opacity-80"
                       onClick={() => navigate("/archives")}
                     >
-                      <MdArchive size="20px" />
+                      <MdArchive color={theme.other.primary} size="20px" />
                       <Title order={5}>アーカイブ</Title>
                     </Group>
                     <Group
@@ -95,7 +113,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
                       className="cursor-pointer hover:opacity-80"
                       onClick={() => navigate("/categories")}
                     >
-                      <MdCategory size="20px" />
+                      <MdCategory color={theme.other.primary} size="20px" />
                       <Title order={5}>カテゴリー</Title>
                     </Group>
                   </Group>
@@ -108,6 +126,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
           </Grid>
         </Header>
       }
+      footer={smallerThanMd ? <SPNavbar path={path} /> : <></>}
     >
       {children}
       <Drawer opened={isOpen} onClose={() => setIsOpen(false)} position="right" padding="sm" size="md">
