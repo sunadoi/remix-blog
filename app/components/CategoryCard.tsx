@@ -1,4 +1,4 @@
-import { Card, Overlay, Group, Image, Text, Badge } from "@mantine/core"
+import { Card, LoadingOverlay, Group, Image, Text, Badge } from "@mantine/core"
 import { useNavigate, useTransition } from "@remix-run/react"
 import type { FC } from "react"
 import { useState } from "react"
@@ -29,9 +29,11 @@ export const CategoryCard: FC<CategoryCardProps> = ({ categoryName, icon, total 
       }}
     >
       <Group position="center" direction="column" spacing="xs">
-        {transition.state === "loading" && selectedCardName === categoryName && (
-          <Overlay opacity={0.3} color="white" zIndex={1} />
-        )}
+        <LoadingOverlay
+          visible={transition.state === "loading" && selectedCardName === categoryName}
+          overlayOpacity={0.5}
+          overlayColor="white"
+        />
         <Image
           src={icon}
           alt="categoryIcon"

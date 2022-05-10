@@ -1,4 +1,4 @@
-import { Card, Overlay, Group, Image, Text, Grid, Stack, AspectRatio, Box } from "@mantine/core"
+import { Card, LoadingOverlay, Group, Image, Text, Grid, Stack, AspectRatio, Box } from "@mantine/core"
 import { useNavigate, useTransition } from "@remix-run/react"
 import dayjs from "dayjs"
 import type { FC } from "react"
@@ -31,9 +31,11 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
         navigate(`/posts/${content.id}`)
       }}
     >
-      {transition.state === "loading" && selectedCardId === content.id && (
-        <Overlay opacity={0.3} color="white" zIndex={1} />
-      )}
+      <LoadingOverlay
+        visible={transition.state === "loading" && selectedCardId === content.id}
+        overlayOpacity={0.5}
+        overlayColor="white"
+      />
       {/* NOTE: CardSectionを使うとOverlayのmtがずれてしまうのでBoxでCardSectionを定義 */}
       <Box mt={-16} mr={-16} ml={-16}>
         <AspectRatio ratio={1.9 / 1}>
@@ -80,9 +82,11 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
         navigate(`/posts/${content.id}`)
       }}
     >
-      {transition.state === "loading" && selectedCardId === content.id && (
-        <Overlay opacity={0.3} color="white" zIndex={1} />
-      )}
+      <LoadingOverlay
+        visible={transition.state === "loading" && selectedCardId === content.id}
+        overlayOpacity={0.5}
+        overlayColor="white"
+      />
       <Grid gutter={largerThanMd ? "xl" : "md"}>
         <Grid.Col span={6} p={0}>
           <AspectRatio ratio={1.9 / 1}>
