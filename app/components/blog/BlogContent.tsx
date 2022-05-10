@@ -1,5 +1,6 @@
 import { cx } from "@emotion/css"
 import { Box, Blockquote, Text, Title, Group, Image, Paper } from "@mantine/core"
+import { useNavigate } from "@remix-run/react"
 import dayjs from "dayjs"
 import parse from "html-react-parser"
 import type { FC } from "react"
@@ -15,6 +16,7 @@ import type { MicroCMSContent } from "@/types/microcms"
 
 export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
   const [largerThanMd] = useMediaQueryMin("md", true)
+  const navigate = useNavigate()
 
   return (
     <Box
@@ -46,7 +48,7 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
       >
         {content.category.map((c) => {
           return (
-            <li key={c} className="max-w-max shrink-0">
+            <li key={c} className="max-w-max shrink-0 cursor-pointer" onClick={() => navigate(`/categories/${c}`)}>
               <Paper key={c} radius="xl" shadow="xs" px="md" py={4}>
                 <Group spacing="xs" align="center">
                   <Image fit="contain" src={CategoryIconMap.get(c) ?? ""} alt="categoryIcon" width={20} height={20} />
