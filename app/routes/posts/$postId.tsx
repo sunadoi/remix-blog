@@ -3,6 +3,7 @@ import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { useEffect } from "react"
+import { FaTwitter, FaFacebook } from "react-icons/fa"
 import { MdToc, MdShare } from "react-icons/md"
 import tocbot from "tocbot"
 
@@ -51,6 +52,7 @@ export default function PostsId() {
   }>()
   const [largerThanMd] = useMediaQueryMin("md", true)
   const theme = useMantineTheme()
+  // const [openShareModal, setOpenShareModal] = useState(false)
 
   useEffect(() => {
     tocbot.init({
@@ -64,11 +66,35 @@ export default function PostsId() {
   return (
     <>
       <Grid justify="center">
-        <Grid.Col span={largerThanMd ? 7 : 12} className={`${largerThanMd ? "max-w-[830px]" : ""}`}>
+        <Grid.Col span={largerThanMd ? 7 : 12} className={`${largerThanMd ? "max-w-[830px]" : ""} relative`}>
           {largerThanMd ? (
-            <Paper my="md" mx={0} p="md" radius="md" shadow="xs">
-              <BlogContent content={content} />
-            </Paper>
+            <>
+              <Group align="flex-start" className="absolute left-[-48px] h-[100%]">
+                <Group direction="column" align="center" className="sticky top-[200px]">
+                  <ActionIcon
+                    component="a"
+                    href={`https://twitter.com/intent/tweet?url=https://blog-sunadoi.vercel.app/posts/${content.id}&text=${content.title}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:opacity-80"
+                  >
+                    <FaTwitter color="#00acee" size={24} />
+                  </ActionIcon>
+                  <ActionIcon
+                    component="a"
+                    href={`https://www.facebook.com/share.php?u=https://blog-sunadoi.vercel.app/posts/${content.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:opacity-80"
+                  >
+                    <FaFacebook color="#3b5998" size={24} />
+                  </ActionIcon>
+                </Group>
+              </Group>
+              <Paper my="md" mx={0} p="md" radius="md" shadow="xs">
+                <BlogContent content={content} />
+              </Paper>
+            </>
           ) : (
             <BlogContent content={content} />
           )}
@@ -89,12 +115,45 @@ export default function PostsId() {
             variant="filled"
             className="bg-white hover:bg-white"
             sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
+            onClick={async () => {
+              await navigator.share({
+                title: content.title,
+                text: content.title,
+                url: "",
+              })
+            }}
           >
             <MdShare color={theme.other.primary} size={16} />
           </ActionIcon>
           <ActionIcon variant="filled" radius={100} color={theme.other.primary} size="xl">
             <MdToc size={24} />
           </ActionIcon>
+          {/* <Modal
+            opened={openShareModal}
+            onClose={() => setOpenShareModal(false)}
+            withCloseButton={false}
+            overlayOpacity={0.3}
+            centered
+          >
+            <Group direction="column" position="center">
+              <Title order={3}>シェアしてくれるとうれしい</Title>
+              <Group position="center">
+                <ActionIcon
+                  component="a"
+                  href={`https://twitter.com/intent/tweet?url=https://blog-sunadoi.vercel.app/posts/${content.id}&text=${content.title}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-80"
+                >
+                  <FaTwitter color="#00acee" size={36} />
+                </ActionIcon>
+                <FaFacebook color="#3b5998" size={36} />
+              </Group>
+              <Button variant="white" onClick={() => setOpenShareModal(false)}>
+                とじる
+              </Button>
+            </Group>
+          </Modal> */}
         </Group>
       )}
     </>
