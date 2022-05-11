@@ -14,7 +14,7 @@ type SyntaxHighlighterProps = {
 }
 
 export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
-  const clipboard = useClipboard({ timeout: 1000 })
+  const clipboard = useClipboard({ timeout: 2000 })
   const [largerThanSm] = useMediaQueryMin("sm", true)
 
   return (

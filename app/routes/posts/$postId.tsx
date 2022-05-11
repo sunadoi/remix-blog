@@ -1,10 +1,11 @@
-import { ActionIcon, Box, Grid, Group, Paper, useMantineTheme } from "@mantine/core"
+import { ActionIcon, Box, Grid, Group, Paper, Tooltip, useMantineTheme } from "@mantine/core"
+import { useClipboard } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { useEffect } from "react"
 import { FaTwitter, FaFacebook } from "react-icons/fa"
-import { MdToc, MdShare } from "react-icons/md"
+import { MdToc, MdShare, MdLink } from "react-icons/md"
 import tocbot from "tocbot"
 
 import { BlogContent } from "@/components/blog/BlogContent"
@@ -52,6 +53,7 @@ export default function PostsId() {
   }>()
   const [largerThanMd] = useMediaQueryMin("md", true)
   const theme = useMantineTheme()
+  const clipboard = useClipboard({ timeout: 2000 })
   // const [openShareModal, setOpenShareModal] = useState(false)
 
   useEffect(() => {
@@ -70,12 +72,26 @@ export default function PostsId() {
           {largerThanMd ? (
             <>
               <Group align="flex-start" className="absolute left-[-48px] h-[100%]">
-                <Group direction="column" align="center" className="sticky top-[200px]">
+                <Group direction="column" align="center" spacing="sm" className="sticky top-[200px]">
+                  <ActionIcon
+                    radius={100}
+                    size="xl"
+                    sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
+                    className="hover:opacity-80"
+                    onClick={() => clipboard.copy(location.href)}
+                  >
+                    <Tooltip opened={clipboard.copied} label="URLをコピーしました" className="flex items-center">
+                      <MdLink color="gray" size={24} />
+                    </Tooltip>
+                  </ActionIcon>
                   <ActionIcon
                     component="a"
                     href={`https://twitter.com/intent/tweet?url=https://blog-sunadoi.vercel.app/posts/${content.id}&text=${content.title}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    radius={100}
+                    size="xl"
+                    sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
                     className="hover:opacity-80"
                   >
                     <FaTwitter color="#00acee" size={24} />
@@ -85,6 +101,9 @@ export default function PostsId() {
                     href={`https://www.facebook.com/share.php?u=https://blog-sunadoi.vercel.app/posts/${content.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    radius={100}
+                    size="xl"
+                    sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
                     className="hover:opacity-80"
                   >
                     <FaFacebook color="#3b5998" size={24} />
