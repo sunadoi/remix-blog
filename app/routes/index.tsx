@@ -1,6 +1,6 @@
-import { Divider, Grid, Title, Group, Stack } from "@mantine/core"
+import { Divider, Grid, Title, Group, Stack, Pagination } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
-import { useLoaderData } from "@remix-run/react"
+import { useLoaderData, useNavigate } from "@remix-run/react"
 
 import { Archive } from "@/components/Archive"
 import { Category } from "@/components/Category"
@@ -16,9 +16,14 @@ export const headers: HeadersFunction = () => {
   }
 }
 
-export const loader: LoaderFunction = async () => {
-  const { contents } = await client.getList<MicroCMSContent>({
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url)
+  const page = Number(url.searchParams.get("page") ?? 1)
+  const per = 12
+
+  const { contents, totalCount } = await client.getList<MicroCMSContent>({
     endpoint: "posts",
+    queries: { limit: per, offset: (page - 1) * per },
   })
   const categories = contents
     .flatMap((c) => c.category)
@@ -40,15 +45,18 @@ export const loader: LoaderFunction = async () => {
     }
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   }, {} as { [key in string]: { month: number; count: number } })
-  return { contents, categories, archives }
+  return { contents, categories, archives, page, totalCount }
 }
 
 export default function Index() {
-  const { contents, categories, archives } = useLoaderData<{
+  const { contents, categories, archives, page, totalCount } = useLoaderData<{
     contents: MicroCMSContent[]
     categories: { [key in CategoryType]: number }
     archives: { [key in string]: { month: number; count: number } }
+    page: number
+    totalCount: number
   }>()
+  const navigate = useNavigate()
   const [largerThanMd] = useMediaQueryMin("md", true)
 
   return (
@@ -88,12 +96,13 @@ export default function Index() {
             </Group>
           }
         />
-        <Grid>
+        <Grid justify="center">
           {contents.map((c) => (
             <Grid.Col key={c.id} span={largerThanMd ? 4 : 6}>
               <ContentCard content={c} />
             </Grid.Col>
           ))}
+          <Pagination page={page} onChange={(page) => navigate(`?page=${page}`)} total={totalCount} my="xl" />
         </Grid>
       </Grid.Col>
       {largerThanMd && (
