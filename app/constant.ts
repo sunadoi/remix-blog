@@ -19,6 +19,8 @@ import OctoberIcon from "@/assets/months/October.png"
 import SeptemberIcon from "@/assets/months/September.png"
 import type { CategoryType } from "@/types/microcms"
 
+export const domain = "https://blog-sunadoi.vercel.app"
+
 export const CategoryIconMap = new Map<CategoryType, string>([
   ["React", ReactIcon],
   ["TypeScript", TypeScriptIcon],

@@ -17,6 +17,7 @@ import { MdArchive, MdCategory, MdPerson } from "react-icons/md"
 
 import Logo from "@/assets/logo.png"
 import { SPNavbar } from "@/components/SPNavbar"
+import { domain } from "@/constant"
 import { useMediaQueryMax } from "@/hooks/useMediaQuery"
 import { MantineTheme } from "@/theme"
 
@@ -26,7 +27,7 @@ export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Suna's Box",
   viewport: "width=device-width,initial-scale=1",
-  "og:url": "https://blog-sunadoi.vercel.app/",
+  "og:url": domain,
   "og:title": "Suna's Box",
   "og:description": "",
   "og:image":

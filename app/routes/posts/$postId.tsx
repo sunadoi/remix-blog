@@ -4,12 +4,13 @@ import type { HeadersFunction, LoaderFunction, MetaFunction } from "@remix-run/n
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { useEffect } from "react"
-import { FaTwitter, FaFacebook } from "react-icons/fa"
+import { FaTwitter } from "react-icons/fa"
 import { MdToc, MdShare, MdLink } from "react-icons/md"
 import tocbot from "tocbot"
 
 import { BlogContent } from "@/components/blog/BlogContent"
 import { Toc } from "@/components/blog/Toc"
+import { domain } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
@@ -23,7 +24,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 
 export const meta: MetaFunction = ({ data }) => {
   return {
-    "og:url": `https://blog-sunadoi.vercel.app/posts/${data.content.id}`,
+    "og:url": `${domain}/posts/${data.content.id}`,
     "og:title": data.content.title,
     "og:image": data.content.image.url,
   }
@@ -87,7 +88,7 @@ export default function PostsId() {
                   </ActionIcon>
                   <ActionIcon
                     component="a"
-                    href={`https://twitter.com/intent/tweet?url=https://blog-sunadoi.vercel.app/posts/${content.id}&text=${content.title}`}
+                    href={`https://twitter.com/intent/tweet?url=${domain}/posts/${content.id}&text=${content.title}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     radius={100}
@@ -96,18 +97,6 @@ export default function PostsId() {
                     className="hover:opacity-80"
                   >
                     <FaTwitter color="#00acee" size={24} />
-                  </ActionIcon>
-                  <ActionIcon
-                    component="a"
-                    href={`https://www.facebook.com/share.php?u=https://blog-sunadoi.vercel.app/posts/${content.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    radius={100}
-                    size="xl"
-                    sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
-                    className="hover:opacity-80"
-                  >
-                    <FaFacebook color="#3b5998" size={24} />
                   </ActionIcon>
                 </Group>
               </Group>
@@ -160,14 +149,13 @@ export default function PostsId() {
               <Group position="center">
                 <ActionIcon
                   component="a"
-                  href={`https://twitter.com/intent/tweet?url=https://blog-sunadoi.vercel.app/posts/${content.id}&text=${content.title}`}
+                  href={`https://twitter.com/intent/tweet?url=${domain}/posts/${content.id}&text=${content.title}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:opacity-80"
                 >
                   <FaTwitter color="#00acee" size={36} />
                 </ActionIcon>
-                <FaFacebook color="#3b5998" size={36} />
               </Group>
               <Button variant="white" onClick={() => setOpenShareModal(false)}>
                 とじる
