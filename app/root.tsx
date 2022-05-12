@@ -26,6 +26,13 @@ export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Suna's Box",
   viewport: "width=device-width,initial-scale=1",
+  "og:url": "https://blog-sunadoi.vercel.app/",
+  "og:title": "Suna's Box",
+  "og:description": "",
+  "og:image":
+    "https://images.microcms-assets.io/assets/99512b0b735d428db7dc00e7e293cb2b/04af4346dc7d46c08a65fcbaf802004b/logo.png",
+  "og:site_name": "Suna's Box",
+  "twitter:card": "summary_large_image",
 })
 
 export function links() {

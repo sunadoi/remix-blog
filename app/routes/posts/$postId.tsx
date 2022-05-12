@@ -1,6 +1,6 @@
 import { ActionIcon, Box, Grid, Group, Paper, Tooltip, useMantineTheme } from "@mantine/core"
 import { useClipboard } from "@mantine/hooks"
-import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
+import type { HeadersFunction, LoaderFunction, MetaFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { useEffect } from "react"
@@ -18,6 +18,14 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   const cacheControl = loaderHeaders.get("Cache-Control") ?? "max-age=0, s-maxage=60, stale-while-revalidate=60"
   return {
     "cache-control": cacheControl,
+  }
+}
+
+export const meta: MetaFunction = ({ data }) => {
+  return {
+    "og:url": `https://blog-sunadoi.vercel.app/posts/${data.content.id}`,
+    "og:title": data.content.title,
+    "og:image": data.content.image.url,
   }
 }
 
@@ -43,14 +51,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 }
 
 export default function PostsId() {
-  const { content } = useLoaderData<{
-    content: MicroCMSContent
-    toc: {
-      id: string
-      text: string
-      name: string
-    }[]
-  }>()
+  const { content } = useLoaderData<{ content: MicroCMSContent }>()
   const [largerThanMd] = useMediaQueryMin("md", true)
   const theme = useMantineTheme()
   const clipboard = useClipboard({ timeout: 2000 })
