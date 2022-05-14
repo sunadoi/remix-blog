@@ -1,4 +1,5 @@
-import { AppShell, Header, Grid, Title, Input, Group, Image, useMantineTheme } from "@mantine/core"
+import { AppShell, Header, Grid, Title, Input, Group, Image, useMantineTheme, Button } from "@mantine/core"
+import { SpotlightProvider } from "@mantine/spotlight"
 import type { LoaderFunction, MetaFunction } from "@remix-run/node"
 import {
   Links,
@@ -13,7 +14,7 @@ import {
 } from "@remix-run/react"
 import type { FC, ReactNode } from "react"
 import { AiOutlineSearch } from "react-icons/ai"
-import { MdArchive, MdCategory, MdPerson } from "react-icons/md"
+import { MdHome, MdArchive, MdCategory, MdPerson } from "react-icons/md"
 
 import Logo from "@/assets/logo.png"
 import { SPNavbar } from "@/components/SPNavbar"
@@ -130,6 +131,29 @@ const Layout: FC<{ path: string; children: ReactNode }> = ({ path, children }) =
                   </Group>
                 </Grid.Col>
                 <Grid.Col span={3} className="max-w-[360px]">
+                  <SpotlightProvider
+                    actions={[
+                      {
+                        title: "トップページ",
+                        onTrigger: () => navigate("/"),
+                        icon: <MdHome />,
+                      },
+                      {
+                        title: "カテゴリーページ",
+                        onTrigger: () => navigate("/categories"),
+                        icon: <MdCategory />,
+                      },
+                      {
+                        title: "アーカイブページ",
+                        onTrigger: () => navigate("/archives"),
+                        icon: <MdArchive />,
+                      },
+                    ]}
+                    searchIcon={<AiOutlineSearch />}
+                    searchPlaceholder="Search..."
+                    nothingFoundMessage="Nothing found..."
+                    shortcut="mod + K"
+                  />
                   <Input icon={<AiOutlineSearch />} radius="md" size="md" />
                 </Grid.Col>
               </>
