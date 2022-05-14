@@ -22,7 +22,7 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
 
   return (
     <Card
-      className="cursor-pointer"
+      className="cursor-pointer hover:opacity-80"
       radius="md"
       p="sm"
       shadow="xs"
@@ -73,7 +73,7 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
 
   return (
     <Card
-      className="max-w-[770px] cursor-pointer"
+      className="max-w-[770px] cursor-pointer hover:opacity-80"
       radius="md"
       p="sm"
       shadow="xs"

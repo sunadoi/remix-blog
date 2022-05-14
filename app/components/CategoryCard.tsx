@@ -19,7 +19,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({ categoryName, icon, total 
 
   return (
     <Card
-      className="cursor-pointer"
+      className="cursor-pointer hover:opacity-80"
       radius="md"
       p="sm"
       shadow="xs"

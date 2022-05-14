@@ -48,7 +48,11 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
       >
         {content.category.map((c) => {
           return (
-            <li key={c} className="max-w-max shrink-0 cursor-pointer" onClick={() => navigate(`/categories/${c}`)}>
+            <li
+              key={c}
+              className="max-w-max shrink-0 cursor-pointer hover:opacity-80"
+              onClick={() => navigate(`/categories/${c}`)}
+            >
               <Paper key={c} radius="xl" shadow="xs" px="md" py={4}>
                 <Group spacing="xs" align="center">
                   <Image fit="contain" src={CategoryIconMap.get(c) ?? ""} alt="categoryIcon" width={20} height={20} />
