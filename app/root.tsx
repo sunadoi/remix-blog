@@ -42,17 +42,26 @@ export function links() {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url)
-  return { path: url.pathname }
+  const env = process.env.NODE_ENV
+  return { path: url.pathname, env }
 }
 
 export default function App() {
-  const { path } = useLoaderData<{ path: string }>()
+  const { path, env } = useLoaderData<{ path: string; env: "development" | "production" }>()
 
   return (
     <html lang="ja">
       <head>
         <Meta />
         <Links />
+        {env === "production" && (
+          <script
+            async
+            defer
+            data-website-id="48f1a1ad-c550-4fc1-a9ee-6a48f621ed5e"
+            src="https://umami-production-fc1a.up.railway.app/umami.js"
+          ></script>
+        )}
       </head>
       <body>
         <MantineTheme>
