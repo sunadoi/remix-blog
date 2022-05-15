@@ -3,15 +3,16 @@ import { useClipboard } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction, MetaFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import { useEffect } from "react"
+import parse from "html-react-parser"
+import { useEffect, useState } from "react"
 import { FaTwitter } from "react-icons/fa"
 import { MdToc, MdShare, MdLink } from "react-icons/md"
-import tocbot from "tocbot"
 
 import { BlogContent } from "@/components/blog/BlogContent"
 import { Toc } from "@/components/blog/Toc"
 import { domain } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
+import type { TocType } from "@/types/blog"
 import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
 
@@ -45,27 +46,59 @@ export const loader: LoaderFunction = async ({ params, request }) => {
       })
     })
 
+  const toc = content.body
+    .map((c) => {
+      if (c.fieldId !== "content") return undefined
+      return [parse(c.richText)]
+        .flat()
+        .map((html) => {
+          if (typeof html === "string") return undefined
+          if (html.type !== "h2" && html.type !== "h3" && html.type !== "h4") return undefined
+
+          return { id: `toc-${html.props.id}`, h: html.type, text: html.props.children }
+        })
+        .filter((e): e is Exclude<TocType, undefined> => e !== undefined)
+    })
+    .filter((e): e is Exclude<TocType[], undefined> => e !== undefined)
+    .flat()
+
   // 下書きの場合キャッシュヘッダを変更
   const headers = draftKey ? { "Cache-Control": "no-store, max-age=0" } : undefined
 
-  return json({ content }, { ...(headers ? { headers } : {}) })
+  return json({ content, toc }, { ...(headers ? { headers } : {}) })
 }
 
 export default function PostsId() {
-  const { content } = useLoaderData<{ content: MicroCMSContent }>()
+  const { content, toc } = useLoaderData<{ content: MicroCMSContent; toc: TocType[] }>()
   const [largerThanMd] = useMediaQueryMin("md", true)
   const theme = useMantineTheme()
   const clipboard = useClipboard({ timeout: 2000 })
   // const [openShareModal, setOpenShareModal] = useState(false)
+  const [openTocDialog, setOpenTocDialog] = useState(false)
 
   useEffect(() => {
-    tocbot.init({
-      tocSelector: ".toc",
-      contentSelector: ".body",
-      headingSelector: "h2, h3, h4",
-    })
-    return () => tocbot.destroy()
-  }, [])
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const toc = document.querySelectorAll("#toc h6")
+          const active = document.getElementById(`toc-${entry.target.textContent}`)
+          if (entry.isIntersecting) {
+            toc.forEach((t) => t?.classList.remove("isActive"))
+            return active?.classList.add("isActive")
+          }
+          // 上にスクロールした時に正しい目次のハイライトにする
+          if (entry.boundingClientRect.y > 0) {
+            toc.forEach((t) => t?.classList.remove("isActive"))
+            let activeIndex = 0
+            toc.forEach((t, index) => (t.id === active?.id ? (activeIndex = index) : undefined))
+            toc.forEach((t, index) => (index === activeIndex - 1 ? t?.classList.add("isActive") : undefined))
+          }
+        })
+      },
+      { root: null, rootMargin: "10% 0% -90% 0%" }
+    )
+    document.querySelectorAll("#contents h2,h3,h4").forEach((ele) => observer.observe(ele))
+  }, [largerThanMd])
 
   return (
     <>
@@ -111,13 +144,17 @@ export default function PostsId() {
         {largerThanMd && (
           <Grid.Col span={3} className="max-w-[360px]">
             <Box className="sticky top-[88px]">
-              <Toc />
+              <Toc toc={toc} />
             </Box>
           </Grid.Col>
         )}
       </Grid>
       {!largerThanMd && (
         <Group position="right" align="flex-end" className="fixed bottom-[88px] right-4">
+          {/* NOTO: unmountするとIntersectionObserverが検出できなくなるためdisplay: noneにする */}
+          <Box className={openTocDialog ? "" : "hidden"}>
+            <Toc toc={toc} />
+          </Box>
           <ActionIcon
             radius={100}
             size="md"
@@ -134,7 +171,13 @@ export default function PostsId() {
           >
             <MdShare color={theme.other.primary} size={16} />
           </ActionIcon>
-          <ActionIcon variant="filled" radius={100} color={theme.other.primary} size="xl">
+          <ActionIcon
+            variant="filled"
+            radius={100}
+            color={theme.other.primary}
+            size="xl"
+            onClick={() => setOpenTocDialog((prev) => !prev)}
+          >
             <MdToc size={24} />
           </ActionIcon>
           {/* <Modal

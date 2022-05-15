@@ -1,9 +1,11 @@
 import { cx } from "@emotion/css"
 import { Box, Blockquote, Text, Title, Group, Image, Paper } from "@mantine/core"
-import { useNavigate } from "@remix-run/react"
+import { useScrollIntoView } from "@mantine/hooks"
+import { useLocation, useNavigate } from "@remix-run/react"
 import dayjs from "dayjs"
 import parse from "html-react-parser"
 import type { FC } from "react"
+import { useEffect } from "react"
 import { BiTime } from "react-icons/bi"
 import { MdUpdate } from "react-icons/md"
 
@@ -17,10 +19,15 @@ import type { MicroCMSContent } from "@/types/microcms"
 export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
   const [largerThanMd] = useMediaQueryMin("md", true)
   const navigate = useNavigate()
+  const location = useLocation()
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({ duration: 0, offset: 80 })
+
+  useEffect(() => {
+    scrollIntoView()
+  }, [])
 
   return (
     <Box
-      className="body"
       sx={(theme) => ({
         code: {
           backgroundColor: theme.colors.gray[2],
@@ -75,61 +82,65 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
           }}
         />
       </Group>
-      {content.body.map((c) => {
-        if (c.fieldId === "content") {
-          return [parse(c.richText)].flat().map((html, index) => {
-            if (typeof html === "string") return <></>
-            if (html.type === "h2" || html.type === "h3" || html.type === "h4") {
+      <div id="contents">
+        {content.body.map((c) => {
+          if (c.fieldId === "content") {
+            return [parse(c.richText)].flat().map((html, index) => {
+              if (typeof html === "string") return <></>
+              if (html.type === "h2" || html.type === "h3" || html.type === "h4") {
+                return (
+                  <div key={index} ref={decodeURI(location.hash) === `#${html.props.children}` ? targetRef : undefined}>
+                    <BlogHeading type={html.type} id={html.props.children}>
+                      {html.props.children}
+                    </BlogHeading>
+                  </div>
+                )
+              }
+              if (html.type === "blockquote") {
+                return (
+                  <Box key={index} mt="lg">
+                    <Blockquote icon={null} color="primary" sx={(theme) => ({ backgroundColor: theme.colors.gray[1] })}>
+                      {html.props.children}
+                    </Blockquote>
+                  </Box>
+                )
+              }
               return (
-                <BlogHeading key={index} type={html.type} id={html.props.id}>
+                <Text key={index} className="leading-loose">
                   {html.props.children}
-                </BlogHeading>
+                </Text>
               )
-            }
-            if (html.type === "blockquote") {
-              return (
-                <Box key={index} mt="lg">
-                  <Blockquote icon={null} color="primary" sx={(theme) => ({ backgroundColor: theme.colors.gray[1] })}>
-                    {html.props.children}
-                  </Blockquote>
-                </Box>
-              )
-            }
+            })
+          }
+          if (c.fieldId === "message") {
+            if (!c.type[0]) return <></>
             return (
-              <Text key={index} className="leading-loose">
-                {html.props.children}
+              <Message type={c.type[0]} key={c.message}>
+                {parse(c.message)}
+              </Message>
+            )
+          }
+          if (c.fieldId === "link") {
+            return (
+              <Text
+                key={c.url}
+                variant="link"
+                component="a"
+                href={c.url}
+                color="blue"
+                className="cursor-pointer hover:opacity-70"
+              >
+                {c.url}
               </Text>
             )
-          })
-        }
-        if (c.fieldId === "message") {
-          if (!c.type[0]) return <></>
+          }
           return (
-            <Message type={c.type[0]} key={c.message}>
-              {parse(c.message)}
-            </Message>
+            <Box key={c.code} my="lg">
+              <SyntaxHighlighter code={c} />
+            </Box>
           )
-        }
-        if (c.fieldId === "link") {
-          return (
-            <Text
-              key={c.url}
-              variant="link"
-              component="a"
-              href={c.url}
-              color="blue"
-              className="cursor-pointer hover:opacity-70"
-            >
-              {c.url}
-            </Text>
-          )
-        }
-        return (
-          <Box key={c.code} my="lg">
-            <SyntaxHighlighter code={c} />
-          </Box>
-        )
-      })}
+        })}
+      </div>
     </Box>
   )
 }
