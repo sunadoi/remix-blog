@@ -2,7 +2,11 @@ import { cx, css } from "@emotion/css"
 import { Box, Group, Paper, Stack, Title, useMantineTheme } from "@mantine/core"
 import type { FC } from "react"
 
-export const Toc: FC = () => {
+type TocProps = {
+  onClose?: () => void
+}
+
+export const Toc: FC<TocProps> = ({ onClose }) => {
   const theme = useMantineTheme()
 
   return (
@@ -11,6 +15,7 @@ export const Toc: FC = () => {
         <Stack spacing="xs">
           <Title order={4}>目次</Title>
           <Box
+            onClick={onClose}
             className={cx(
               "toc", // tocbotによってここにマウントされる
               "font-bold",
@@ -26,6 +31,8 @@ export const Toc: FC = () => {
                   opacity: 0.5;
                   color: ${theme.other.primary};
                   text-decoration: none;
+                  display: block;
+                  width: 100%;
                   :hover {
                     opacity: 1;
                   }

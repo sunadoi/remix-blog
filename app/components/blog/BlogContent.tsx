@@ -20,7 +20,7 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
   const [largerThanMd] = useMediaQueryMin("md", true)
   const navigate = useNavigate()
   const location = useLocation()
-  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({ duration: 0, offset: 70 })
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({ duration: 0, offset: 60 })
 
   useEffect(() => {
     scrollIntoView()

@@ -1,11 +1,11 @@
-import { ActionIcon, Box, Grid, Group, Paper, Tooltip, useMantineTheme } from "@mantine/core"
+import { ActionIcon, Box, Grid, Group, Overlay, Paper, Tooltip, useMantineTheme } from "@mantine/core"
 import { useClipboard } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction, MetaFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { useEffect, useState } from "react"
-import { FaTwitter } from "react-icons/fa"
-import { MdToc, MdShare, MdLink } from "react-icons/md"
+import { FaTwitter, FaBook } from "react-icons/fa"
+import { MdMenuBook, MdShare, MdLink } from "react-icons/md"
 import tocbot from "tocbot"
 
 import { BlogContent } from "@/components/blog/BlogContent"
@@ -107,7 +107,10 @@ export default function PostsId() {
               </Paper>
             </>
           ) : (
-            <BlogContent content={content} />
+            <>
+              {openTocDialog && <Overlay color="transparent" zIndex={1} onClick={() => setOpenTocDialog(false)} />}
+              <BlogContent content={content} />
+            </>
           )}
         </Grid.Col>
         {largerThanMd && (
@@ -119,14 +122,14 @@ export default function PostsId() {
         )}
       </Grid>
       {!largerThanMd && (
-        <Group position="right" align="flex-end" className="fixed bottom-[88px] right-4">
-          {/* NOTO: unmountするとIntersectionObserverが検出できなくなるためdisplay: noneにする */}
+        <Group position="right" align="flex-end" className="fixed bottom-[88px] right-4 z-[2]">
           <Box className={openTocDialog ? "" : "hidden"}>
-            <Toc />
+            <Toc onClose={() => setOpenTocDialog(false)} />
           </Box>
+          {/* NOTO: unmountするとIntersectionObserverが検出できなくなるためdisplay: noneにする */}
           <ActionIcon
             radius={100}
-            size="md"
+            size="lg"
             variant="filled"
             className="bg-white hover:bg-white"
             sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
@@ -138,16 +141,16 @@ export default function PostsId() {
               })
             }}
           >
-            <MdShare color={theme.other.primary} size={16} />
+            <MdShare color={theme.other.primary} size={20} />
           </ActionIcon>
           <ActionIcon
             variant="filled"
             radius={100}
             color={theme.other.primary}
-            size="xl"
+            size={48}
             onClick={() => setOpenTocDialog((prev) => !prev)}
           >
-            <MdToc size={24} />
+            {openTocDialog ? <FaBook size={20} /> : <MdMenuBook size={20} />}
           </ActionIcon>
           {/* <Modal
             opened={openShareModal}
