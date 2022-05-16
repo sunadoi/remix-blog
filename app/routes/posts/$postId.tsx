@@ -10,7 +10,7 @@ import { MdMenuBook, MdShare, MdLink } from "react-icons/md"
 import tocbot from "tocbot"
 
 import { BlogContent } from "@/components/blog/BlogContent"
-import { Toc } from "@/components/blog/Toc"
+import { TocCard, TocDialog } from "@/components/blog/Toc"
 import { domain } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
@@ -117,21 +117,31 @@ export default function PostsId() {
         {largerThanMd && (
           <Grid.Col span={3} className="max-w-[360px]">
             <Box className="sticky top-[88px]">
-              <Toc />
+              <TocCard />
             </Box>
           </Grid.Col>
         )}
       </Grid>
       {!largerThanMd && (
         <>
-          <Box className={cx(`${openTocDialog ? "" : "hidden"}`, "fixed bottom-[130px] right-4 z-[2]")}>
-            <Toc onClose={() => setOpenTocDialog(false)} />
-          </Box>
-          <Group position="right" align="flex-end" className="fixed bottom-[88px] right-4">
+          <Paper
+            my="md"
+            p="md"
+            radius="md"
+            shadow="xs"
+            onClick={() => setOpenTocDialog(false)}
+            className={cx(
+              `${openTocDialog ? "" : "hidden"}`,
+              "fixed bottom-[150px] left-[50%] z-[2] ml-[-46%] w-[90%]"
+            )}
+          >
+            <TocDialog />
+          </Paper>
+          <Group position="right" align="flex-end" className="fixed bottom-[96px] right-4">
             {/* NOTO: unmountするとIntersectionObserverが検出できなくなるためdisplay: noneにする */}
             <ActionIcon
               radius={100}
-              size="lg"
+              size={48}
               variant="filled"
               className="bg-white hover:bg-white"
               sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
@@ -143,16 +153,16 @@ export default function PostsId() {
                 })
               }}
             >
-              <MdShare color={theme.other.primary} size={20} />
+              <MdShare color={theme.other.primary} size={24} />
             </ActionIcon>
             <ActionIcon
               variant="filled"
               radius={100}
               color={theme.other.primary}
-              size={48}
+              size={56}
               onClick={() => setOpenTocDialog((prev) => !prev)}
             >
-              {openTocDialog ? <FaBook size={20} /> : <MdMenuBook size={20} />}
+              {openTocDialog ? <FaBook size={24} /> : <MdMenuBook size={24} />}
             </ActionIcon>
             {/* <Modal
             opened={openShareModal}
