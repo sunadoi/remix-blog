@@ -25,6 +25,11 @@ export const loader: LoaderFunction = async ({ request }) => {
     endpoint: "posts",
     queries: { limit: per, offset: (page - 1) * per },
   })
+  const { contents: pickupContents } = await client.getList<MicroCMSContent>({
+    endpoint: "posts",
+    queries: { ids: ["react18-strict-mode", "library-template-literal-types"] },
+  })
+
   const categories = contents
     .flatMap((c) => c.category)
     .reduce(
@@ -45,12 +50,13 @@ export const loader: LoaderFunction = async ({ request }) => {
     }
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   }, {} as { [key in string]: { month: number; count: number } })
-  return { contents, categories, archives, page, totalCount }
+  return { contents, pickupContents, categories, archives, page, totalCount }
 }
 
 export default function Index() {
-  const { contents, categories, archives, page, totalCount } = useLoaderData<{
+  const { contents, pickupContents, categories, archives, page, totalCount } = useLoaderData<{
     contents: MicroCMSContent[]
+    pickupContents: MicroCMSContent[]
     categories: { [key in CategoryType]: number }
     archives: { [key in string]: { month: number; count: number } }
     page: number
@@ -77,7 +83,7 @@ export default function Index() {
           }
         />
         <Stack>
-          {contents.map((c) => (
+          {pickupContents.map((c) => (
             <WideContentCard key={c.id} content={c} />
           ))}
         </Stack>
