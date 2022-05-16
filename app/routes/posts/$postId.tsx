@@ -1,3 +1,4 @@
+import { cx } from "@emotion/css"
 import { ActionIcon, Box, Grid, Group, Overlay, Paper, Tooltip, useMantineTheme } from "@mantine/core"
 import { useClipboard } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction, MetaFunction } from "@remix-run/node"
@@ -122,45 +123,46 @@ export default function PostsId() {
         )}
       </Grid>
       {!largerThanMd && (
-        <Group position="right" align="flex-end" className="fixed bottom-[88px] right-4 z-[2]">
-          <Box className={openTocDialog ? "" : "hidden"}>
+        <>
+          <Box className={cx(`${openTocDialog ? "" : "hidden"}`, "fixed bottom-[130px] right-4 z-[2]")}>
             <Toc onClose={() => setOpenTocDialog(false)} />
           </Box>
-          {/* NOTO: unmountするとIntersectionObserverが検出できなくなるためdisplay: noneにする */}
-          <ActionIcon
-            radius={100}
-            size="lg"
-            variant="filled"
-            className="bg-white hover:bg-white"
-            sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
-            onClick={async () => {
-              await navigator.share({
-                title: content.title,
-                text: content.title,
-                url: "",
-              })
-            }}
-          >
-            <MdShare color={theme.other.primary} size={20} />
-          </ActionIcon>
-          <ActionIcon
-            variant="filled"
-            radius={100}
-            color={theme.other.primary}
-            size={48}
-            onClick={() => setOpenTocDialog((prev) => !prev)}
-          >
-            {openTocDialog ? <FaBook size={20} /> : <MdMenuBook size={20} />}
-          </ActionIcon>
-          {/* <Modal
+          <Group position="right" align="flex-end" className="fixed bottom-[88px] right-4">
+            {/* NOTO: unmountするとIntersectionObserverが検出できなくなるためdisplay: noneにする */}
+            <ActionIcon
+              radius={100}
+              size="lg"
+              variant="filled"
+              className="bg-white hover:bg-white"
+              sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
+              onClick={async () => {
+                await navigator.share({
+                  title: content.title,
+                  text: content.title,
+                  url: "",
+                })
+              }}
+            >
+              <MdShare color={theme.other.primary} size={20} />
+            </ActionIcon>
+            <ActionIcon
+              variant="filled"
+              radius={100}
+              color={theme.other.primary}
+              size={48}
+              onClick={() => setOpenTocDialog((prev) => !prev)}
+            >
+              {openTocDialog ? <FaBook size={20} /> : <MdMenuBook size={20} />}
+            </ActionIcon>
+            {/* <Modal
             opened={openShareModal}
             onClose={() => setOpenShareModal(false)}
             withCloseButton={false}
             overlayOpacity={0.3}
             centered
           >
-            <Group direction="column" position="center">
-              <Title order={3}>シェアしてくれるとうれしい</Title>
+          <Group direction="column" position="center">
+          <Title order={3}>シェアしてくれるとうれしい</Title>
               <Group position="center">
                 <ActionIcon
                   component="a"
@@ -173,11 +175,12 @@ export default function PostsId() {
                 </ActionIcon>
               </Group>
               <Button variant="white" onClick={() => setOpenShareModal(false)}>
-                とじる
+              とじる
               </Button>
             </Group>
           </Modal> */}
-        </Group>
+          </Group>
+        </>
       )}
     </>
   )
