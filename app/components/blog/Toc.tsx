@@ -29,7 +29,7 @@ export const TocDialog: FC = () => {
         目次
       </Title>
       <Divider mt="xl" size="sm" sx={(theme) => ({ borderColor: theme.other.paleBlue })} />
-      <Box mt="md" className="max-h-[300px] overflow-y-scroll">
+      <Box mt="md" className="max-h-[350px] overflow-y-scroll">
         <Toc />
       </Box>
     </>

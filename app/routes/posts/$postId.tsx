@@ -109,7 +109,15 @@ export default function PostsId() {
             </>
           ) : (
             <>
-              {openTocDialog && <Overlay color="transparent" zIndex={1} onClick={() => setOpenTocDialog(false)} />}
+              {openTocDialog && (
+                <Overlay
+                  color="black"
+                  opacity={0.5}
+                  zIndex={200}
+                  sx={() => ({ position: "fixed" })}
+                  onClick={() => setOpenTocDialog(false)}
+                />
+              )}
               <BlogContent content={content} />
             </>
           )}
@@ -124,6 +132,7 @@ export default function PostsId() {
       </Grid>
       {!largerThanMd && (
         <>
+          {/* NOTO: unmountすると検出できなくなるためdisplay: noneにする */}
           <Paper
             my="md"
             p="md"
@@ -132,13 +141,12 @@ export default function PostsId() {
             onClick={() => setOpenTocDialog(false)}
             className={cx(
               `${openTocDialog ? "" : "hidden"}`,
-              "fixed bottom-[150px] left-[50%] z-[2] ml-[-46%] w-[90%]"
+              "fixed bottom-[150px] left-[50%] z-[300] ml-[-46%] w-[90%]"
             )}
           >
             <TocDialog />
           </Paper>
-          <Group position="right" align="flex-end" className="fixed bottom-[96px] right-4">
-            {/* NOTO: unmountするとIntersectionObserverが検出できなくなるためdisplay: noneにする */}
+          <Group position="right" align="flex-end" className="fixed bottom-[96px] right-4 z-[300]">
             <ActionIcon
               radius={100}
               size={48}
@@ -153,6 +161,7 @@ export default function PostsId() {
                 })
               }}
             >
+              {openTocDialog && <Overlay color="black" m={-1} radius={100} opacity={0.5} zIndex={1} />}
               <MdShare color={theme.other.primary} size={24} />
             </ActionIcon>
             <ActionIcon
