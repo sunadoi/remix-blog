@@ -20,10 +20,9 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
   const [largerThanMd] = useMediaQueryMin("md", true)
   const navigate = useNavigate()
   const location = useLocation()
-  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({ duration: 0, offset: 80 })
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({ duration: 0, offset: 70 })
 
   useEffect(() => {
-    console.log("aaa")
     scrollIntoView()
   }, [largerThanMd])
 
@@ -83,7 +82,7 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
           }}
         />
       </Group>
-      <div id="contents">
+      <div className="body">
         {content.body.map((c) => {
           if (c.fieldId === "content") {
             return [parse(c.richText)].flat().map((html, index) => {
