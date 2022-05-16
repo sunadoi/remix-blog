@@ -1,17 +1,14 @@
-import { useMantineTheme, Tabs, Footer } from "@mantine/core"
-import { useNavigate } from "@remix-run/react"
+import { useMantineTheme, Footer, Grid, Text, Group } from "@mantine/core"
+import { useLocation, useNavigate } from "@remix-run/react"
 import type { FC } from "react"
 import { useEffect, useState } from "react"
 import { MdHome, MdArchive, MdCategory, MdPerson } from "react-icons/md"
 
-type SPNavbarProps = {
-  path: string
-}
-
-export const SPNavbar: FC<SPNavbarProps> = ({ path }) => {
+export const SPNavbar: FC = () => {
   const navigate = useNavigate()
   const theme = useMantineTheme()
-  const [tab, setTab] = useState(0)
+  const [tabIndex, setTabIndex] = useState(0)
+  const { pathname } = useLocation()
 
   const tabs = [
     { path: "/", label: "ホーム", icon: <MdHome color={theme.other.primary} size={24} /> },
@@ -21,33 +18,36 @@ export const SPNavbar: FC<SPNavbarProps> = ({ path }) => {
   ]
 
   useEffect(() => {
-    // NOTE: /categories/fooでもcategoriesと一致とみなすにはinculudesを使う必要がある。
-    // tabsでfindIndexすると/が先にヒットしてしまうのでreverseする。
-    const index = [...tabs].reverse().findIndex((t) => path.includes(t.path))
-    if (index !== -1) setTab(tabs.length - index - 1)
-  }, [])
+    const index = pathname === "/" ? 0 : [...tabs].findIndex((t, index) => index !== 0 && pathname.includes(t.path))
+    setTabIndex(index)
+  }, [pathname])
 
   return (
     <Footer height="100%" px="md" py="sm" className="sticky">
-      <Tabs
-        variant="unstyled"
-        active={tab}
-        onTabChange={(tabIndex, tabKey) => {
-          setTab(tabIndex)
-          tabKey && navigate(tabKey)
-        }}
-        styles={(theme) => ({
-          tabControl: { padding: "8px", height: "100%", width: "calc(100% / 4)", borderRadius: theme.radius.md },
-          tabsList: { justifyContent: "space-between" },
-          tabInner: { flexDirection: "column", gap: "8px" },
-          tabLabel: { color: theme.other.primary, fontSize: theme.fontSizes.xs },
-          tabActive: { backgroundColor: theme.other.paleBlue, fontWeight: "bold" },
-        })}
-      >
-        {tabs.map((tab) => (
-          <Tabs.Tab key={tab.path} tabKey={tab.path} label={tab.label} icon={tab.icon} />
+      <Grid grow p="sm">
+        {tabs.map((tab, index) => (
+          <Grid.Col
+            key={tab.path}
+            span={3}
+            sx={(theme) => ({
+              borderRadius: theme.radius.md,
+              backgroundColor: index === tabIndex ? theme.other.paleBlue : undefined,
+              fontWeight: index === tabIndex ? "bold" : "normal",
+            })}
+            onClick={() => {
+              setTabIndex(index)
+              navigate(tab.path)
+            }}
+          >
+            <Group direction="column" position="center" align="center" spacing="xs">
+              {tab.icon}
+              <Text color={theme.other.primary} size="xs">
+                {tab.label}
+              </Text>
+            </Group>
+          </Grid.Col>
         ))}
-      </Tabs>
+      </Grid>
     </Footer>
   )
 }

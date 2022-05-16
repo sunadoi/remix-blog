@@ -28,14 +28,13 @@ export function links() {
   return [{ rel: "stylesheet", href: styles }]
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const url = new URL(request.url)
+export const loader: LoaderFunction = async () => {
   const env = process.env.NODE_ENV
-  return { path: url.pathname, env }
+  return { env }
 }
 
 export default function App() {
-  const { path, env } = useLoaderData<{ path: string; env: "development" | "production" }>()
+  const { env } = useLoaderData<{ env: "development" | "production" }>()
 
   return (
     <html lang="ja">
@@ -53,7 +52,7 @@ export default function App() {
       </head>
       <body>
         <MantineTheme>
-          <Layout path={path}>
+          <Layout>
             <Outlet />
           </Layout>
         </MantineTheme>
@@ -65,12 +64,12 @@ export default function App() {
   )
 }
 
-const Layout: FC<{ path: string; children: ReactNode }> = ({ path, children }) => {
+const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   const [smallerThanMd, mounted] = useMediaQueryMax("md", true)
 
   if (!mounted) return <></>
   return (
-    <AppShell header={<Header />} footer={smallerThanMd ? <SPNavbar path={path} /> : <></>}>
+    <AppShell header={<Header />} footer={smallerThanMd ? <SPNavbar /> : <></>}>
       <div className="min-h-[100vh]">{children}</div>
     </AppShell>
   )
