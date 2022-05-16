@@ -71,7 +71,7 @@ const Layout: FC<{ path: string; children: ReactNode }> = ({ path, children }) =
   if (!mounted) return <></>
   return (
     <AppShell header={<Header />} footer={smallerThanMd ? <SPNavbar path={path} /> : <></>}>
-      {children}
+      <div className="min-h-[100vh]">{children}</div>
     </AppShell>
   )
 }
