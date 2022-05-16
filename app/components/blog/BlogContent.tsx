@@ -23,8 +23,9 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({ duration: 0, offset: 80 })
 
   useEffect(() => {
+    console.log("aaa")
     scrollIntoView()
-  }, [])
+  }, [largerThanMd])
 
   return (
     <Box

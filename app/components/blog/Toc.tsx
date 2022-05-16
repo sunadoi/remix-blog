@@ -1,7 +1,6 @@
 import { cx, css } from "@emotion/css"
 import { Group, Paper, Stack, Title } from "@mantine/core"
 import type { FC } from "react"
-// import { HashLink } from "react-router-hash-link"
 
 import type { TocType } from "@/types/blog"
 
@@ -30,20 +29,20 @@ export const Toc: FC<TocProps> = ({ toc }) => {
             {toc.map((t) => {
               return (
                 <li key={t.id} className="cursor-pointer list-none">
-                  {/* <a href={`#${t.text}`} className="no-underline"> */}
-                  <Title
-                    order={6}
-                    id={`toc-${t.text}`}
-                    className={cx(
-                      "leading-loose",
-                      "opacity-50",
-                      "hover:opacity-100",
-                      t.h === "h3" ? "indent-[8px]" : t.h === "h4" ? "indent-[24px]" : ""
-                    )}
-                  >
-                    {t.text}
-                  </Title>
-                  {/* </a> */}
+                  <a href={`#${t.text}`} className="no-underline">
+                    <Title
+                      order={6}
+                      id={`toc-${t.text}`}
+                      className={cx(
+                        "leading-loose",
+                        "opacity-50",
+                        "hover:opacity-100",
+                        t.h === "h3" ? "indent-[8px]" : t.h === "h4" ? "indent-[24px]" : ""
+                      )}
+                    >
+                      {t.text}
+                    </Title>
+                  </a>
                 </li>
               )
             })}
