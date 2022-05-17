@@ -99,7 +99,11 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
               if (html.type === "blockquote") {
                 return (
                   <Box key={index} mt="lg">
-                    <Blockquote icon={null} color="primary" sx={(theme) => ({ backgroundColor: theme.colors.gray[1] })}>
+                    <Blockquote
+                      icon={null}
+                      color="primary"
+                      sx={(theme) => ({ backgroundColor: theme.colors.gray[1], borderRadius: theme.radius.md })}
+                    >
                       {html.props.children}
                     </Blockquote>
                   </Box>
