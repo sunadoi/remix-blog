@@ -5,8 +5,8 @@ import type { HeadersFunction, LoaderFunction, MetaFunction } from "@remix-run/n
 import { json } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { useEffect, useState } from "react"
-import { FaTwitter, FaBook } from "react-icons/fa"
-import { MdMenuBook, MdShare, MdLink } from "react-icons/md"
+import { FaTwitter } from "react-icons/fa"
+import { MdClose, MdShare, MdLink, MdToc } from "react-icons/md"
 import tocbot from "tocbot"
 
 import { BlogContent } from "@/components/blog/BlogContent"
@@ -167,11 +167,18 @@ export default function PostsId() {
             <ActionIcon
               variant="filled"
               radius={100}
-              color={theme.other.primary}
+              sx={(theme) => ({
+                color: openTocDialog ? theme.other.primary : theme.other.white,
+                backgroundColor: openTocDialog ? theme.other.white : theme.other.primary,
+                "&:hover": {
+                  color: openTocDialog ? theme.other.primary : theme.other.white,
+                  backgroundColor: openTocDialog ? theme.other.white : theme.other.primary,
+                },
+              })}
               size={56}
               onClick={() => setOpenTocDialog((prev) => !prev)}
             >
-              {openTocDialog ? <FaBook size={24} /> : <MdMenuBook size={24} />}
+              {openTocDialog ? <MdClose size={32} /> : <MdToc size={32} />}
             </ActionIcon>
             {/* <Modal
             opened={openShareModal}
