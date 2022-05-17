@@ -94,24 +94,29 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
           </AspectRatio>
         </Grid.Col>
         <Grid.Col span={6}>
-          <Stack justify="space-between" spacing="sm" className="h-[100%]">
-            <Text size="md" sx={(theme) => ({ color: theme.other.primary })} weight="bold" lineClamp={2}>
+          <Stack justify="space-around" spacing="sm" className="h-[100%]">
+            <Text
+              size={largerThanMd ? "lg" : "sm"}
+              sx={(theme) => ({ color: theme.other.primary })}
+              weight="bold"
+              lineClamp={2}
+            >
               {content.title}
             </Text>
             <Group position="apart" spacing="xs">
               {largerThanMd && (
                 <Group spacing="xs">
                   {content.topic?.[0] && isCategory(content.topic?.[0]) && (
-                    <Image fit="contain" src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={16} height={16} />
+                    <Image fit="contain" src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={20} height={20} />
                   )}
-                  <Text sx={(theme) => ({ color: theme.other.secondary })} size="sm">
+                  <Text sx={(theme) => ({ color: theme.other.secondary })} size="md">
                     {content.topic?.[0]}
                   </Text>
                 </Group>
               )}
               <Group spacing="xs">
-                <BiTime size={largerThanMd ? 16 : 12} />
-                <Text size="sm" color="gray">
+                <BiTime size={largerThanMd ? 20 : 12} />
+                <Text size={largerThanMd ? "md" : "sm"} color="gray">
                   {dayjs(content.publishedAt).format("YYYY.MM.DD")}
                 </Text>
               </Group>
