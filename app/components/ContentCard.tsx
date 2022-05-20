@@ -24,8 +24,8 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
     <Card
       className="cursor-pointer hover:opacity-80"
       radius="md"
-      p="sm"
-      shadow="xs"
+      p={largerThanMd ? "sm" : "md"}
+      sx={() => ({ height: "100%", boxShadow: "0px 4px 4px rgba(185, 206, 239, 0.25)" })}
       onClick={() => {
         setSelectedCardId(content.id)
         navigate(`/posts/${content.id}`)
@@ -42,21 +42,30 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
           <Image src={content.image.url} alt="thumbnail" />
         </AspectRatio>
       </Box>
-      <Text size="md" sx={(theme) => ({ color: theme.other.primary })} weight="bold" my="sm" lineClamp={3}>
-        {content.title}
-      </Text>
-      <Group position="apart" direction={largerThanMd ? "row" : "column"} spacing="xs">
+      <Box className={`h-[${largerThanMd ? "120px" : "100px"}]`}>
+        <Text
+          size="xl"
+          sx={(theme) => ({ color: theme.other.primary })}
+          weight="bold"
+          my="sm"
+          lineClamp={3}
+          className="tracking-[0.5px]"
+        >
+          {content.title}
+        </Text>
+      </Box>
+      <Group position="apart" spacing="xs" mb="xs" className="w-[100%]">
         <Group spacing="xs">
           {content.topic?.[0] && isCategory(content.topic?.[0]) && (
             <Image fit="contain" src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={16} height={16} />
           )}
-          <Text sx={(theme) => ({ color: theme.other.secondary })} size="sm">
+          <Text sx={(theme) => ({ color: theme.other.secondary })} size="lg">
             {content.topic?.[0]}
           </Text>
         </Group>
         <Group spacing="xs">
           <BiTime size={largerThanMd ? 16 : 12} />
-          <Text size="sm" color="gray">
+          <Text size="lg" color="gray">
             {dayjs(content.publishedAt).format("YYYY.MM.DD")}
           </Text>
         </Group>
@@ -70,13 +79,14 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
   const [selectedCardId, setSelectedCardId] = useState("")
   const transition = useTransition()
   const [largerThanMd] = useMediaQueryMin("md", true)
+  const [largerThanLg] = useMediaQueryMin("lg", true)
 
   return (
     <Card
       className="max-w-[770px] cursor-pointer hover:opacity-80"
       radius="md"
       p="sm"
-      shadow="xs"
+      sx={() => ({ boxShadow: "0px 4px 4px rgba(185, 206, 239, 0.25)" })}
       onClick={() => {
         setSelectedCardId(content.id)
         navigate(`/posts/${content.id}`)
@@ -87,19 +97,20 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
         overlayOpacity={0.5}
         overlayColor="white"
       />
-      <Grid gutter={largerThanMd ? "xl" : "md"}>
+      <Grid gutter={largerThanMd ? "xl" : "lg"}>
         <Grid.Col span={6} p={0}>
           <AspectRatio ratio={1.9 / 1}>
             <Image src={content.image.url} alt="thumbnail" radius="sm" />
           </AspectRatio>
         </Grid.Col>
-        <Grid.Col span={6}>
-          <Stack justify="space-around" spacing="sm" className="h-[100%]">
+        <Grid.Col span={6} p={largerThanLg ? "md" : "sm"} pr={largerThanLg ? "lg" : "md"}>
+          <Stack justify="space-around" spacing="xs" className="h-[100%]">
             <Text
-              size={largerThanMd ? "lg" : "sm"}
+              size={largerThanMd ? "lg" : "md"}
               sx={(theme) => ({ color: theme.other.primary })}
               weight="bold"
-              lineClamp={2}
+              className="tracking-[0.5px]"
+              lineClamp={largerThanMd ? 2 : 2}
             >
               {content.title}
             </Text>
@@ -107,16 +118,16 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
               {largerThanMd && (
                 <Group spacing="xs">
                   {content.topic?.[0] && isCategory(content.topic?.[0]) && (
-                    <Image fit="contain" src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={20} height={20} />
+                    <Image fit="contain" src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={16} height={16} />
                   )}
-                  <Text sx={(theme) => ({ color: theme.other.secondary })} size="md">
+                  <Text sx={(theme) => ({ color: theme.other.secondary })} size="lg">
                     {content.topic?.[0]}
                   </Text>
                 </Group>
               )}
               <Group spacing="xs">
-                <BiTime size={largerThanMd ? 20 : 12} />
-                <Text size={largerThanMd ? "md" : "sm"} color="gray">
+                <BiTime size={largerThanMd ? 16 : 12} />
+                <Text size={largerThanMd ? "lg" : "sm"} color="gray">
                   {dayjs(content.publishedAt).format("YYYY.MM.DD")}
                 </Text>
               </Group>

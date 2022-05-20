@@ -1,4 +1,4 @@
-import { Divider, Grid, Title, Group, Stack, Pagination, Container } from "@mantine/core"
+import { Divider, Grid, Title, Group, Stack, Pagination } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useNavigate } from "@remix-run/react"
 
@@ -64,6 +64,7 @@ export default function Index() {
   }>()
   const navigate = useNavigate()
   const [largerThanMd] = useMediaQueryMin("md", true)
+  const [largerThanLg] = useMediaQueryMin("lg", true)
 
   return (
     <Grid justify="center">
@@ -104,14 +105,14 @@ export default function Index() {
         />
         <Grid>
           {contents.map((c) => (
-            <Grid.Col key={c.id} span={largerThanMd ? 4 : 6}>
+            <Grid.Col key={c.id} span={largerThanLg ? 6 : 12}>
               <ContentCard content={c} />
             </Grid.Col>
           ))}
-          <Container>
-            <Pagination page={page} onChange={(page) => navigate(`?page=${page}`)} total={totalCount} my="xl" />
-          </Container>
         </Grid>
+        <Group position="center">
+          <Pagination page={page} onChange={(page) => navigate(`?page=${page}`)} total={totalCount} my="xl" />
+        </Group>
       </Grid.Col>
       {largerThanMd && (
         <Grid.Col span={3} className="max-w-[360px]">
