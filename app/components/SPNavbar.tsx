@@ -4,7 +4,11 @@ import type { FC } from "react"
 import { useEffect, useState } from "react"
 import { MdHome, MdArchive, MdCategory, MdPerson } from "react-icons/md"
 
-export const SPNavbar: FC = () => {
+type SPNavbarProps = {
+  setNavLoading: (loading: boolean) => void
+}
+
+export const SPNavbar: FC<SPNavbarProps> = ({ setNavLoading }) => {
   const navigate = useNavigate()
   const theme = useMantineTheme()
   const [tabIndex, setTabIndex] = useState(0)
@@ -20,6 +24,7 @@ export const SPNavbar: FC = () => {
   useEffect(() => {
     const index = pathname === "/" ? 0 : [...tabs].findIndex((t, index) => index !== 0 && pathname.includes(t.path))
     setTabIndex(index)
+    setNavLoading(false)
   }, [pathname])
 
   return (
@@ -36,6 +41,7 @@ export const SPNavbar: FC = () => {
             })}
             onClick={() => {
               setTabIndex(index)
+              setNavLoading(true)
               navigate(tab.path)
             }}
           >

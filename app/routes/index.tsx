@@ -25,10 +25,10 @@ export const loader: LoaderFunction = async ({ request }) => {
     endpoint: "posts",
     queries: { limit: per, offset: (page - 1) * per },
   })
-  const { contents: pickupContents } = await client.getList<MicroCMSContent>({
-    endpoint: "posts",
-    queries: { ids: ["react18-strict-mode", "library-template-literal-types"] },
-  })
+
+  const pickupContents = contents.filter((c) =>
+    ["react18-strict-mode", "library-template-literal-types"].includes(c.id)
+  )
 
   const categories = contents
     .flatMap((c) => c.category)
