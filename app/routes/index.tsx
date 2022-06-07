@@ -64,7 +64,6 @@ export default function Index() {
   }>()
   const navigate = useNavigate()
   const [largerThanMd] = useMediaQueryMin("md", true)
-  const [largerThanLg] = useMediaQueryMin("lg", true)
 
   return (
     <Grid justify="center">
@@ -105,7 +104,7 @@ export default function Index() {
         />
         <Grid>
           {contents.map((c) => (
-            <Grid.Col key={c.id} span={largerThanLg ? 6 : 12}>
+            <Grid.Col key={c.id} span={6}>
               <ContentCard content={c} />
             </Grid.Col>
           ))}

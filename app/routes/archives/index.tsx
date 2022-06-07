@@ -46,6 +46,7 @@ export default function Index() {
     yearMonths: { [key in string]: { month: number; contents: MicroCMSContent[] } }
   }>()
   const [largerThanMd] = useMediaQueryMin("md", true)
+  const [largerThanLg] = useMediaQueryMin("lg", true)
   const [params] = useSearchParams()
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({ duration: 0, offset: 80 })
 
@@ -55,7 +56,7 @@ export default function Index() {
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 8 : 12} className="max-w-[1200px]">
+      <Grid.Col span={largerThanMd ? 10 : 12} className="max-w-[1200px]">
         {/* <Tabs
           position="center"
           variant="unstyled"
@@ -95,8 +96,8 @@ export default function Index() {
         {Object.entries(yearMonths).map(([yearMonth, archive]) => {
           return (
             <Box key={yearMonth} ref={yearMonth === params.get("month") ? targetRef : undefined} mb="xl">
-              <Grid justify="center" gutter={largerThanMd ? 80 : "lg"}>
-                <Grid.Col span={largerThanMd ? 2 : 12}>
+              <Grid justify="center" gutter={largerThanLg ? 80 : "lg"}>
+                <Grid.Col span={largerThanMd ? 3 : 12}>
                   {largerThanMd ? (
                     <Stack justify="center" align="center" spacing="xs" mt="sm">
                       <Image src={MonthIconMap.get(archive.month) ?? ""} alt="monthIcon" width="100px" />
@@ -120,7 +121,7 @@ export default function Index() {
                 <Grid.Col span={largerThanMd ? 9 : 12}>
                   <Grid>
                     {archive.contents.map((c) => (
-                      <Grid.Col key={c.id} span={largerThanMd ? 4 : 6}>
+                      <Grid.Col key={c.id} span={largerThanLg ? 4 : 6}>
                         <ContentCard content={c} />
                       </Grid.Col>
                     ))}

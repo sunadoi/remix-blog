@@ -6,10 +6,11 @@ import { AiOutlineSearch } from "react-icons/ai"
 import { MdHome, MdArchive, MdCategory, MdPerson } from "react-icons/md"
 
 import Logo from "@/assets/logo.png"
-import { useMediaQueryMax } from "@/hooks/useMediaQuery"
+import { useMediaQueryMax, useMediaQueryMin } from "@/hooks/useMediaQuery"
 
 export const Header: FC = () => {
   const navigate = useNavigate()
+  const [largerThanLg] = useMediaQueryMin("lg", true)
   const [smallerThanMd] = useMediaQueryMax("md", true)
   const theme = useMantineTheme()
 
@@ -36,15 +37,15 @@ export const Header: FC = () => {
               <Group position="right">
                 <Group spacing="xs" className="cursor-pointer hover:opacity-80">
                   <MdPerson color={theme.other.primary} size="20px" />
-                  <Title order={5}>プロフィール</Title>
+                  {largerThanLg && <Title order={5}>プロフィール</Title>}
                 </Group>
                 <Group spacing="xs" className="cursor-pointer hover:opacity-80" onClick={() => navigate("/archives")}>
                   <MdArchive color={theme.other.primary} size="20px" />
-                  <Title order={5}>アーカイブ</Title>
+                  {largerThanLg && <Title order={5}>アーカイブ</Title>}
                 </Group>
                 <Group spacing="xs" className="cursor-pointer hover:opacity-80" onClick={() => navigate("/categories")}>
                   <MdCategory color={theme.other.primary} size="20px" />
-                  <Title order={5}>カテゴリー</Title>
+                  {largerThanLg && <Title order={5}>カテゴリー</Title>}
                 </Group>
               </Group>
             </Grid.Col>
