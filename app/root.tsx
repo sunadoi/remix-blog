@@ -89,6 +89,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
           visible={transition.state === "loading" && navLoading}
           overlayOpacity={0.5}
           overlayColor="white"
+          className="fixed"
         />
         {children}
       </div>
