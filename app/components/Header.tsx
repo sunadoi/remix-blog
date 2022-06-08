@@ -36,15 +36,15 @@ export const Header: FC = () => {
             <Grid.Col span={4} className="max-w-[480px]">
               <Group position="right">
                 <Group spacing="xs" className="cursor-pointer hover:opacity-80">
-                  <MdPerson color={theme.other.primary} size="20px" />
+                  <MdPerson color={theme.other.primary} size="24px" />
                   {largerThanLg && <Title order={5}>プロフィール</Title>}
                 </Group>
                 <Group spacing="xs" className="cursor-pointer hover:opacity-80" onClick={() => navigate("/archives")}>
-                  <MdArchive color={theme.other.primary} size="20px" />
+                  <MdArchive color={theme.other.primary} size="24px" />
                   {largerThanLg && <Title order={5}>アーカイブ</Title>}
                 </Group>
                 <Group spacing="xs" className="cursor-pointer hover:opacity-80" onClick={() => navigate("/categories")}>
-                  <MdCategory color={theme.other.primary} size="20px" />
+                  <MdCategory color={theme.other.primary} size="24px" />
                   {largerThanLg && <Title order={5}>カテゴリー</Title>}
                 </Group>
               </Group>
