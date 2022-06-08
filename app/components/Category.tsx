@@ -33,7 +33,7 @@ export const Category: FC<CategoryProps> = ({ categories }) => {
             onClick={() => navigate(`/categories/${category}`)}
           >
             {isCategory(category) && (
-              <Image fit="contain" src={CategoryIconMap.get(category) ?? ""} width={24} height={24} />
+              <Image fit="contain" src={CategoryIconMap.get(category) ?? ""} width={32} height={32} />
             )}
             <Text sx={(theme) => ({ color: theme.other.secondary })}>
               {category} ({count})

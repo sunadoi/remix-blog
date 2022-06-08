@@ -60,9 +60,9 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
               className="max-w-max shrink-0 cursor-pointer hover:opacity-80"
               onClick={() => navigate(`/categories/${c}`)}
             >
-              <Paper key={c} radius="xl" shadow="xs" px="md" py={4}>
+              <Paper key={c} radius="xl" shadow="xs" px="sm" py={4}>
                 <Group spacing="xs" align="center">
-                  <Image fit="contain" src={CategoryIconMap.get(c) ?? ""} alt="categoryIcon" width={20} height={20} />
+                  <Image fit="contain" src={CategoryIconMap.get(c) ?? ""} alt="categoryIcon" width={24} height={24} />
                   <Text sx={(theme) => ({ color: theme.other.secondary })}>{c}</Text>
                 </Group>
               </Paper>
