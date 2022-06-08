@@ -41,7 +41,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({ categoryName, icon, total 
           height={largerThanMd ? 72 : 40}
           fit="contain"
         />
-        <Text size="lg" sx={(theme) => ({ color: theme.other.primary })} weight="bold" mt="sm" mb="xs">
+        <Text size="lg" sx={(theme) => ({ color: theme.other.primary })} weight="bold" my="xs">
           {categoryName}
         </Text>
         <Badge radius="md" variant="filled" size="lg" className="cursor-pointer">

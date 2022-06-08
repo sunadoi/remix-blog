@@ -47,6 +47,7 @@ export default function Index() {
     categories: { name: string; icon: string; total: number }[]
   }>()
   const [largerThanMd] = useMediaQueryMin("md", true)
+  const [largerThanLg] = useMediaQueryMin("lg", true)
 
   return (
     <Grid justify="center">
@@ -68,7 +69,7 @@ export default function Index() {
         <Grid mt="xl">
           {categories.map((category) => {
             return (
-              <Grid.Col key={category.name} span={largerThanMd ? 2 : 4}>
+              <Grid.Col key={category.name} span={largerThanLg ? 2 : 4}>
                 <CategoryCard categoryName={category.name} icon={category.icon} total={category.total} />
               </Grid.Col>
             )
