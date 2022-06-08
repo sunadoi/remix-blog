@@ -73,7 +73,15 @@ export const Header: FC = () => {
                 nothingFoundMessage="Nothing found..."
                 shortcut="mod + K"
               />
-              <Input icon={<AiOutlineSearch />} radius="md" size="md" />
+              <Input
+                icon={<AiOutlineSearch />}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                  if (e.key !== "Enter") return
+                  navigate(`/search?q=${e.currentTarget.value}`)
+                }}
+                radius="md"
+                size="md"
+              />
             </Grid.Col>
           </>
         )}
