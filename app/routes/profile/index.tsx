@@ -4,6 +4,7 @@ import { useLoaderData } from "@remix-run/react"
 
 import { PostsCard } from "@/components/profile/PostsCard"
 import { ProfileCard } from "@/components/profile/ProfileCard"
+import { QACard } from "@/components/profile/QACard"
 import { CategoryIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
@@ -67,9 +68,10 @@ export default function Index() {
             </Group>
           }
         />
-        <Group direction="column" grow>
+        <Group direction="column" spacing="xl" grow>
           <ProfileCard />
           <PostsCard categories={categories} total={totalCount} />
+          <QACard />
         </Group>
       </Grid.Col>
     </Grid>
