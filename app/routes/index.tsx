@@ -50,17 +50,18 @@ export const loader: LoaderFunction = async ({ request }) => {
     }
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   }, {} as { [key in string]: { month: number; count: number } })
-  return { contents, pickupContents, categories, archives, page, totalCount }
+  return { contents, pickupContents, categories, archives, page, totalCount, totalPages: Math.ceil(totalCount / per) }
 }
 
 export default function Index() {
-  const { contents, pickupContents, categories, archives, page, totalCount } = useLoaderData<{
+  const { contents, pickupContents, categories, archives, page, totalCount, totalPages } = useLoaderData<{
     contents: MicroCMSContent[]
     pickupContents: MicroCMSContent[]
     categories: { [key in CategoryType]: number }
     archives: { [key in string]: { month: number; count: number } }
     page: number
     totalCount: number
+    totalPages: number
   }>()
   const navigate = useNavigate()
   const [largerThanMd] = useMediaQueryMin("md", true)
@@ -97,7 +98,7 @@ export default function Index() {
                 |
               </Title>
               <Title order={2} mr="md">
-                All Topics ({contents.length})
+                All Topics ({totalCount})
               </Title>
             </Group>
           }
@@ -110,7 +111,14 @@ export default function Index() {
           ))}
         </Grid>
         <Group position="center">
-          <Pagination page={page} onChange={(page) => navigate(`?page=${page}`)} total={totalCount} my="xl" />
+          <Pagination
+            page={page}
+            siblings={0}
+            boundaries={1}
+            onChange={(page) => navigate(`?page=${page}`)}
+            total={totalPages}
+            my="xl"
+          />
         </Group>
       </Grid.Col>
       {largerThanMd && (
