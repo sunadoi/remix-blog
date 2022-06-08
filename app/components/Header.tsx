@@ -35,7 +35,7 @@ export const Header: FC = () => {
           <>
             <Grid.Col span={4} className="max-w-[480px]">
               <Group position="right">
-                <Group spacing="xs" className="cursor-pointer hover:opacity-80">
+                <Group spacing="xs" className="cursor-pointer hover:opacity-80" onClick={() => navigate("/profile")}>
                   <MdPerson color={theme.other.primary} size="24px" />
                   {largerThanLg && <Title order={5}>プロフィール</Title>}
                 </Group>

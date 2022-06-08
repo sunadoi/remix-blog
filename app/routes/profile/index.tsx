@@ -2,7 +2,7 @@ import { Divider, Grid, Title, Group } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 
-import { CategoryCard } from "@/components/CategoryCard"
+import { PostsCard } from "@/components/profile/PostsCard"
 import { CategoryIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
@@ -15,7 +15,7 @@ export const headers: HeadersFunction = () => {
 }
 
 export const loader: LoaderFunction = async () => {
-  const { contents } = await client.getList<MicroCMSContent>({
+  const { contents, totalCount } = await client.getList<MicroCMSContent>({
     endpoint: "posts",
   })
 
@@ -39,19 +39,19 @@ export const loader: LoaderFunction = async () => {
     }))
     .sort((a, b) => b.total - a.total)
 
-  return { categories: sortedCategory }
+  return { categories: sortedCategory, totalCount }
 }
 
 export default function Index() {
-  const { categories } = useLoaderData<{
+  const { categories, totalCount } = useLoaderData<{
     categories: { name: string; icon: string; total: number }[]
+    totalCount: number
   }>()
   const [largerThanMd] = useMediaQueryMin("md", true)
-  const [largerThanLg] = useMediaQueryMin("lg", true)
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 8 : 12} className="max-w-[1200px]">
+      <Grid.Col span={largerThanMd ? 10 : 12} className="max-w-[1200px]">
         <Divider
           my="md"
           size="md"
@@ -61,20 +61,12 @@ export default function Index() {
                 |
               </Title>
               <Title order={2} mr="md">
-                Categories
+                Profile
               </Title>
             </Group>
           }
         />
-        <Grid mt="xl">
-          {categories.map((category) => {
-            return (
-              <Grid.Col key={category.name} span={largerThanLg ? 2 : 4}>
-                <CategoryCard category={category} />
-              </Grid.Col>
-            )
-          })}
-        </Grid>
+        <PostsCard categoryIcons={categories.sort((a, b) => b.total - a.total).map((c) => c.icon)} total={totalCount} />
       </Grid.Col>
     </Grid>
   )
