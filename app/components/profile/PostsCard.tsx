@@ -1,14 +1,18 @@
 import { Card, Divider, Grid, Group, Image, Text } from "@mantine/core"
+import { useNavigate } from "@remix-run/react"
 import type { FC } from "react"
 
 import WritingIcon from "@/assets/writing.png"
+import type { CategoryType } from "@/types/category"
 
 type PostsCardProps = {
-  categoryIcons: string[]
+  categories: CategoryType[]
   total: number
 }
 
-export const PostsCard: FC<PostsCardProps> = ({ categoryIcons, total }) => {
+export const PostsCard: FC<PostsCardProps> = ({ categories, total }) => {
+  const navigate = useNavigate()
+
   return (
     <Card radius="md" p="sm" shadow="xs">
       <Group position="center" direction="column" spacing="xs">
@@ -21,9 +25,16 @@ export const PostsCard: FC<PostsCardProps> = ({ categoryIcons, total }) => {
         </Text>
         <Divider my="sm" size="xs" className="w-[100%]" />
         <Grid px="md" my="sm">
-          {categoryIcons.map((icon) => (
-            <Grid.Col key={icon} span={3}>
-              <Image src={icon} alt="" width={64} height={64} classNames={{ image: "mx-auto" }} />
+          {categories.map((category) => (
+            <Grid.Col key={category.name} span={3} className="cursor-pointer hover:opacity-80">
+              <Image
+                onClick={() => navigate(`/categories/${category.name}`)}
+                src={category.icon}
+                alt=""
+                width={64}
+                height={64}
+                classNames={{ image: "mx-auto" }}
+              />
             </Grid.Col>
           ))}
         </Grid>

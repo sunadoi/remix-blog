@@ -3,6 +3,7 @@ import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 
 import { PostsCard } from "@/components/profile/PostsCard"
+import { ProfileCard } from "@/components/profile/ProfileCard"
 import { CategoryIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
@@ -66,7 +67,10 @@ export default function Index() {
             </Group>
           }
         />
-        <PostsCard categoryIcons={categories.sort((a, b) => b.total - a.total).map((c) => c.icon)} total={totalCount} />
+        <Group direction="column" grow>
+          <ProfileCard />
+          <PostsCard categories={categories} total={totalCount} />
+        </Group>
       </Grid.Col>
     </Grid>
   )
