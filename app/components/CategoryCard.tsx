@@ -32,6 +32,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({ category }) => {
           visible={transition.state === "loading" && selectedCardName === category.name}
           overlayOpacity={0.5}
           overlayColor="white"
+          transitionDuration={1000}
         />
         <Image
           src={category.icon}

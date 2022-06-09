@@ -35,6 +35,7 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
         visible={transition.state === "loading" && selectedCardId === content.id}
         overlayOpacity={0.5}
         overlayColor="white"
+        transitionDuration={1000}
       />
       {/* NOTE: CardSectionを使うとOverlayのmtがずれてしまうのでBoxでCardSectionを定義 */}
       <Box mt={-16} mr={-16} ml={-16}>
@@ -108,6 +109,7 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
         visible={transition.state === "loading" && selectedCardId === content.id}
         overlayOpacity={0.5}
         overlayColor="white"
+        transitionDuration={1000}
       />
       <Grid gutter={largerThanMd ? "xl" : "lg"}>
         <Grid.Col span={6} p={0}>

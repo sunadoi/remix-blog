@@ -1,5 +1,5 @@
-import { Card, Divider, Grid, Group, Image, Text } from "@mantine/core"
-import { useNavigate } from "@remix-run/react"
+import { Card, Divider, Grid, Group, Image, LoadingOverlay, Text } from "@mantine/core"
+import { useNavigate, useTransition } from "@remix-run/react"
 import type { FC } from "react"
 
 import WritingIcon from "@/assets/writing.png"
@@ -12,9 +12,16 @@ type PostsCardProps = {
 
 export const PostsCard: FC<PostsCardProps> = ({ categories, total }) => {
   const navigate = useNavigate()
+  const transition = useTransition()
 
   return (
     <Card radius="md" p="sm" shadow="xs">
+      <LoadingOverlay
+        visible={transition.state === "loading"}
+        overlayOpacity={0.5}
+        overlayColor="white"
+        transitionDuration={1000}
+      />
       <Group position="center" direction="column" spacing="xs">
         <Image src={WritingIcon} alt="" fit="contain" />
         <Text size="lg" sx={(theme) => ({ color: theme.other.primary })} mt="sm" weight="bold">

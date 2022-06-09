@@ -1,18 +1,7 @@
-import { AppShell, LoadingOverlay } from "@mantine/core"
+import { AppShell } from "@mantine/core"
 import type { LoaderFunction, MetaFunction } from "@remix-run/node"
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useCatch,
-  useLoaderData,
-  useTransition,
-} from "@remix-run/react"
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch, useLoaderData } from "@remix-run/react"
 import type { FC, ReactNode } from "react"
-import { useState } from "react"
 
 import { Header } from "@/components/Header"
 import { SPNavbar } from "@/components/SPNavbar"
@@ -77,22 +66,11 @@ export default function App() {
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   const [smallerThanMd, mounted] = useMediaQueryMax("md", true)
-  const transition = useTransition()
-  const [navLoading, setNavLoading] = useState(false)
 
   if (!mounted) return <></>
   return (
-    // TODO: Loadingを出さなくて済むくらいレスポンスを早くする
-    <AppShell header={<Header />} footer={smallerThanMd ? <SPNavbar setNavLoading={setNavLoading} /> : <></>}>
-      <div className="min-h-[100vh]">
-        <LoadingOverlay
-          visible={transition.state === "loading" && navLoading}
-          overlayOpacity={0.5}
-          overlayColor="white"
-          className="fixed"
-        />
-        {children}
-      </div>
+    <AppShell header={<Header />} footer={smallerThanMd ? <SPNavbar /> : <></>}>
+      <div className="min-h-[100vh]">{children}</div>
     </AppShell>
   )
 }
