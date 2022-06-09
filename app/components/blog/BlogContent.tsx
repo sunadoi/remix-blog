@@ -110,7 +110,7 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
                 )
               }
               return (
-                <Text key={index} className="leading-loose">
+                <Text key={index} className="break-all leading-loose">
                   {html.props.children}
                 </Text>
               )
