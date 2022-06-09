@@ -62,7 +62,7 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
           mb="xs"
           className="absolute bottom-1 w-[90%]"
         >
-          <Group spacing={4} align="center">
+          <Group spacing={2} align="center">
             {content.topic?.[0] && isCategory(content.topic?.[0]) && (
               <Image
                 fit="contain"
@@ -130,9 +130,14 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
             </Text>
             <Group position="apart" spacing="xs">
               {largerThanMd && (
-                <Group spacing="xs">
+                <Group spacing={2}>
                   {content.topic?.[0] && isCategory(content.topic?.[0]) && (
-                    <Image fit="contain" src={CategoryIconMap.get(content.topic?.[0]) ?? ""} width={16} height={16} />
+                    <Image
+                      fit="contain"
+                      src={CategoryIconMap.get(content.topic?.[0]) ?? ""}
+                      width={largerThanMd ? 24 : 20}
+                      height={largerThanMd ? 24 : 20}
+                    />
                   )}
                   <Text sx={(theme) => ({ color: theme.other.secondary })} size="lg">
                     {content.topic?.[0]}
