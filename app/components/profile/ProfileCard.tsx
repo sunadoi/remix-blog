@@ -1,15 +1,17 @@
-import { Card, Divider, Group, Text } from "@mantine/core"
+import { Card, Group, Text } from "@mantine/core"
 import type { FC } from "react"
 
 export const ProfileCard: FC = () => {
   return (
-    <Card radius="md" p="sm" shadow="xs">
-      <Group position="center" direction="column" spacing="xs">
-        <Text size="xl" sx={(theme) => ({ color: theme.other.primary })} mt="sm" weight="bold">
-          すな
+    <Card radius="md" p="sm" shadow="xs" className="h-[100%]">
+      <Group direction="column" spacing="xs" mx="md" mt="md">
+        <Text sx={(theme) => ({ color: theme.other.primary })} weight="bold" my={0}>
+          <span className="mr-2">🧑‍💻</span>プロフィール
+        </Text>
+        <Text sx={(theme) => ({ color: theme.other.primary })} weight="bold" my={0}>
+          すな / メインはフロントエンド / テクノロジーで課題を解決するのが好き
         </Text>
       </Group>
-      <Divider my="sm" size="xs" className="w-[100%]" />
       <Group direction="column" spacing="xs" mx="md" mt="md">
         <Text sx={(theme) => ({ color: theme.other.primary })} weight="bold" my={0}>
           <span className="mr-2">✨</span>好きな技術

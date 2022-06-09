@@ -69,8 +69,14 @@ export default function Index() {
           }
         />
         <Group direction="column" spacing="xl" grow>
-          <ProfileCard />
-          <PostsCard categories={categories} total={totalCount} />
+          <Grid grow>
+            <Grid.Col span={largerThanMd ? 6 : 12}>
+              <ProfileCard />
+            </Grid.Col>
+            <Grid.Col span={largerThanMd ? 6 : 12}>
+              <PostsCard categories={categories} total={totalCount} />
+            </Grid.Col>
+          </Grid>
           <QACard />
         </Group>
       </Grid.Col>
