@@ -24,7 +24,7 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
     <Card
       className="relative cursor-pointer hover:opacity-80"
       radius="md"
-      p={largerThanMd ? "sm" : "sm"}
+      p="sm"
       sx={() => ({ height: "100%", boxShadow: "0px 4px 4px rgba(185, 206, 239, 0.25)" })}
       onClick={() => {
         setSelectedCardId(content.id)
@@ -49,7 +49,7 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
           sx={(theme) => ({ color: theme.other.primary })}
           weight="bold"
           mt="sm"
-          mb={48}
+          mb={56}
           lineClamp={3}
           className="tracking-[0.5px]"
         >
@@ -111,9 +111,9 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
         overlayColor="white"
         transitionDuration={1000}
       />
-      <Grid gutter={largerThanMd ? "xl" : "lg"}>
-        <Grid.Col span={6} p={0}>
-          <AspectRatio ratio={1.9 / 1}>
+      <Grid gutter={largerThanMd ? "xl" : "lg"} columns={10}>
+        <Grid.Col span={4} p={0}>
+          <AspectRatio ratio={1.8 / 1}>
             <Image src={content.image.url} alt="thumbnail" radius="sm" />
           </AspectRatio>
         </Grid.Col>

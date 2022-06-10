@@ -28,7 +28,7 @@ export const Header: FC = () => {
             alt="logo"
             width={smallerThanMd ? "100%" : "200px"}
             className="cursor-pointer hover:opacity-80"
-            onClick={() => navigate("/")}
+            onClick={() => !smallerThanMd && navigate("/")}
           />
         </Grid.Col>
         {!smallerThanMd && (
