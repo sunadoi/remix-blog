@@ -1,6 +1,7 @@
 import { Card, Divider, Grid, Group, Image, LoadingOverlay, Text } from "@mantine/core"
 import { useNavigate, useTransition } from "@remix-run/react"
 import type { FC } from "react"
+import { useState } from "react"
 
 import WritingIcon from "@/assets/writing.png"
 import type { CategoryType } from "@/types/category"
@@ -13,11 +14,13 @@ type PostsCardProps = {
 export const PostsCard: FC<PostsCardProps> = ({ categories, total }) => {
   const navigate = useNavigate()
   const transition = useTransition()
+  // NOTE: アイコンクリックではない単純なページでloaderが出ないようにする
+  const [clicked, setClicked] = useState(false)
 
   return (
     <Card radius="md" p="sm" shadow="xs">
       <LoadingOverlay
-        visible={transition.state === "loading"}
+        visible={transition.state === "loading" && clicked}
         overlayOpacity={0.5}
         overlayColor="white"
         transitionDuration={1000}
@@ -35,7 +38,10 @@ export const PostsCard: FC<PostsCardProps> = ({ categories, total }) => {
           {categories.map((category) => (
             <Grid.Col key={category.name} span={3} className="cursor-pointer hover:opacity-80">
               <Image
-                onClick={() => navigate(`/categories/${category.name}`)}
+                onClick={() => {
+                  setClicked(true)
+                  navigate(`/categories/${category.name}`)
+                }}
                 src={category.icon}
                 alt=""
                 width={64}
