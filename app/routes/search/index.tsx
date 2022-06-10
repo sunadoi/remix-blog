@@ -59,12 +59,14 @@ export default function Index() {
               navigate(`/search?q=${e.currentTarget.value}`)
             }}
             radius="md"
-            size="md"
+            size="lg"
             classNames={{ wrapper: "w-[60%]" }}
           />
-          <Text size="xl" color="brand" weight="bold">
-            「{q}」の検索結果: {contents.length}件
-          </Text>
+          {q && (
+            <Text size="xl" color="brand" weight="bold">
+              「{q}」の検索結果: {contents.length}件
+            </Text>
+          )}
         </Group>
         <Grid mt="xl">
           {contents.map((content) => {

@@ -2,6 +2,7 @@ import { useMantineTheme, Footer, Grid, Text, Group } from "@mantine/core"
 import { useLocation, useNavigate } from "@remix-run/react"
 import type { FC } from "react"
 import { useEffect, useState } from "react"
+import { AiOutlineSearch } from "react-icons/ai"
 import { MdHome, MdArchive, MdCategory, MdPerson } from "react-icons/md"
 
 export const SPNavbar: FC = () => {
@@ -14,6 +15,7 @@ export const SPNavbar: FC = () => {
     { path: "/", label: "ホーム", icon: <MdHome color={theme.other.primary} size={24} /> },
     { path: "/categories", label: "カテゴリー", icon: <MdCategory color={theme.other.primary} size={24} /> },
     { path: "/archives", label: "アーカイブ", icon: <MdArchive color={theme.other.primary} size={24} /> },
+    { path: "/search", label: "検索", icon: <AiOutlineSearch color={theme.other.primary} size={24} /> },
     { path: "/profile", label: "プロフィール", icon: <MdPerson color={theme.other.primary} size={24} /> },
   ]
 
@@ -23,12 +25,13 @@ export const SPNavbar: FC = () => {
   }, [pathname])
 
   return (
-    <Footer height="100%" px="md" py="sm" className="sticky">
-      <Grid grow p="sm">
+    <Footer height="100%" px="sm" py="sm" className="sticky">
+      <Grid grow py="sm" px="xs" columns={10}>
         {tabs.map((tab, index) => (
           <Grid.Col
             key={tab.path}
-            span={3}
+            span={2}
+            px={0}
             sx={(theme) => ({
               borderRadius: theme.radius.md,
               backgroundColor: index === tabIndex ? theme.other.paleBlue : undefined,
