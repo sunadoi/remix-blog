@@ -78,7 +78,7 @@ export default function Index() {
                 |
               </Title>
               <Title order={2} mr="md">
-                PICK UP
+                Pick Up
               </Title>
             </Group>
           }
