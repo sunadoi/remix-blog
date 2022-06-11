@@ -28,6 +28,7 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
 
   return (
     <Box
+      pb="xl"
       sx={(theme) => ({
         code: {
           backgroundColor: theme.colors.gray[2],

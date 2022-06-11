@@ -1,5 +1,5 @@
 import { cx } from "@emotion/css"
-import { ActionIcon, Box, Grid, Group, Overlay, Paper, Tooltip, useMantineTheme } from "@mantine/core"
+import { ActionIcon, Box, Divider, Grid, Group, Overlay, Paper, Tooltip, useMantineTheme } from "@mantine/core"
 import { useClipboard } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction, MetaFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
@@ -9,6 +9,7 @@ import { FaTwitter } from "react-icons/fa"
 import { MdClose, MdShare, MdLink, MdToc } from "react-icons/md"
 import tocbot from "tocbot"
 
+import { CoffeeArea, CoffeeCard } from "@/components/CoffeeCard"
 import { BlogContent } from "@/components/blog/BlogContent"
 import { TocCard, TocDialog } from "@/components/blog/Toc"
 import { domain } from "@/constant"
@@ -106,6 +107,7 @@ export default function PostsId() {
               <Paper my="md" mx={0} p="md" radius="md" shadow="xs">
                 <BlogContent content={content} />
               </Paper>
+              <CoffeeCard />
             </>
           ) : (
             <>
@@ -119,6 +121,8 @@ export default function PostsId() {
                 />
               )}
               <BlogContent content={content} />
+              <Divider mt="xl" size="sm" />
+              <CoffeeArea />
             </>
           )}
         </Grid.Col>
