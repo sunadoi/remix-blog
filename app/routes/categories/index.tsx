@@ -51,7 +51,7 @@ export default function Index() {
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 8 : 12} className="max-w-[1200px]">
+      <Grid.Col span={largerThanMd ? 10 : 12} className="max-w-[1200px]">
         <Divider
           my="md"
           size="md"
