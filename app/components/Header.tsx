@@ -22,7 +22,7 @@ export const Header: FC = () => {
       className={smallerThanMd ? "" : "sticky"}
     >
       <Grid justify="center" align="center" className={`h-[${smallerThanMd ? "70px" : "80px"}]`}>
-        <Grid.Col span={smallerThanMd ? 5 : 3} px={smallerThanMd ? 0 : 16} className="max-w-[360px]">
+        <Grid.Col span={5} md={3} px={smallerThanMd ? 0 : 16} className="max-w-[360px]">
           <Image
             src={Logo}
             alt="logo"

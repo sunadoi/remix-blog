@@ -4,7 +4,6 @@ import { useLoaderData, useNavigate } from "@remix-run/react"
 import { AiOutlineSearch } from "react-icons/ai"
 
 import { ContentCard } from "@/components/ContentCard"
-import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
 
@@ -30,13 +29,11 @@ export default function Index() {
     contents: MicroCMSContent[]
     q: string
   }>()
-  const [largerThanMd] = useMediaQueryMin("md", true)
-  const [largerThanLg] = useMediaQueryMin("lg", true)
   const navigate = useNavigate()
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 10 : 12} className="max-w-[1200px]">
+      <Grid.Col span={12} md={10} className="max-w-[1200px]">
         <Divider
           my="md"
           size="md"
@@ -71,7 +68,7 @@ export default function Index() {
         <Grid mt="xl">
           {contents.map((content) => {
             return (
-              <Grid.Col key={content.id} span={largerThanLg ? 4 : 6}>
+              <Grid.Col key={content.id} span={6} lg={4}>
                 <ContentCard content={content} />
               </Grid.Col>
             )

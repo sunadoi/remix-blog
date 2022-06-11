@@ -46,7 +46,6 @@ export default function Index() {
     yearMonths: { [key in string]: { month: number; contents: MicroCMSContent[] } }
   }>()
   const [largerThanMd] = useMediaQueryMin("md", true)
-  const [largerThanLg] = useMediaQueryMin("lg", true)
   const [params] = useSearchParams()
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({ duration: 0, offset: 80 })
 
@@ -56,29 +55,7 @@ export default function Index() {
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 10 : 12} className="max-w-[1200px]">
-        {/* <Tabs
-          position="center"
-          variant="unstyled"
-          onTabChange={(_, tabkey) => (tabkey === "month" || tabkey === "year") && setArchiveType(tabkey)}
-          styles={(theme) => ({
-            tabControl: {
-              border: `1px solid ${theme.other.secondary}`,
-              "&:first-of-type": {
-                borderTopLeftRadius: theme.radius.md,
-                borderBottomLeftRadius: theme.radius.md,
-              },
-              "&:last-of-type": {
-                borderTopRightRadius: theme.radius.md,
-                borderBottomRightRadius: theme.radius.md,
-              },
-            },
-            tabActive: { backgroundColor: theme.other.secondary, color: "white" },
-          })}
-        >
-          <Tabs.Tab label="月別" tabKey="month" />
-          <Tabs.Tab label="年別" tabKey="year" />
-        </Tabs> */}
+      <Grid.Col span={12} md={10} className="max-w-[1200px]">
         <Divider
           my="md"
           size="md"
@@ -96,8 +73,8 @@ export default function Index() {
         {Object.entries(yearMonths).map(([yearMonth, archive]) => {
           return (
             <Box key={yearMonth} ref={yearMonth === params.get("month") ? targetRef : undefined} mb="xl">
-              <Grid justify="center" gutter={largerThanLg ? 80 : "lg"}>
-                <Grid.Col span={largerThanMd ? 3 : 12}>
+              <Grid justify="center">
+                <Grid.Col span={12} md={3} lg={2}>
                   {largerThanMd ? (
                     <Stack justify="center" align="center" spacing="xs" mt="sm">
                       <Image src={MonthIconMap.get(archive.month) ?? ""} alt="monthIcon" width="100px" />
@@ -118,10 +95,10 @@ export default function Index() {
                     </Group>
                   )}
                 </Grid.Col>
-                <Grid.Col span={largerThanMd ? 9 : 12}>
+                <Grid.Col span={12} md={9} lg={10}>
                   <Grid>
                     {archive.contents.map((c) => (
-                      <Grid.Col key={c.id} span={largerThanLg ? 4 : 6}>
+                      <Grid.Col key={c.id} span={6} lg={4}>
                         <ContentCard content={c} />
                       </Grid.Col>
                     ))}

@@ -4,7 +4,6 @@ import { useLoaderData } from "@remix-run/react"
 
 import { CategoryCard } from "@/components/CategoryCard"
 import { CategoryIconMap } from "@/constant"
-import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
 
@@ -46,12 +45,10 @@ export default function Index() {
   const { categories } = useLoaderData<{
     categories: { name: string; icon: string; total: number }[]
   }>()
-  const [largerThanMd] = useMediaQueryMin("md", true)
-  const [largerThanLg] = useMediaQueryMin("lg", true)
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 10 : 12} className="max-w-[1200px]">
+      <Grid.Col span={12} md={10} className="max-w-[1200px]">
         <Divider
           my="md"
           size="md"
@@ -69,7 +66,7 @@ export default function Index() {
         <Grid mt="xl">
           {categories.map((category) => {
             return (
-              <Grid.Col key={category.name} span={largerThanLg ? 2 : 4}>
+              <Grid.Col key={category.name} span={6} md={4} lg={2}>
                 <CategoryCard category={category} />
               </Grid.Col>
             )

@@ -30,7 +30,7 @@ export default function Category() {
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 8 : 12} className="max-w-[1200px]">
+      <Grid.Col span={12} md={10} className="max-w-[1200px]">
         <Group mt="xl" mb="lg" position={largerThanMd ? "left" : "center"}>
           <Image
             src={CategoryIconMap.get(category) ?? ""}
@@ -48,7 +48,7 @@ export default function Category() {
         <Grid>
           {contents.map((c) => {
             return (
-              <Grid.Col key={c.id} span={largerThanMd ? 3 : 6}>
+              <Grid.Col key={c.id} span={6} md={4} lg={3}>
                 <ContentCard content={c} />
               </Grid.Col>
             )

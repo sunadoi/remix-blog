@@ -58,7 +58,6 @@ export default function PostsId() {
   const [largerThanMd] = useMediaQueryMin("md", true)
   const theme = useMantineTheme()
   const clipboard = useClipboard({ timeout: 2000 })
-  // const [openShareModal, setOpenShareModal] = useState(false)
   const [openTocDialog, setOpenTocDialog] = useState(false)
 
   useEffect(() => {
@@ -74,7 +73,7 @@ export default function PostsId() {
   return (
     <>
       <Grid justify="center">
-        <Grid.Col span={largerThanMd ? 7 : 12} className={`${largerThanMd ? "max-w-[830px]" : ""} relative`}>
+        <Grid.Col span={12} md={7} className={`${largerThanMd ? "max-w-[830px]" : ""} relative`}>
           {largerThanMd ? (
             <>
               <Group align="flex-start" className="absolute left-[-48px] h-[100%]">
@@ -184,31 +183,6 @@ export default function PostsId() {
             >
               {openTocDialog ? <MdClose size={32} /> : <MdToc size={32} />}
             </ActionIcon>
-            {/* <Modal
-            opened={openShareModal}
-            onClose={() => setOpenShareModal(false)}
-            withCloseButton={false}
-            overlayOpacity={0.3}
-            centered
-          >
-          <Group direction="column" position="center">
-          <Title order={3}>シェアしてくれるとうれしい</Title>
-              <Group position="center">
-                <ActionIcon
-                  component="a"
-                  href={`https://twitter.com/intent/tweet?url=${domain}/posts/${content.id}&text=${content.title}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-80"
-                >
-                  <FaTwitter color="#00acee" size={36} />
-                </ActionIcon>
-              </Group>
-              <Button variant="white" onClick={() => setOpenShareModal(false)}>
-              とじる
-              </Button>
-            </Group>
-          </Modal> */}
           </Group>
         </>
       )}
