@@ -1,11 +1,11 @@
-import { Card, Divider, Group, Text, Image, Badge } from "@mantine/core"
+import { Card, Divider, Group, Text, Image, Badge, Grid } from "@mantine/core"
 import type { FC } from "react"
 
 import QAImage from "@/assets/qa.png"
 import { useMediaQueryMax } from "@/hooks/useMediaQuery"
 
 export const QACard: FC = () => {
-  const [smallerThanMd] = useMediaQueryMax("sm", true)
+  const [smallerThanSm] = useMediaQueryMax("sm", true)
 
   return (
     <Card radius="md" p="sm" pb="xl" shadow="xs">
@@ -15,26 +15,34 @@ export const QACard: FC = () => {
       {qa.map((e, index) => (
         <Group direction="column" key={e.question} spacing="sm">
           <Divider mt="md" mb="sm" size="xs" className="w-[100%]" />
-          <Group ml="md">
-            <Badge radius="md" py="sm" variant="filled" size="md">
-              <Text>Q{index + 1}</Text>
-            </Badge>
-            <Text sx={(theme) => ({ color: theme.other.primary })} weight="bold">
-              {e.question}
-            </Text>
-          </Group>
-          <Group ml="md" align="start">
-            <Badge radius="md" py="sm" variant="outline" size="md">
-              <Text>A{index + 1}</Text>
-            </Badge>
-            <Text
-              sx={(theme) => ({ color: theme.other.primary })}
-              mt={smallerThanMd ? 0 : 4}
-              className="max-w-[60vw] whitespace-pre-wrap break-words"
-            >
-              {e.answer}
-            </Text>
-          </Group>
+          <Grid ml="md" align="start" className="w-[95%]" columns={smallerThanSm ? 24 : 20}>
+            <Grid.Col span={4} md={2} px={0}>
+              <Badge radius="md" py="sm" variant="filled" size="md">
+                <Text>Q{index + 1}</Text>
+              </Badge>
+            </Grid.Col>
+            <Grid.Col span={20} md={18}>
+              <Text sx={(theme) => ({ color: theme.other.primary })} mt={smallerThanSm ? 2 : 4} weight="bold">
+                {e.question}
+              </Text>
+            </Grid.Col>
+          </Grid>
+          <Grid ml="md" align="start" className="w-[95%]" columns={smallerThanSm ? 24 : 20}>
+            <Grid.Col span={4} md={2} px={0}>
+              <Badge radius="md" py="sm" variant="outline" size="md">
+                <Text>A{index + 1}</Text>
+              </Badge>
+            </Grid.Col>
+            <Grid.Col span={20} md={18}>
+              <Text
+                sx={(theme) => ({ color: theme.other.primary })}
+                mt={smallerThanSm ? 2 : 4}
+                className="whitespace-pre-wrap break-words"
+              >
+                {e.answer}
+              </Text>
+            </Grid.Col>
+          </Grid>
         </Group>
       ))}
     </Card>

@@ -6,7 +6,6 @@ import { PostsCard } from "@/components/profile/PostsCard"
 import { ProfileCard } from "@/components/profile/ProfileCard"
 import { QACard } from "@/components/profile/QACard"
 import { CategoryIconMap } from "@/constant"
-import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
 
@@ -49,11 +48,10 @@ export default function Index() {
     categories: { name: string; icon: string; total: number }[]
     totalCount: number
   }>()
-  const [largerThanMd] = useMediaQueryMin("md", true)
 
   return (
     <Grid justify="center">
-      <Grid.Col span={largerThanMd ? 10 : 12} className="max-w-[1200px]">
+      <Grid.Col span={12} md={10} lg={5} className="max-w-[1200px]">
         <Divider
           my="md"
           size="md"
@@ -69,14 +67,8 @@ export default function Index() {
           }
         />
         <Group direction="column" spacing="xl" grow>
-          <Grid grow>
-            <Grid.Col span={largerThanMd ? 6 : 12}>
-              <ProfileCard />
-            </Grid.Col>
-            <Grid.Col span={largerThanMd ? 6 : 12}>
-              <PostsCard categories={categories} total={totalCount} />
-            </Grid.Col>
-          </Grid>
+          <ProfileCard />
+          <PostsCard categories={categories} total={totalCount} />
           <QACard />
         </Group>
       </Grid.Col>
