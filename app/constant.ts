@@ -5,6 +5,10 @@ import GoIcon from "@/assets/category/go.svg"
 import JavaScriptIcon from "@/assets/category/javascript.svg"
 import ReactIcon from "@/assets/category/react.svg"
 import TypeScriptIcon from "@/assets/category/typescript.svg"
+import GoFileIcon from "@/assets/code/go.svg"
+import JavaScriptFileIcon from "@/assets/code/javascript.svg"
+import ReactFileIcon from "@/assets/code/react.svg"
+import TypeScriptFileIcon from "@/assets/code/typescript.svg"
 import AprilIcon from "@/assets/months/April.png"
 import AugustIcon from "@/assets/months/August.png"
 import DecemberIcon from "@/assets/months/December.png"
@@ -31,9 +35,11 @@ export const CategoryIconMap = new Map<CategoryType, string>([
   ["GitHub", GitHubIcon],
 ])
 
-export const LanguageIconMap = new Map<string, string>([
-  ["tsx", ReactIcon],
-  ["ts", TypeScriptIcon],
+export const FileIconMap = new Map<string, string>([
+  ["tsx", ReactFileIcon],
+  ["ts", TypeScriptFileIcon],
+  ["js", JavaScriptFileIcon],
+  ["go", GoFileIcon],
 ])
 
 export const MonthIconMap = new Map<number, string>([

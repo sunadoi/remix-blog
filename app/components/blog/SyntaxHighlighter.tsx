@@ -3,9 +3,9 @@ import { useClipboard } from "@mantine/hooks"
 import type { FC } from "react"
 import { FiClipboard } from "react-icons/fi"
 import { Prism } from "react-syntax-highlighter"
-import { xonokai } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
-import { LanguageIconMap } from "@/constant"
+import { FileIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { Code } from "@/types/microcms"
 
@@ -24,7 +24,7 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
           <Tabs.Tab
             style={{ backgroundColor: "#22272E" }}
             label={code.fileName}
-            icon={<Image src={LanguageIconMap.get(code.language) ?? ""} alt="languageIcon" width="16px" />}
+            icon={<Image src={FileIconMap.get(code.language) ?? ""} alt="languageIcon" width={20} height={20} />}
             className="cursor-default rounded-t-[8px] rounded-b-none px-[16px]"
           />
         </Tabs>
@@ -47,7 +47,7 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
       )}
       <Prism
         language={code.language}
-        style={xonokai}
+        style={okaidia}
         showLineNumbers
         wrapLines
         customStyle={{
@@ -75,7 +75,7 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
                   : code.diffRemove && [...code.diffRemove.split(",").map((n) => Number(n))].includes(lineNumber)
                   ? "#3F2D32"
                   : code.highlight && [...code.highlight.split(",").map((n) => Number(n))].includes(lineNumber)
-                  ? "#3c3c3c"
+                  ? "rgba(60,60,60,0.6)"
                   : "#22272E",
             },
           }
