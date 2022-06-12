@@ -3,7 +3,7 @@ import { useNavigate, useTransition } from "@remix-run/react"
 import dayjs from "dayjs"
 import type { FC } from "react"
 import { useState } from "react"
-import { BiTime } from "react-icons/bi"
+import { BiPencil } from "react-icons/bi"
 
 import { CategoryIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
@@ -76,7 +76,7 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
             </Text>
           </Group>
           <Group spacing="xs">
-            <BiTime size={largerThanMd ? 16 : 12} />
+            <BiPencil size={largerThanMd ? 16 : 12} />
             <Text size={largerThanMd ? "md" : "sm"} color="gray">
               {dayjs(content.publishedAt).format("YYYY.MM.DD")}
             </Text>
@@ -145,7 +145,7 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
                 </Group>
               )}
               <Group spacing="xs">
-                <BiTime size={largerThanMd ? 16 : 12} />
+                <BiPencil size={largerThanMd ? 16 : 12} />
                 <Text size={largerThanMd ? "lg" : "sm"} color="gray">
                   {dayjs(content.publishedAt).format("YYYY.MM.DD")}
                 </Text>

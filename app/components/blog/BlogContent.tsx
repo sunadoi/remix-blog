@@ -6,7 +6,7 @@ import dayjs from "dayjs"
 import parse from "html-react-parser"
 import type { FC } from "react"
 import { useEffect } from "react"
-import { BiTime } from "react-icons/bi"
+import { BiPencil } from "react-icons/bi"
 import { MdUpdate } from "react-icons/md"
 
 import { BlogHeading } from "@/components/blog/BlogHeading"
@@ -40,7 +40,7 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
       <Title order={2}>{content.title}</Title>
       <Group my="sm">
         <Group spacing="xs">
-          <BiTime />
+          <BiPencil />
           <Text color="gray">{dayjs(content.publishedAt).format("YYYY.MM.DD")}</Text>
         </Group>
         <Group spacing="xs">
