@@ -1,22 +1,14 @@
 import { cx, css } from "@emotion/css"
-import { Box, Divider, Group, Paper, Stack, Title, useMantineTheme } from "@mantine/core"
+import { Box, Divider, Group, Paper, Title, useMantineTheme } from "@mantine/core"
 import type { FC } from "react"
 
 export const TocCard: FC = () => {
   return (
-    <Paper
-      mb="md"
-      mt="md"
-      p="md"
-      radius="md"
-      shadow="xs"
-      className="h-[100%] w-[100%] overflow-x-hidden overflow-y-scroll"
-    >
-      <Group spacing="xs">
-        <Stack spacing="xs">
-          <Title order={4}>目次</Title>
-          <Toc />
-        </Stack>
+    <Paper my="md" p="md" radius="md" shadow="xs" className="h-[100%] overflow-x-hidden overflow-y-scroll">
+      <Group spacing="xs" direction="column" className="w-[100%]">
+        <Title order={4}>目次</Title>
+        <Divider size="sm" className="w-[100%]" sx={(theme) => ({ borderColor: theme.other.paleBlue })} />
+        <Toc />
       </Group>
     </Paper>
   )
@@ -46,6 +38,7 @@ const Toc: FC = () => {
         "font-bold",
         "leading-loose",
         "text-sm",
+        "w-[100%]",
         css`
           ol {
             list-style-type: none;
