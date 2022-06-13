@@ -1,8 +1,9 @@
-import { Card, LoadingOverlay, Group, Image, Text, Badge } from "@mantine/core"
+import { Card, LoadingOverlay, Group, Text, Badge } from "@mantine/core"
 import { useNavigate, useTransition } from "@remix-run/react"
 import type { FC } from "react"
 import { useState } from "react"
 
+import { Image } from "@/components/Image"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType } from "@/types/category"
 

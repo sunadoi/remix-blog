@@ -1,8 +1,9 @@
-import { Paper, Group, Title, Divider, Image, Text, useMantineTheme } from "@mantine/core"
+import { Paper, Group, Title, Divider, Text, useMantineTheme } from "@mantine/core"
 import { useNavigate } from "@remix-run/react"
 import type { FC } from "react"
 import { MdCategory } from "react-icons/md"
 
+import { Image } from "@/components/Image"
 import { CategoryIconMap } from "@/constant"
 import type { CategoryType } from "@/types/microcms"
 import { isCategory } from "@/types/microcms"
@@ -35,7 +36,7 @@ export const Category: FC<CategoryProps> = ({ categories }) => {
               onClick={() => navigate(`/categories/${category}`)}
             >
               {isCategory(category) && (
-                <Image fit="contain" src={CategoryIconMap.get(category) ?? ""} width={32} height={32} />
+                <Image fit="contain" src={CategoryIconMap.get(category) ?? ""} alt="" width={32} height={32} />
               )}
               <Text sx={(theme) => ({ color: theme.other.secondary })}>
                 {category} ({count})

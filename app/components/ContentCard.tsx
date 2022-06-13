@@ -1,10 +1,11 @@
-import { Card, LoadingOverlay, Group, Image, Text, Grid, Stack, AspectRatio, Box } from "@mantine/core"
+import { Card, LoadingOverlay, Group, Text, Grid, Stack, AspectRatio, Box } from "@mantine/core"
 import { useNavigate, useTransition } from "@remix-run/react"
 import dayjs from "dayjs"
 import type { FC } from "react"
 import { useState } from "react"
 import { BiPencil } from "react-icons/bi"
 
+import { Image } from "@/components/Image"
 import { CategoryIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
@@ -40,7 +41,7 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
       {/* NOTE: CardSectionを使うとOverlayのmtがずれてしまうのでBoxでCardSectionを定義 */}
       <Box mt={-16} mr={-16} ml={-16}>
         <AspectRatio ratio={1.9 / 1}>
-          <Image src={content.image.url} alt="thumbnail" />
+          <Image src={content.image.url} alt="thumbnail" width="100%" height="100%" />
         </AspectRatio>
       </Box>
       <Group direction="column" position="apart">
@@ -67,6 +68,7 @@ export const ContentCard: FC<ContentCardProps> = ({ content }) => {
               <Image
                 fit="contain"
                 src={CategoryIconMap.get(content.topic?.[0]) ?? ""}
+                alt=""
                 width={largerThanMd ? 24 : 20}
                 height={largerThanMd ? 24 : 20}
               />
@@ -114,7 +116,7 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
       <Grid gutter={largerThanMd ? "xl" : "lg"} columns={10}>
         <Grid.Col span={4} p={0}>
           <AspectRatio ratio={1.8 / 1}>
-            <Image src={content.image.url} alt="thumbnail" radius="sm" />
+            <Image src={content.image.url} alt="thumbnail" radius="sm" width="100%" height="100%" />
           </AspectRatio>
         </Grid.Col>
         <Grid.Col span={6} p={largerThanLg ? "md" : "sm"} pr={largerThanLg ? "lg" : "md"}>
@@ -135,6 +137,7 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
                     <Image
                       fit="contain"
                       src={CategoryIconMap.get(content.topic?.[0]) ?? ""}
+                      alt=""
                       width={largerThanMd ? 24 : 20}
                       height={largerThanMd ? 24 : 20}
                     />

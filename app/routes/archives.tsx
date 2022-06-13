@@ -1,10 +1,11 @@
-import { Divider, Grid, Title, Group, Box, Image, Stack, Badge } from "@mantine/core"
+import { Divider, Grid, Title, Group, Box, Stack, Badge } from "@mantine/core"
 import { useScrollIntoView } from "@mantine/hooks"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useSearchParams } from "@remix-run/react"
 import { useEffect } from "react"
 
 import { ContentCard } from "@/components/ContentCard"
+import { Image } from "@/components/Image"
 import { MonthIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { MicroCMSContent } from "@/types/microcms"
@@ -77,7 +78,7 @@ export default function Index() {
                 <Grid.Col span={12} md={3} lg={2}>
                   {largerThanMd ? (
                     <Stack justify="center" align="center" spacing="xs" mt="sm">
-                      <Image src={MonthIconMap.get(archive.month) ?? ""} alt="monthIcon" width="100px" />
+                      <Image src={MonthIconMap.get(archive.month) ?? ""} alt="monthIcon" width={100} height={100} />
                       <Title order={3}>{yearMonth}</Title>
                       <Badge radius="md" variant="filled" size="lg">
                         {archive.contents.length}記事
@@ -85,7 +86,7 @@ export default function Index() {
                     </Stack>
                   ) : (
                     <Group position="center" spacing="md">
-                      <Image src={MonthIconMap.get(archive.month) ?? ""} alt="monthIcon" width="100px" />
+                      <Image src={MonthIconMap.get(archive.month) ?? ""} alt="monthIcon" width={100} height={100} />
                       <Stack spacing="xs">
                         <Title order={3}>{yearMonth}</Title>
                         <Badge radius="md" variant="filled" size="lg">

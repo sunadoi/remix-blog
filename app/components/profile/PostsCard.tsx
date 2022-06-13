@@ -1,9 +1,10 @@
-import { Card, Divider, Grid, Group, Image, LoadingOverlay, Text } from "@mantine/core"
+import { Card, Divider, Grid, Group, LoadingOverlay, Text } from "@mantine/core"
 import { useNavigate, useTransition } from "@remix-run/react"
 import type { FC } from "react"
 import { useState } from "react"
 
 import WritingIcon from "@/assets/writing.png"
+import { Image } from "@/components/Image"
 import type { CategoryType } from "@/types/category"
 
 type PostsCardProps = {
@@ -26,7 +27,7 @@ export const PostsCard: FC<PostsCardProps> = ({ categories, total }) => {
         transitionDuration={1000}
       />
       <Group position="center" direction="column" spacing="xs">
-        <Image src={WritingIcon} alt="" fit="contain" />
+        <Image src={WritingIcon} alt="" fit="contain" width={73} height={73} />
         <Text size="lg" sx={(theme) => ({ color: theme.other.primary })} mt="sm" weight="bold">
           執筆記事数
         </Text>

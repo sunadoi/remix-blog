@@ -1,7 +1,8 @@
-import { Card, Divider, Group, Text, Image, Badge, Grid } from "@mantine/core"
+import { Card, Divider, Group, Text, Badge, Grid } from "@mantine/core"
 import type { FC } from "react"
 
 import QAImage from "@/assets/qa.png"
+import { Image } from "@/components/Image"
 import { useMediaQueryMax } from "@/hooks/useMediaQuery"
 
 export const QACard: FC = () => {
@@ -10,7 +11,7 @@ export const QACard: FC = () => {
   return (
     <Card radius="md" p="sm" pb="xl" shadow="xs">
       <Group position="center" direction="column" spacing="xs">
-        <Image src={QAImage} alt="" fit="contain" />
+        <Image src={QAImage} alt="" fit="contain" width={230} height={164} />
       </Group>
       {qa.map((e, index) => (
         <Group direction="column" key={e.question} spacing="sm">

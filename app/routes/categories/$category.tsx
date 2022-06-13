@@ -1,8 +1,9 @@
-import { Badge, Grid, Group, Image, Title } from "@mantine/core"
+import { Badge, Grid, Group, Title } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 
 import { ContentCard } from "@/components/ContentCard"
+import { Image } from "@/components/Image"
 import { CategoryIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
@@ -34,6 +35,7 @@ export default function Category() {
         <Group mt="xl" mb="lg" position={largerThanMd ? "left" : "center"}>
           <Image
             src={CategoryIconMap.get(category) ?? ""}
+            alt=""
             width={largerThanMd ? 120 : 80}
             height={largerThanMd ? 120 : 80}
             fit="contain"

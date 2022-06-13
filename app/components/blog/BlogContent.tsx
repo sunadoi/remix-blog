@@ -1,5 +1,5 @@
 import { cx } from "@emotion/css"
-import { Box, Blockquote, Text, Title, Group, Image, Paper } from "@mantine/core"
+import { Box, Blockquote, Text, Title, Group, Paper } from "@mantine/core"
 import { useScrollIntoView } from "@mantine/hooks"
 import { useLocation, useNavigate } from "@remix-run/react"
 import dayjs from "dayjs"
@@ -9,6 +9,7 @@ import { useEffect } from "react"
 import { BiPencil } from "react-icons/bi"
 import { MdUpdate } from "react-icons/md"
 
+import { Image } from "@/components/Image"
 import { BlogHeading } from "@/components/blog/BlogHeading"
 import { Message } from "@/components/blog/Message"
 import { SyntaxHighlighter } from "@/components/blog/SyntaxHighlighter"
@@ -72,18 +73,17 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
           )
         })}
       </ul>
-      <Group position="center">
-        <Image
-          src={content.image.url}
-          alt="thumbnail"
-          width="60%"
-          radius="md"
-          mb="xl"
-          classNames={{
-            image: "mx-auto",
-          }}
-        />
-      </Group>
+      <Image
+        src={content.image.url}
+        alt="thumbnail"
+        width="60%"
+        height="100%"
+        radius="md"
+        mb="xl"
+        classNames={{
+          image: "mx-auto",
+        }}
+      />
       <div className="body">
         {content.body.map((c) => {
           if (c.fieldId === "content") {

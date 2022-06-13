@@ -1,4 +1,4 @@
-import { useMantineTheme, Grid, Group, Input, Title, Image, Header as MantineHeader } from "@mantine/core"
+import { useMantineTheme, Grid, Group, Input, Title, Header as MantineHeader } from "@mantine/core"
 import { SpotlightProvider } from "@mantine/spotlight"
 import { useNavigate } from "@remix-run/react"
 import type { FC } from "react"
@@ -6,6 +6,7 @@ import { AiOutlineSearch } from "react-icons/ai"
 import { MdHome, MdArchive, MdCategory, MdPerson } from "react-icons/md"
 
 import Logo from "@/assets/logo.png"
+import { Image } from "@/components/Image"
 import { useMediaQueryMax, useMediaQueryMin } from "@/hooks/useMediaQuery"
 
 export const Header: FC = () => {
@@ -27,6 +28,7 @@ export const Header: FC = () => {
             src={Logo}
             alt="logo"
             width={smallerThanMd ? "100%" : "200px"}
+            height="100%"
             className="cursor-pointer hover:opacity-80"
             onClick={() => !smallerThanMd && navigate("/")}
           />

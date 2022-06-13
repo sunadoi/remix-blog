@@ -1,10 +1,11 @@
-import { Tabs, Image, Box, Group, Tooltip } from "@mantine/core"
+import { Tabs, Box, Group, Tooltip } from "@mantine/core"
 import { useClipboard } from "@mantine/hooks"
 import type { FC } from "react"
 import { FiClipboard } from "react-icons/fi"
 import { Prism } from "react-syntax-highlighter"
 import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
+import { Image } from "@/components/Image"
 import { FileIconMap } from "@/constant"
 import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { Code } from "@/types/microcms"

@@ -1,8 +1,9 @@
-import { Card, Group, Image, Anchor } from "@mantine/core"
+import { Card, Group, Anchor } from "@mantine/core"
 import type { FC } from "react"
 
 import CoffeePCImage from "@/assets/coffee_pc.png"
 import CoffeeSPImage from "@/assets/coffee_sp.png"
+import { Image } from "@/components/Image"
 
 export const CoffeeCard: FC = () => {
   return (
