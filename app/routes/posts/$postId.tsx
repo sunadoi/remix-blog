@@ -83,6 +83,7 @@ export default function PostsId() {
                     size="xl"
                     sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
                     className="hover:opacity-80"
+                    aria-label="copy"
                     onClick={() => clipboard.copy(location.href)}
                   >
                     <Tooltip opened={clipboard.copied} label="URLをコピーしました" className="flex items-center">
@@ -98,6 +99,7 @@ export default function PostsId() {
                     size="xl"
                     sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
                     className="hover:opacity-80"
+                    aria-label="twitter"
                   >
                     <FaTwitter color="#00acee" size={24} />
                   </ActionIcon>

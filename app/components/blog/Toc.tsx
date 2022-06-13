@@ -1,12 +1,14 @@
 import { cx, css } from "@emotion/css"
-import { Box, Divider, Group, Paper, Title, useMantineTheme } from "@mantine/core"
+import { Box, Divider, Group, Paper, Text, useMantineTheme } from "@mantine/core"
 import type { FC } from "react"
 
 export const TocCard: FC = () => {
   return (
     <Paper my="md" p="md" radius="md" shadow="xs" className="h-[100%] overflow-x-hidden overflow-y-scroll">
       <Group spacing="xs" direction="column" className="w-[100%]">
-        <Title order={4}>目次</Title>
+        <Text size="lg" weight="bold" sx={(theme) => ({ color: theme.other.primary })}>
+          目次
+        </Text>
         <Divider size="sm" className="w-[100%]" sx={(theme) => ({ borderColor: theme.other.paleBlue })} />
         <Toc />
       </Group>
@@ -17,9 +19,16 @@ export const TocCard: FC = () => {
 export const TocDialog: FC = () => {
   return (
     <>
-      <Title order={4} mt="md" mb="sm" className="absolute top-0">
+      <Text
+        mt="md"
+        mb="sm"
+        size="lg"
+        weight="bold"
+        sx={(theme) => ({ color: theme.other.primary })}
+        className="absolute top-0"
+      >
         目次
-      </Title>
+      </Text>
       <Divider mt="xl" size="sm" sx={(theme) => ({ borderColor: theme.other.paleBlue })} />
       <Box mt="md" className="max-h-[350px] overflow-y-scroll">
         <Toc />
