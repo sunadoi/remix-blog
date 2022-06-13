@@ -19,6 +19,7 @@
     "@remix-run/node": "^1.4.0",
     "@remix-run/react": "^1.4.0",
     "@remix-run/vercel": "^1.4.0",
+    "@types/react-slick": "^0.23.8",
     "@vercel/node": "^1.14.0",
     "dayjs": "^1.11.1",
     "html-react-parser": "^1.4.11",
@@ -26,6 +27,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
+    "react-slick": "^0.29.0",
     "react-syntax-highlighter": "^15.5.0",
     "tocbot": "^4.18.2"
   },

@@ -1,6 +1,7 @@
-import { Divider, Grid, Title, Group, Stack, Pagination } from "@mantine/core"
+import { Divider, Grid, Title, Group, Stack, Pagination, Box } from "@mantine/core"
 import type { HeadersFunction, LoaderFunction } from "@remix-run/node"
 import { useLoaderData, useNavigate } from "@remix-run/react"
+import Slider from "react-slick"
 
 import { Archive } from "@/components/Archive"
 import { Category } from "@/components/Category"
@@ -14,6 +15,22 @@ export const headers: HeadersFunction = () => {
   return {
     "Cache-Control": "max-age=0, s-maxage=60, stale-while-revalidate=60",
   }
+}
+
+export function links() {
+  return [
+    {
+      rel: "stylesheet",
+      type: "text/css",
+      charSet: "UTF-8",
+      href: "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css",
+    },
+    {
+      rel: "stylesheet",
+      type: "text/css",
+      href: "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css",
+    },
+  ]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -68,7 +85,7 @@ export default function Index() {
 
   return (
     <Grid justify="center">
-      <Grid.Col span={12} md={7} className="max-w-[830px]">
+      <Grid.Col span={12} md={7} className="w-[100%] max-w-[830px]">
         <Divider
           my="md"
           size="md"
@@ -83,11 +100,21 @@ export default function Index() {
             </Group>
           }
         />
-        <Stack>
-          {pickupContents.map((c) => (
-            <WideContentCard key={c.id} content={c} />
-          ))}
-        </Stack>
+        {largerThanMd ? (
+          <Stack>
+            {pickupContents.map((c) => (
+              <WideContentCard key={c.id} content={c} />
+            ))}
+          </Stack>
+        ) : (
+          <Slider autoplay infinite arrows={false} slidesToShow={1} slidesToScroll={1} centerMode speed={0}>
+            {pickupContents.map((c) => (
+              <Box key={c.id} px="md">
+                <ContentCard content={c} />
+              </Box>
+            ))}
+          </Slider>
+        )}
         <Divider
           mt={64}
           mb="md"
