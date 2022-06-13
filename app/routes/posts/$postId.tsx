@@ -155,6 +155,7 @@ export default function PostsId() {
               size={48}
               variant="filled"
               className="bg-white hover:bg-white"
+              aria-label="share"
               sx={() => ({ boxShadow: "rgb(0 0 0 / 5%) 0px 1px 3px, rgb(0 0 0 / 10%) 0px 1px 2px" })}
               onClick={async () => {
                 await navigator.share({
@@ -169,6 +170,7 @@ export default function PostsId() {
             </ActionIcon>
             <ActionIcon
               variant="filled"
+              aria-label="toc"
               radius={100}
               sx={(theme) => ({
                 color: openTocDialog ? theme.other.primary : theme.other.white,

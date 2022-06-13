@@ -145,6 +145,7 @@ export default function Index() {
             onChange={(page) => navigate(`?page=${page}`)}
             total={totalPages}
             my="xl"
+            getItemAriaLabel={(page) => page.toString()}
           />
         </Group>
       </Grid.Col>
