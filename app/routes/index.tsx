@@ -109,14 +109,14 @@ export default function Index() {
         ) : (
           <Slider autoplay infinite arrows={false} slidesToShow={1} slidesToScroll={1} centerMode speed={0}>
             {pickupContents.map((c) => (
-              <Box key={c.id} px="md">
+              <Box key={c.id} p="md">
                 <ContentCard content={c} />
               </Box>
             ))}
           </Slider>
         )}
         <Divider
-          mt={64}
+          mt={largerThanMd ? 64 : "xl"}
           mb="md"
           size="md"
           label={
