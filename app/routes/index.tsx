@@ -107,7 +107,18 @@ export default function Index() {
             ))}
           </Stack>
         ) : (
-          <Slider autoplay infinite arrows={false} slidesToShow={1} slidesToScroll={1} centerMode speed={0}>
+          <Slider
+            autoplay
+            infinite
+            arrows={false}
+            slidesToShow={1}
+            slidesToScroll={1}
+            centerMode
+            pauseOnFocus
+            pauseOnHover
+            touchThreshold={3}
+            speed={0}
+          >
             {pickupContents.map((c) => (
               <Box key={c.id} p="md">
                 <ContentCard content={c} />
