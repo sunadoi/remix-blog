@@ -31,9 +31,10 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
       pb="xl"
       sx={(theme) => ({
         code: {
-          backgroundColor: theme.colors.gray[2],
+          backgroundColor: theme.colors.gray[1],
           borderRadius: "4px",
           padding: "4px",
+          margin: "0 4px",
         },
       })}
     >
