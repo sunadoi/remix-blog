@@ -115,7 +115,7 @@ export const WideContentCard: FC<ContentCardProps> = ({ content }) => {
       />
       <Grid gutter={largerThanMd ? "xl" : "lg"} columns={10}>
         <Grid.Col span={4} p={0}>
-          <AspectRatio ratio={1.8 / 1}>
+          <AspectRatio ratio={1.9 / 1}>
             <Image src={content.image.url} alt="thumbnail" radius="sm" width="100%" height="100%" />
           </AspectRatio>
         </Grid.Col>
