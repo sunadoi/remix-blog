@@ -1,7 +1,7 @@
 import { Card, Divider, Group, Text, Badge, Grid } from "@mantine/core"
 import type { FC } from "react"
 
-import QAImage from "@/assets/qa.png"
+import QAImage from "@/assets/qa.webp"
 import { Image } from "@/components/Image"
 import { useMediaQueryMax } from "@/hooks/useMediaQuery"
 

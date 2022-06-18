@@ -3,7 +3,7 @@ import { useNavigate, useTransition } from "@remix-run/react"
 import type { FC } from "react"
 import { useState } from "react"
 
-import WritingIcon from "@/assets/writing.png"
+import WritingIcon from "@/assets/writing.svg"
 import { Image } from "@/components/Image"
 import type { CategoryType } from "@/types/category"
 

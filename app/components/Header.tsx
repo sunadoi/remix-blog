@@ -5,7 +5,7 @@ import type { FC } from "react"
 import { AiOutlineSearch } from "react-icons/ai"
 import { MdHome, MdArchive, MdCategory, MdPerson } from "react-icons/md"
 
-import Logo from "@/assets/logo.png"
+import Logo from "@/assets/logo.webp"
 import { Image } from "@/components/Image"
 import { useMediaQueryMax, useMediaQueryMin } from "@/hooks/useMediaQuery"
 
