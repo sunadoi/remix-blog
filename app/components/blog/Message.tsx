@@ -21,7 +21,7 @@ export const Message: FC<MessageProps> = ({ type, children }) => {
     )
 
   return (
-    <Alert icon={Icon} color={color} radius="md" my="lg">
+    <Alert icon={Icon} color={color} radius="md" my="lg" className="whitespace-pre-wrap">
       {children}
     </Alert>
   )
