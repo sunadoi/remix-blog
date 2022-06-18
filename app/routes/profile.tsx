@@ -11,7 +11,7 @@ import { client } from "lib/client.server"
 
 export const headers: HeadersFunction = () => {
   return {
-    "Cache-Control": "max-age=0, s-maxage=60, stale-while-revalidate=60",
+    "Cache-Control": "max-age=0, s-maxage=240, stale-while-revalidate=60",
   }
 }
 

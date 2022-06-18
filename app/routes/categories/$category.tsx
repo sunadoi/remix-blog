@@ -9,10 +9,9 @@ import { useMediaQueryMin } from "@/hooks/useMediaQuery"
 import type { CategoryType, MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
 
-export const headers: HeadersFunction = ({ loaderHeaders }) => {
-  const cacheControl = loaderHeaders.get("Cache-Control") ?? "max-age=0, s-maxage=60, stale-while-revalidate=60"
+export const headers: HeadersFunction = () => {
   return {
-    "cache-control": cacheControl,
+    "cache-control": "max-age=0, s-maxage=240, stale-while-revalidate=60",
   }
 }
 

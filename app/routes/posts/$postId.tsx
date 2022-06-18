@@ -18,7 +18,7 @@ import type { MicroCMSContent } from "@/types/microcms"
 import { client } from "lib/client.server"
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
-  const cacheControl = loaderHeaders.get("Cache-Control") ?? "max-age=0, s-maxage=60, stale-while-revalidate=60"
+  const cacheControl = loaderHeaders.get("Cache-Control") ?? "max-age=0, s-maxage=240, stale-while-revalidate=60"
   return {
     "cache-control": cacheControl,
   }
@@ -48,7 +48,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     })
 
   // 下書きの場合キャッシュヘッダを変更
-  const headers = draftKey ? { "Cache-Control": "no-store, max-age=0" } : undefined
+  const headers = draftKey ? { "Cache-Control": "no-cache" } : undefined
 
   return json({ content }, { ...(headers ? { headers } : {}) })
 }
