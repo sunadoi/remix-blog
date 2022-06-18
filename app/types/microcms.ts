@@ -43,7 +43,6 @@ export type MicroCMSContent = {
   title: string
   image: { url: string; height: number; width: number }
   category: CategoryType[]
-  topic: CategoryType[]
   body: (Content | Message | Link | Code)[]
 } & MicroCMSDate
 
