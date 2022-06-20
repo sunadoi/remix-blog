@@ -104,7 +104,11 @@ export const BlogContent: FC<{ content: MicroCMSContent }> = ({ content }) => {
                     <Blockquote
                       icon={null}
                       color="primary"
-                      sx={(theme) => ({ backgroundColor: theme.colors.gray[1], borderRadius: theme.radius.md })}
+                      sx={(theme) => ({
+                        backgroundColor: theme.colors.gray[1],
+                        borderRadius: theme.radius.md,
+                        color: theme.other.black,
+                      })}
                     >
                       {html.props.children}
                     </Blockquote>

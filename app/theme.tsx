@@ -16,6 +16,7 @@ declare module "@mantine/core" {
     primary: string
     secondary: string
     paleBlue: string
+    black: string
     white: string
   }
 }
@@ -51,6 +52,7 @@ export const MantineTheme: FC<{ children: ReactNode }> = ({ children }) => {
             primary: "#012C6B",
             secondary: "#416190",
             paleBlue: "#E9EFFB",
+            black: "#333333",
             white: "#FFFFFF",
           },
           primaryColor: "brand",
@@ -70,7 +72,7 @@ export const MantineTheme: FC<{ children: ReactNode }> = ({ children }) => {
         }}
         styles={{
           Title: (theme) => ({ root: { color: theme.other.primary, fontFamily } }),
-          Text: () => ({ root: { fontFamily } }),
+          Text: () => ({ root: { fontFamily, color: "#333333" } }),
         }}
         withNormalizeCSS
         withGlobalStyles

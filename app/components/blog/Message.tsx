@@ -1,4 +1,4 @@
-import { Alert } from "@mantine/core"
+import { Alert, Text } from "@mantine/core"
 import type { FC, ReactNode } from "react"
 import { AiOutlineCheckCircle } from "react-icons/ai"
 import { BsInfoCircle } from "react-icons/bs"
@@ -22,7 +22,7 @@ export const Message: FC<MessageProps> = ({ type, children }) => {
 
   return (
     <Alert icon={Icon} color={color} radius="md" my="lg" className="whitespace-pre-wrap">
-      {children}
+      <Text>{children}</Text>
     </Alert>
   )
 }
