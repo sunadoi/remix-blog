@@ -60,9 +60,9 @@ export const loader: LoaderFunction = async ({ request }) => {
     const date = dayjsSSR(c.publishedAt)
     return {
       ...acc,
-      [date.format("YYYY年MM月")]: {
+      [date.format("YYYY-MM")]: {
         month: date.month() + 1,
-        count: (acc[date.format("YYYY年MM月")]?.["count"] ?? 0) + 1,
+        count: (acc[date.format("YYYY-MM")]?.["count"] ?? 0) + 1,
       },
     }
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
