@@ -19,7 +19,7 @@ export const QACard: FC = () => {
           <Grid ml="md" align="start" className="w-[95%]" columns={smallerThanSm ? 24 : 20}>
             <Grid.Col span={4} md={2} px={0}>
               <Badge radius="md" py="sm" variant="filled" size="md">
-                <Text>Q{index + 1}</Text>
+                <Text sx={(theme) => ({ color: theme.other.white })}>Q{index + 1}</Text>
               </Badge>
             </Grid.Col>
             <Grid.Col span={20} md={18}>
@@ -74,7 +74,10 @@ const qa = [
   { question: "好きな漫画・アニメは？", answer: "ハガレン。ちょうどいい長さだし面白いし終わり方綺麗でかなり好き" },
   { question: "好きなゲームは？", answer: "モンハン。大学生の時1日20時間プレイしたことある。友達の家で(迷惑)" },
   { question: "ONE PIECEで好きなキャラクターは？", answer: "サボ" },
-  { question: "NARUTOで好きなキャラクターは？", answer: "我愛羅" },
+  {
+    question: "NARUTOで好きなキャラクターは？",
+    answer: "我愛羅（多分サブキャラでつえーみたいなのが好きなんだと思う）",
+  },
   {
     question: "銀魂で好きなキャラクターは？",
     answer: "沖田総悟と定春。大学の授業中に銀魂読んで笑いを堪えきれず吹き出したことがある",
@@ -82,7 +85,7 @@ const qa = [
   {
     question: "好きな本は？",
     answer:
-      "苦しかったときの話をしようか。これ読んで当時大企業から転職しようと思った。\n何度読み返しても泣けるくらいいい本。人生のバイブル",
+      "『苦しかったときの話をしようか』。これ読んで当時大企業から転職しようと思った。\n何度読み返しても泣けるくらいいい本。人生のバイブル",
   },
   { question: "好きな香りは？", answer: "レモン。グレープフルーツ。ゆず。柑橘系の香り全般的に好き" },
   { question: "好きなスポーツは？", answer: "ラケット系の競技は全般的に好き。あとスノボとボルダリング" },
@@ -107,7 +110,10 @@ const qa = [
       "バタフライエフェクト。セッション。ダイハード。ダークナイト。インセプション。アクション系はわりと全般的に好き",
   },
   { question: "得意だった教科は？", answer: "数学。理科。体育" },
-  { question: "苦手だった教科は？", answer: "現代文" },
+  {
+    question: "苦手だった教科は？",
+    answer: "現代文の小説。太郎の気持ちを答えなさいとか言われるけど太郎の気持ちは太郎にしかわからないと思う。",
+  },
   { question: "弱点は？", answer: "くすぐりにはめっぽう弱い" },
   {
     question: "好きなジブリ映画は？",
