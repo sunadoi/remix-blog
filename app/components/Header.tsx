@@ -69,6 +69,16 @@ export const Header: FC = () => {
                     onTrigger: () => navigate("/archives"),
                     icon: <MdArchive />,
                   },
+                  {
+                    title: "検索ページ",
+                    onTrigger: () => navigate("/search"),
+                    icon: <AiOutlineSearch />,
+                  },
+                  {
+                    title: "プロフィールページ",
+                    onTrigger: () => navigate("/profile"),
+                    icon: <MdPerson />,
+                  },
                 ]}
                 searchIcon={<AiOutlineSearch />}
                 searchPlaceholder="Search..."
