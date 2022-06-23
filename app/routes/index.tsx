@@ -44,8 +44,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   })
 
   const pickupContents = contents.filter((c) =>
-    ["react18-strict-mode", "library-template-literal-types"].includes(c.id)
+    ["virtual-dom", "react18-strict-mode", "go-fmt-stringer"].includes(c.id)
   )
+
+  const sortedContents = contents.sort((a, b) => dayjsSSR(b.publishedAt).diff(dayjsSSR(a.publishedAt)))
 
   const categories = contents
     .flatMap((c) => c.category)
@@ -67,7 +69,15 @@ export const loader: LoaderFunction = async ({ request }) => {
     }
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   }, {} as { [key in string]: { month: number; count: number } })
-  return { contents, pickupContents, categories, archives, page, totalCount, totalPages: Math.ceil(totalCount / per) }
+  return {
+    contents: sortedContents,
+    pickupContents,
+    categories,
+    archives,
+    page,
+    totalCount,
+    totalPages: Math.ceil(totalCount / per),
+  }
 }
 
 export default function Index() {
