@@ -16,7 +16,7 @@ export const QACard: FC = () => {
       {qa.map((e, index) => (
         <Group direction="column" key={e.question} spacing="sm">
           <Divider mt="md" mb="sm" size="xs" className="w-[100%]" />
-          <Grid ml="md" align="start" className="w-[95%]" columns={smallerThanSm ? 24 : 20}>
+          <Grid ml="md" align="start" className="w-[95%]" columns={smallerThanSm ? 24 : 20} gutter="xl">
             <Grid.Col span={4} md={2} px={0}>
               <Badge radius="md" py="sm" variant="filled" size="md">
                 <Text sx={(theme) => ({ color: theme.other.white })}>Q{index + 1}</Text>
@@ -28,7 +28,7 @@ export const QACard: FC = () => {
               </Text>
             </Grid.Col>
           </Grid>
-          <Grid ml="md" align="start" className="w-[95%]" columns={smallerThanSm ? 24 : 20}>
+          <Grid ml="md" align="start" className="w-[95%]" columns={smallerThanSm ? 24 : 20} gutter="xl">
             <Grid.Col span={4} md={2} px={0}>
               <Badge radius="md" py="sm" variant="outline" size="md">
                 <Text>A{index + 1}</Text>
