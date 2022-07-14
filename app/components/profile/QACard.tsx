@@ -124,7 +124,7 @@ const qa = [
   { question: "初恋はいつで、どんな人だった？", answer: "小学校高学年。転校生だった。" },
   { question: "好きな異性のタイプは？", answer: "屈託なくよく笑う人" },
   { question: "幸せを感じる瞬間は？", answer: "2度寝する瞬間" },
-  { question: "好きなアーティストは？", answer: "B'z。東京事変。緑黄色社会。SUPER BEAVER" },
+  { question: "好きなアーティストは？", answer: "東京事変。緑黄色社会。SUPER BEAVER" },
   { question: "今一番気になっていることは？", answer: "ICL。視力めちゃくちゃ悪いからやろうか悩んでる" },
   {
     question: "これだけは絶対許せないこと",
@@ -138,7 +138,7 @@ const qa = [
   { question: "インドア派？アウトドア派？", answer: "圧倒的にインドア派" },
   { question: "よく出没する場所は？", answer: "い、家…" },
   { question: "今1番行きたいところは？", answer: "ヨーロッパ旅行に行きたい。スペイン、イタリア、フランスあたり" },
-  { question: "今1番欲しいものは？", answer: "自分に合ったワーキングチェア" },
+  { question: "今1番欲しいものは？", answer: "生ピアノ" },
   {
     question: "好きな場所は？",
     answer:

@@ -25,7 +25,13 @@ export const SyntaxHighlighter: FC<SyntaxHighlighterProps> = ({ code }) => {
           <Tabs.Tab
             style={{ backgroundColor: "#22272E" }}
             label={code.fileName}
-            icon={<Image src={FileIconMap.get(code.language) ?? ""} alt="languageIcon" width={20} height={20} />}
+            icon={
+              FileIconMap.get(code.language) ? (
+                <Image src={FileIconMap.get(code.language) ?? ""} alt="" width={20} height={20} />
+              ) : (
+                ""
+              )
+            }
             className="cursor-default rounded-t-[8px] rounded-b-none px-[16px]"
           />
         </Tabs>
